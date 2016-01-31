@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\workspace\\native-activity\\app\\build\\intermediates\\res\\merged\\arm7\\debug\\values\\values.xml",
+        "outputFile": "D:\\workspace\\AndroidStudioProjects\\100Balls\\app\\build\\intermediates\\res\\merged\\arm7\\debug\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 102
                 },
                 "from": {
-                    "file": "D:\\workspace\\native-activity\\app\\src\\main\\res\\values\\strings.xml",
+                    "file": "D:\\workspace\\AndroidStudioProjects\\100Balls\\app\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

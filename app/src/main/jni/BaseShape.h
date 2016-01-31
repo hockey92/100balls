@@ -35,8 +35,6 @@ protected:
 
 private:
     Renderer *renderer;
-
-//    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 };
 
 #endif //TEAPOT_BASESHAPE_H

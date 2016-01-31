@@ -1,4 +1,4 @@
-See file:///D:/workspace/native-activity/app/build/tmp/linkArmeabi-v7aDebugArm7Native-activitySharedLibrary/output.txt for all output for linkArmeabi-v7aDebugArm7Native-activitySharedLibrary.
+See file:///D:/workspace/AndroidStudioProjects/100Balls/app/build/tmp/linkArmeabi-v7aDebugArm7Native-activitySharedLibrary/output.txt for all output for linkArmeabi-v7aDebugArm7Native-activitySharedLibrary.
 linking libnative-activity.so successful.
 
-Finished linkArmeabi-v7aDebugArm7Native-activitySharedLibrary, see full log file:///D:/workspace/native-activity/app/build/tmp/linkArmeabi-v7aDebugArm7Native-activitySharedLibrary/output.txt.
+Finished linkArmeabi-v7aDebugArm7Native-activitySharedLibrary, see full log file:///D:/workspace/AndroidStudioProjects/100Balls/app/build/tmp/linkArmeabi-v7aDebugArm7Native-activitySharedLibrary/output.txt.

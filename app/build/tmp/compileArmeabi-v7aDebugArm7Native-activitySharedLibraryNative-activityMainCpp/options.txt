@@ -28,5 +28,5 @@ c++
 -UNDEBUG
 -fno-omit-frame-pointer
 -fno-strict-aliasing
--ID:\\workspace\\native-activity\\app\\src\\main\\jni\\native_app_glue
--ID:\\workspace\\native-activity\\app\\src\\main\\jni\\ndk_helper
+-ID:\\workspace\\AndroidStudioProjects\\100Balls\\app\\src\\main\\jni\\native_app_glue
+-ID:\\workspace\\AndroidStudioProjects\\100Balls\\app\\src\\main\\jni\\ndk_helper
