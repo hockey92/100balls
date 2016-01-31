@@ -1,0 +1,60 @@
+See file:///D:/workspace/native-activity/app/build/tmp/compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainCpp/output.txt for all output for compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainCpp.
+compiling CircleRenderer.cpp successful.
+
+compiling ChainRenderer.cpp successful.
+
+compiling Collision.cpp successful.
+
+compiling CollisionFactory.cpp successful.
+
+compiling Constraint.cpp successful.
+
+compiling BaseShape.cpp successful.
+
+compiling ContainerRenderer.cpp successful.
+
+compiling Circle.cpp successful.
+
+compiling Container.cpp successful.
+
+compiling GlassRenderer.cpp successful.
+
+compiling GlassPhysicsObject.cpp successful.
+
+compiling ImpulseFactory.cpp successful.
+
+compiling Line.cpp successful.
+
+compiling GlassShape.cpp successful.
+
+compiling PhysicsObject.cpp successful.
+
+compiling main.cpp successful.
+
+compiling Renderer.cpp successful.
+
+compiling Segment.cpp successful.
+
+compiling Vec2.cpp successful.
+
+compiling RendererPool.cpp successful.
+
+compiling PhysicsService.cpp successful.
+
+compiling gestureDetector.cpp successful.
+
+compiling GLContext.cpp successful.
+
+compiling interpolator.cpp successful.
+
+compiling perfMonitor.cpp successful.
+
+compiling JNIHelper.cpp successful.
+
+compiling vecmath.cpp successful.
+
+compiling shader.cpp successful.
+
+compiling tapCamera.cpp successful.
+
+Finished compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainCpp, see full log file:///D:/workspace/native-activity/app/build/tmp/compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainCpp/output.txt.
