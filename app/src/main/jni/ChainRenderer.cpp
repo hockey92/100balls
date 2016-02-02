@@ -14,11 +14,12 @@ void ChainRenderer::innerRender(float *pm) {
     glUniformMatrix4fv(projection, 1, GL_FALSE, pm);
     glUniform2fv(mOffsetUniform, 1, mOffsets);
 
-    glDrawElements(GL_LINES, (num - 1) * 2, GL_UNSIGNED_SHORT, indices);
+    glDrawElements(GL_LINES, indicesSize, GL_UNSIGNED_SHORT, indices);
 }
 
-void ChainRenderer::initialize(float *points, int num) {
+void ChainRenderer::initialize(float *points, int num, unsigned short* indices, int indicesSize) {
     this->num = num;
+    this->indicesSize = (indices == NULL) ? (num - 1) * 2 : indicesSize;
 
     vertices = new Vertex[num];
     for (int i = 0; i < num; i++) {
@@ -27,13 +28,24 @@ void ChainRenderer::initialize(float *points, int num) {
         }
     }
 
-    indices = new unsigned short[(num - 1) * 2];
-    for (int i = 0; i < num - 1; i++) {
-        indices[i * 2] = i;
-        indices[i * 2 + 1] = i + 1;
+    if (indices != NULL) {
+        this->indices = new unsigned short[indicesSize];
+        for (int i = 0; i < indicesSize; i++) {
+            (this->indices)[i] = indices[i];
+        }
+    } else {
+        this->indices = new unsigned short[(num - 1) * 2];
+        for (int i = 0; i < num - 1; i++) {
+            (this->indices[i * 2]) = i;
+            (this->indices[i * 2 + 1]) = i + 1;
+        }
     }
 
     glGenBuffers(1, &vb);
     glBindBuffer(GL_ARRAY_BUFFER, vb);
     glBufferData(GL_ARRAY_BUFFER, num * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+}
+
+void ChainRenderer::initialize(float *points, int num) {
+    initialize(points, num, NULL, 0);
 }

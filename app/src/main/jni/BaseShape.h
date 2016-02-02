@@ -8,7 +8,11 @@
 class BaseShape : public IShape {
 
 public:
-    BaseShape(Renderer *renderer) : renderer(renderer), _type(0), parent(NULL) { }
+    BaseShape(Renderer *renderer)
+            : renderer(renderer),
+              _type(0),
+              parent(NULL),
+              angle(0.f) { }
 
     void move(const Vec2 &coords);
 
@@ -20,7 +24,7 @@ public:
         return childCount;
     }
 
-    virtual BaseShape* getChildren(int i);
+    virtual BaseShape *getChildren(int i);
 
     virtual int type() const {
         return _type;
@@ -29,9 +33,10 @@ public:
 protected:
     Vec2 center;
     int childCount;
-    BaseShape** children;
     int _type;
-    BaseShape* parent;
+    float angle;
+    BaseShape **children;
+    BaseShape *parent;
 
 private:
     Renderer *renderer;

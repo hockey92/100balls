@@ -5,10 +5,10 @@
 
 GlassPhysicsObject::GlassPhysicsObject()
         : PhysicsObject(new GlassShape(), 0.f) {
-    float right = 1;
-    float left = -1;
-    float down = -2;
-    float up = 2;
+    float right = 1.5f;
+    float left = -1.5f;
+    float down = -3;
+    float up = 1.0f;
 
     path[0] = new Segment(Vec2(right, up), Vec2(right, down));
     path[1] = new Segment(Vec2(right, down), Vec2(left, down));
@@ -17,8 +17,8 @@ GlassPhysicsObject::GlassPhysicsObject()
 }
 
 void GlassPhysicsObject::update() {
-    float velValue  = 1.0;
-    float distFromPath = 0.3;
+    float velValue  = -1.5f;
+    float distFromPath = 0.3f;
 
     Vec2 dist;
     float len = 0;
@@ -32,5 +32,5 @@ void GlassPhysicsObject::update() {
         }
     }
     Vec2 norm = dist * (1 / len);
-    setVel((Vec2::cross(norm, 1) * velValue) + (norm * (((len - distFromPath) * 0.1f) * DT)));
+    setVel((Vec2::cross(norm, 1) * velValue) + (norm * (((len - distFromPath) * 0.1f) / DT)));
 }

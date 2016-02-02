@@ -16,8 +16,6 @@
  */
 
 //BEGIN_INCLUDE(all)
-#include <jni.h>
-#include <errno.h>
 
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
@@ -25,13 +23,7 @@
 #include <android/sensor.h>
 #include <android/log.h>
 #include <android_native_app_glue.h>
-#include "GlassRenderer.h"
-#include "BaseShape.h"
 #include "PhysicsService.h"
-#include "ContainerRenderer.h"
-#include "CircleRenderer.h"
-#include "Circle.h"
-#include "GlassShape.h"
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
@@ -54,9 +46,6 @@ struct engine {
     ASensorManager *sensorManager;
     const ASensor *accelerometerSensor;
     ASensorEventQueue *sensorEventQueue;
-
-//    BaseShape *shape[4];
-
     int animating;
     EGLDisplay display;
     EGLSurface surface;
@@ -66,8 +55,7 @@ struct engine {
     struct saved_state state;
 
     float projectionMatrix[16];
-    PhysicsService* physicsService;
-//    PhysicsObject *physicsObject;
+    PhysicsService *physicsService;
 };
 
 static float createProjectionMatrix(float *pM, float x, float y, float w, float h) {
@@ -144,22 +132,6 @@ static int engine_init_display(struct engine *engine) {
     engine->height = h;
     engine->state.angle = 0;
     engine->physicsService = new PhysicsService();
-//    engine->physicsObject = new PhysicsObject(new GlassShape(), 0.1f);
-
-//    Renderer *renderer = new CircleRenderer();
-//    Renderer* renderer = new GlassRenderer();
-//
-//    engine->shape[0] = new BaseShape(renderer);
-//    engine->shape[1] = new BaseShape(renderer);
-//    engine->shape[2] = new BaseShape(renderer);
-//    engine->shape[3] = new BaseShape(renderer);
-//
-//    engine->shape[0]->move(Vec2(-0.5f, -0.5f));
-//    engine->shape[1]->move(Vec2(0.5f, 0.5f));
-//    engine->shape[2]->move(Vec2(0.5f, -0.5f));
-//    engine->shape[3]->move(Vec2(-0.5f, 0.5f));
-
-//    PhysicsService physicsService(*(engine->shape));
 
     createProjectionMatrix(engine->projectionMatrix, 3.f, 3.f, w, h);
 
@@ -167,16 +139,6 @@ static int engine_init_display(struct engine *engine) {
     glEnable(GL_DEPTH_TEST);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 //    glViewport(100, 100, 300, 300);
-
-//    engine->program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER);
-//    engine->mPosAttrib = glGetAttribLocation(engine->program, "pos");
-//    engine->mColorAttrib = glGetAttribLocation(engine->program, "color");
-//    engine->mScaleRotUniform = glGetUniformLocation(engine->program, "scaleRot");
-//    engine->mOffsetUniform = glGetUniformLocation(engine->program, "offset");
-//
-//    glGenBuffers(1, &engine->mVB);
-//    glBindBuffer(GL_ARRAY_BUFFER, mVB);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(QUAD), &QUAD[0], GL_STATIC_DRAW);
 
     return 0;
 }
@@ -195,28 +157,7 @@ static void engine_draw_frame(struct engine *engine) {
                  ((float) engine->state.y) / engine->height, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 
-
     engine->physicsService->draw(engine->projectionMatrix);
-
-//    for (int i = 0; i < 4; i++) {
-//        engine->shape[i]->draw(engine->projectionMatrix);
-//    }
-//
-//    glUseProgram(engine->program);
-//
-//    glBindBuffer(GL_ARRAY_BUFFER, engine->mVB);
-//    glVertexAttribPointer(engine->mPosAttrib, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-//                          (const GLvoid *) offsetof(Vertex, pos));
-//    glEnableVertexAttribArray(engine->mPosAttrib);
-//
-//    glUniformMatrix2fv(engine->mScaleRotUniform, 1, GL_FALSE, engine->mScaleRot);
-//    glUniform2fv(engine->mOffsetUniform, 1, engine->mOffsets);
-//
-//    short indices[] = {0, 1, 1, 2};
-//
-//    glDrawElements(GL_LINES, 4, GL_UNSIGNED_SHORT, &indices[0]);
-
-
 
     eglSwapBuffers(engine->display, engine->surface);
 }
@@ -246,10 +187,16 @@ static void engine_term_display(struct engine *engine) {
  */
 static int32_t engine_handle_input(struct android_app *app, AInputEvent *event) {
     struct engine *engine = (struct engine *) app->userData;
-    if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
-        engine->animating = 1;
-        engine->state.x = AMotionEvent_getX(event, 0);
-        engine->state.y = AMotionEvent_getY(event, 0);
+    int eventType = AInputEvent_getType(event);
+    if (eventType == AINPUT_EVENT_TYPE_MOTION) {
+        int action = AKeyEvent_getAction(event) & AMOTION_EVENT_ACTION_MASK;
+        if (action == AMOTION_EVENT_ACTION_DOWN) {
+            engine->physicsService->open();
+        } else if (action == AMOTION_EVENT_ACTION_UP) {
+            engine->animating = 1;
+            engine->physicsService->close();
+        }
+
         return 1;
     }
     return 0;
@@ -357,9 +304,9 @@ void android_main(struct android_app *state) {
                     ASensorEvent event;
                     while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
                                                        &event, 1) > 0) {
-                        LOGI("accelerometer: x=%f y=%f z=%f",
-                             event.acceleration.x, event.acceleration.y,
-                             event.acceleration.z);
+//                        LOGI("accelerometer: x=%f y=%f z=%f",
+//                             event.acceleration.x, event.acceleration.y,
+//                             event.acceleration.z);
                     }
                 }
             }
@@ -383,8 +330,8 @@ void android_main(struct android_app *state) {
 
 //        engine.shape[0]->move(Vec2(0.1, 0.1));
 
-        engine_draw_frame(&engine);
         engine.physicsService->nextFrame();
+        engine_draw_frame(&engine);
 //        }
     }
 }

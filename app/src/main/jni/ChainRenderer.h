@@ -12,11 +12,14 @@ public:
 protected:
     void innerRender(float *pm);
 
+    void initialize(float *points, int num, unsigned short* indices, int indicesSize);
+
     void initialize(float *points, int num);
 
 private:
     Vertex *vertices;
     int num;
+    int indicesSize;
     unsigned short *indices;
 };
 

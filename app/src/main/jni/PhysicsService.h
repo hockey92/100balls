@@ -14,8 +14,13 @@ public:
 
     void draw(float *projection);
 
+    void open();
+
+    void close();
+
 private:
     std::vector<PhysicsObject*> physicsObjects;
+    PhysicsObject* gate;
 
 //    pthread_t threadId;
 //

@@ -11,5 +11,8 @@ ContainerRenderer::ContainerRenderer() {
                 1.50f, -0.20f, 0.0f,
                 1.50f, 0.80f, 0.0f
         };
-        initialize(points, 8);
+
+        unsigned short indices[] = {0, 1, 1, 2, 2, 3, 4, 5, 5, 6, 6, 7};
+
+        initialize(points, 8, indices, 12);
 }

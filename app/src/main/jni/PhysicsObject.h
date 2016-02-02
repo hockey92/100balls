@@ -8,7 +8,7 @@
 class PhysicsObject {
 
 public:
-    PhysicsObject(BaseShape *shape, float invM) : shape(shape), invM(invM) { }
+    PhysicsObject(BaseShape *shape, float invM) : shape(shape), invM(invM), active(true) { }
 
     ~PhysicsObject();
 
@@ -40,6 +40,14 @@ public:
 
     void draw(float *projection);
 
+    bool isActive() {
+        return active;
+    }
+
+    void setActive(bool active) {
+        this->active = active;
+    }
+
 private:
     static const float G = 10.f;
 
@@ -47,6 +55,7 @@ private:
     BaseShape *shape;
     float invM;
     float invI;
+    bool active;
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSOBJECT_H
