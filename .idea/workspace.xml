@@ -5,60 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f338f810-8023-4965-b65d-c8e9465fbf96" name="Default" comment=" test">
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\incremental\mergeArm7DebugJniLibFolders\merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\transforms\dex\arm7\debug\folders\1000\1f\main\classes.dex" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\transforms\mergeJniLibs\arm7\debug\folders\2000\1f\main\lib\armeabi-v7a\gdb.setup" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\transforms\mergeJniLibs\arm7\debug\folders\2000\1f\main\lib\armeabi-v7a\gdbserver" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\transforms\mergeJniLibs\arm7\debug\folders\2000\1f\main\lib\armeabi-v7a\libnative-activity.so" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\outputs\apk\app-arm7-debug-unaligned.apk" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\outputs\apk\app-arm7-debug.apk" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/5vex4wqmo2anfs0v4m5snnaef/BaseShape.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/5vex4wqmo2anfs0v4m5snnaef/BaseShape.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/eoys7yxeynanoyw32ml2s0536/ChainRenderer.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/eoys7yxeynanoyw32ml2s0536/ChainRenderer.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/8b3hqczy7vieyue4re00v3n4b/Circle.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/8b3hqczy7vieyue4re00v3n4b/Circle.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/e1vk3nhw36zsm4g502lgyju3n/CircleRenderer.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/e1vk3nhw36zsm4g502lgyju3n/CircleRenderer.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/jopl4qgcncd3yivdf08f4cwy/Container.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/jopl4qgcncd3yivdf08f4cwy/Container.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/4nwad1nn2s7qs7ebet4yoeqjw/ContainerRenderer.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/4nwad1nn2s7qs7ebet4yoeqjw/ContainerRenderer.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/21jxsrz2zns2ifh4jjbl4zsif/Gate.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/21jxsrz2zns2ifh4jjbl4zsif/Gate.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/3lhskbpbr38it61sq1pp7ebfw/GlassRenderer.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/3lhskbpbr38it61sq1pp7ebfw/GlassRenderer.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/c83bk245oop8b8eul7klouqz8/GlassShape.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/c83bk245oop8b8eul7klouqz8/GlassShape.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/8ksawwebvhlxdxik68la7xal0/PhysicsService.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/8ksawwebvhlxdxik68la7xal0/PhysicsService.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/4vm73yju0w6kcpbek9k6yi6lq/Renderer.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/4vm73yju0w6kcpbek9k6yi6lq/Renderer.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/ejreizcdq95f90442v53c9sl2/RendererPool.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/ejreizcdq95f90442v53c9sl2/RendererPool.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/9g5cmx3mj3hqrwvl0df578quw/Segment.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/9g5cmx3mj3hqrwvl0df578quw/Segment.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/compilationState.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/compilationState.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/binaries/debug/arm7/lib/armeabi-v7a/libnative-activity.so" afterPath="$PROJECT_DIR$/app/build/intermediates/binaries/debug/arm7/lib/armeabi-v7a/libnative-activity.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/binaries/debug/arm7/obj/armeabi-v7a/libnative-activity.so" afterPath="$PROJECT_DIR$/app/build/intermediates/binaries/debug/arm7/obj/armeabi-v7a/libnative-activity.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/6s36oaxpxb6aib8x9ewxdcd0w/main.o" afterPath="$PROJECT_DIR$/app/build/intermediates/objectFiles/armeabi-v7aDebugArm7Native-activitySharedLibrary/native-activityMainCpp/6s36oaxpxb6aib8x9ewxdcd0w/main.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/outputFileStates.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-arm7-debug-androidTest.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-arm7-debug-androidTest.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-arm7-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-arm7-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Application.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/Application.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Application.h" afterPath="$PROJECT_DIR$/app/src/main/jni/Application.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/BaseRenderer.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/BaseRenderer.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/BaseRenderer.h" afterPath="$PROJECT_DIR$/app/src/main/jni/BaseRenderer.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/FileTexture.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/FileTexture.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/FileTexture.h" afterPath="$PROJECT_DIR$/app/src/main/jni/FileTexture.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/PhysicsService.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/PhysicsService.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/PhysicsService.h" afterPath="$PROJECT_DIR$/app/src/main/jni/PhysicsService.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Renderer.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/Renderer.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Renderer.h" afterPath="$PROJECT_DIR$/app/src/main/jni/Renderer.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/RendererPool.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/RendererPool.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/RendererPool.h" afterPath="$PROJECT_DIR$/app/src/main/jni/RendererPool.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/TextureRenderer.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/TextureRenderer.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/TextureRenderer.h" afterPath="$PROJECT_DIR$/app/src/main/jni/TextureRenderer.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/common.hpp" afterPath="$PROJECT_DIR$/app/src/main/jni/common.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/main.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeArm7DebugAssets/merger.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeArm7DebugAssets/merger.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tmp/linkArmeabi-v7aDebugArm7Native-activitySharedLibrary/options.txt" afterPath="$PROJECT_DIR$/app/build/tmp/linkArmeabi-v7aDebugArm7Native-activitySharedLibrary/options.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tmp/compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainC/output.txt" afterPath="$PROJECT_DIR$/app/build/tmp/compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainC/output.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tmp/compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainCpp/output.txt" afterPath="$PROJECT_DIR$/app/build/tmp/compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainCpp/output.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="native-activity.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -158,11 +113,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.26020408">
+              <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -191,10 +146,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhysicsService.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PhysicsService.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/jni/PhysicsService.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33534744">
+            <state vertical-scroll-proportion="-4.111111">
               <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
@@ -9473,6 +9428,68 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="native-activity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="100Balls" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="native-activity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="100Balls" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="native-activity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="100Balls" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jni" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -9859,7 +9876,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31369427" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -9868,7 +9885,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18630573" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49673203" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38535032" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6433121" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -10335,14 +10352,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/jni/Application.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.6296296">
@@ -10364,8 +10373,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/jni/PhysicsService.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33534744">
+        <state vertical-scroll-proportion="-4.111111">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26020408">
+          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
           <folding />
         </state>
       </provider>
