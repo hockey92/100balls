@@ -5,87 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f338f810-8023-4965-b65d-c8e9465fbf96" name="Default" comment=" test">
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\.gradle\2.8\taskArtifacts\compilationState.bin" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\.gradle\2.8\taskArtifacts\fileHashes.bin" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\.gradle\2.8\taskArtifacts\fileSnapshots.bin" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\.gradle\2.8\taskArtifacts\outputFileStates.bin" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\.gradle\2.8\taskArtifacts\taskArtifacts.bin" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\generated\source\buildConfig\androidTest\arm7\debug\com\example\native_activity\test\BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\generated\source\buildConfig\arm7\debug\com\example\native_activity\BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\generated\source\r\arm7\debug\com\example\native_activity\R.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\assets\arm7\debug\circle.tga" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\binaries\debug\arm7\lib\armeabi-v7a\gdb.setup" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\binaries\debug\arm7\lib\armeabi-v7a\gdbserver" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\binaries\debug\arm7\lib\armeabi-v7a\libnative-activity.so" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\binaries\debug\arm7\obj\armeabi-v7a\libnative-activity.so" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\blame\res\arm7\debug\multi\values.json" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\blame\res\arm7\debug\single\mipmap-hdpi-v4.json" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\blame\res\arm7\debug\single\mipmap-mdpi-v4.json" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\blame\res\arm7\debug\single\mipmap-xhdpi-v4.json" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\blame\res\arm7\debug\single\mipmap-xxhdpi-v4.json" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\classes\androidTest\arm7\debug\com\example\native_activity\test\BuildConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\classes\arm7\debug\com\example\native_activity\BuildConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\classes\arm7\debug\com\example\native_activity\R$attr.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\classes\arm7\debug\com\example\native_activity\R$mipmap.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\classes\arm7\debug\com\example\native_activity\R$string.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\classes\arm7\debug\com\example\native_activity\R.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\incremental\compileArm7DebugAidl\dependency.store" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\incremental\compileArm7DebugAndroidTestAidl\dependency.store" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\incremental\mergeArm7DebugAndroidTestAssets\merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\incremental\mergeArm7DebugAndroidTestResources\merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\incremental\mergeArm7DebugAssets\merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\incremental\mergeArm7DebugResources\merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\manifest\androidTest\arm7\debug\AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\manifests\full\arm7\debug\AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainC\9i748blqjbjmvbmn33knp0ust\gl3stub.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainC\druzgvvwhnnzk7fajp9s0uz7c\android_native_app_glue.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\1bi0qreraf58ddtx3jpeajwoz\PhysicsObject.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\21jxsrz2zns2ifh4jjbl4zsif\Gate.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\251tydqnr09qq20xpzeipczd8\vecmath.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\3lhskbpbr38it61sq1pp7ebfw\GlassRenderer.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\4nwad1nn2s7qs7ebet4yoeqjw\ContainerRenderer.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\4uwsnbeotg6ygfgaek4bfmqph\Vec2.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\4vm73yju0w6kcpbek9k6yi6lq\Renderer.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\55l1uqtpmvsjvnui4themkaf6\Constraint.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\5vex4wqmo2anfs0v4m5snnaef\BaseShape.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\6iwn34cn26bczsnsvpcgr26h8\ImpulseFactory.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\6s36oaxpxb6aib8x9ewxdcd0w\main.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\75r0jrauqa6fvarsxatt0pbkr\GlassPhysicsObject.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\7hh4toj67kyv3fs3e4homl815\GLContext.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\8b3hqczy7vieyue4re00v3n4b\Circle.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\8cha6x27l58uxghzz8yujturo\shader.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\8ksawwebvhlxdxik68la7xal0\PhysicsService.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\9g5cmx3mj3hqrwvl0df578quw\Segment.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\9puuacycxk19w2n5o0gbtefa4\interpolator.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\aavr7vre7jcdzapvltknepwj9\perfMonitor.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\ak0bp60dmnl03nt4so96d2n66\Collision.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\aoun1q3c1y74zryt896yvqad2\CollisionFactory.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\buhwchn4lb3tjfxsnfx6up200\gestureDetector.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\bzjeiaat5ico9aq2debauc6up\Line.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\c83bk245oop8b8eul7klouqz8\GlassShape.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\cp6rbf72sj2ff9d1exzs64ogx\JNIHelper.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\e1vk3nhw36zsm4g502lgyju3n\CircleRenderer.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\ejreizcdq95f90442v53c9sl2\RendererPool.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\eoys7yxeynanoyw32ml2s0536\ChainRenderer.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\jopl4qgcncd3yivdf08f4cwy\Container.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\objectFiles\armeabi-v7aDebugArm7Native-activitySharedLibrary\native-activityMainCpp\nzmnj5mkawmz3tvxakict8ay\tapCamera.o" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\res\merged\arm7\debug\mipmap-hdpi-v4\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\res\merged\arm7\debug\mipmap-mdpi-v4\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\res\merged\arm7\debug\mipmap-xhdpi-v4\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\res\merged\arm7\debug\mipmap-xxhdpi-v4\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\res\merged\arm7\debug\values\values.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\res\resources-arm7-debug-androidTest.ap_" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\intermediates\res\resources-arm7-debug.ap_" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\outputs\logs\manifest-merger-arm7-debug-report.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\tmp\compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainC\options.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\tmp\compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainC\output.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\tmp\compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainCpp\options.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\tmp\compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainCpp\output.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\tmp\linkArmeabi-v7aDebugArm7Native-activitySharedLibrary\options.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\workspace\AndroidStudioProjects\100Balls\app\build\tmp\linkArmeabi-v7aDebugArm7Native-activitySharedLibrary\output.txt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="native-activity.iws" />
@@ -156,26 +77,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="100Balls.iml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/100Balls.iml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gradle-wrapper.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
@@ -189,8 +90,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3469388">
-              <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.23776224">
+              <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -224,6 +125,26 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-4.111111">
               <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="local.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/local.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -9563,24 +9484,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="native-activity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="100Balls" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -9588,16 +9491,6 @@
         <subPane subId="Changed Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -9976,7 +9869,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18630573" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49673203" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6433121" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.272293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -10102,13 +9995,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/jni/Vec2.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.8888888">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/jni/Container.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.2592592">
@@ -10363,14 +10249,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gradlew.bat">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -10470,10 +10348,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/local.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3469388">
-          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.23776224">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
           <folding />
         </state>
       </provider>

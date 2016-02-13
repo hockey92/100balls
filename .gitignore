@@ -3,3 +3,5 @@
 *.dex
 *.bin
 app/build/*
+.gradle/*
+.idea/*
