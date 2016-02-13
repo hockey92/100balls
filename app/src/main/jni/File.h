@@ -1,22 +1,14 @@
 #ifndef NATIVE_ACTIVITY_FILE_H
 #define NATIVE_ACTIVITY_FILE_H
 
-class TGAFile {
+class File {
 
 public:
-    TGAFile(const char *fileName, struct android_app *app);
-
-    ~TGAFile();
-
-    void *getBuf();
-
-    int getW() { return w; }
-
-    int getH() { return h; }
+    File(const char *fileName, struct android_app *app);
+    ~File();
+    void *getBuf() const;
 
 private:
-    int h;
-    int w;
     void *buf;
 };
 

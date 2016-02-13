@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "common.hpp"
+#include "FileBuf.h"
 
 // verbose debug logs on?
 #define VERBOSE_LOGGING 1
@@ -14,6 +15,7 @@
 
 Application::Application(struct android_app *app) {
     this->app = app;
+    FileBuf::init(app);
     mEglDisplay = EGL_NO_DISPLAY;
     mEglSurface = EGL_NO_SURFACE;
     mEglContext = EGL_NO_CONTEXT;
