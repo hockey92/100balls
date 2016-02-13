@@ -1,105 +1,63 @@
-/*
- * Copyright (C) Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-#ifndef endlesstunnel_native_engine_hpp
-#define endlesstunnel_native_engine_hpp
+#ifndef NATIVE_ACTIVITY_APPLICATION_H
+#define NATIVE_ACTIVITY_APPLICATION_H
 
-#include "common.hpp"
+#include <jni.h>
+#include <EGL/egl.h>
 
-struct NativeEngineSavedState {};
+#include <android/input.h>
 
-class NativeEngine {
-    public:
-        // create an engine
-        NativeEngine(struct android_app *app);
-        ~NativeEngine();
+class Application {
+public:
+    Application(struct android_app *app);
 
-        // runs application until it dies
-        void GameLoop();
+    void loop();
 
-        // returns the JNI environment
-        JNIEnv *GetJniEnv();
+    ~Application();
 
-        // returns the Android app object
-        android_app* GetAndroidApp();
+    void handleCommand(int32_t cmd);
+    bool handleInput(AInputEvent *event);
 
-        // returns the (singleton) instance
-        static NativeEngine* GetInstance();
+private:
+    struct android_app *app;
 
-    private:
-        // variables to track Android lifecycle:
-        bool mHasFocus, mIsVisible, mHasWindow;
+    // EGL stuff
+    EGLDisplay mEglDisplay;
+    EGLSurface mEglSurface;
+    EGLContext mEglContext;
+    EGLConfig mEglConfig;
 
-        // are our OpenGL objects (textures, etc) currently loaded?
-        bool mHasGLObjects;
+    // variables to track Android lifecycle:
+    bool mHasFocus, mIsVisible, mHasWindow;
 
-        // android API version (0 if not yet queried)
-        int mApiVersion;
+    // are our OpenGL objects (textures, etc) currently loaded?
+    bool mHasGLObjects;
 
-        // EGL stuff
-        EGLDisplay mEglDisplay;
-        EGLSurface mEglSurface;
-        EGLContext mEglContext;
-        EGLConfig mEglConfig;
+    // android API version (0 if not yet queried)
+    int mApiVersion;
 
-        // known surface size
-        int mSurfWidth, mSurfHeight;
+    bool initDisplay();
 
-        // android_app structure
-        struct android_app* mApp;
+    bool initSurface();
 
-        // additional saved state
-        struct NativeEngineSavedState mState;
+    bool initContext();
 
-        // JNI environment
-        JNIEnv *mJniEnv;
+    bool isAnimating();
 
-        // is this the first frame we're drawing?
-        bool mIsFirstFrame;
+    void doFrame();
 
-        // initialize the display
-        bool InitDisplay();
+    bool prepareToRender();
 
-        // initialize surface. Requires display to have been initialized first.
-        bool InitSurface();
+    bool handleEglError(EGLint error);
 
-        // initialize context. Requires display to have been initialized first.
-        bool InitContext();
+// kill context
+    void killContext();
+    void killSurface();
+    void killDisplay(); // also causes context and surface to get killed
 
-        // kill context
-        void KillContext();
-        void KillSurface();
-        void KillDisplay(); // also causes context and surface to get killed
+    bool initGLObjects();
+    void killGLObjects();
 
-        bool HandleEglError(EGLint error);
-
-        bool InitGLObjects();
-        void KillGLObjects();
-
-        void ConfigureOpenGL();
-
-        bool PrepareToRender();
-
-        void DoFrame();
-
-        bool IsAnimating();
-
-    public:
-        // these are public for simplicity because we have internal static callbacks
-        void HandleCommand(int32_t cmd);
-        bool HandleInput(AInputEvent *event);
+    void configureOpenGL();
 };
 
 #endif

@@ -5,38 +5,41 @@
 #include "GlassPhysicsObject.h"
 #include "Gate.h"
 #include <list>
+#include "RendererPool.h"
 
-PhysicsService::PhysicsService() {
+//PhysicsService::PhysicsService() {
+//     textureRenderer =
+//
 //    pthread_create(&threadId, NULL, threadFunc, this);
-
-    PhysicsObject *po = NULL;
-
-    for (int i = 0; i < 40; i++) {
-        po = new PhysicsObject(new Circle(0.06f), 0.1f);
-        po->getShape()->move(Vec2((float) i * 0.001f, 0.15f * (float) i));
-        physicsObjects.push_back(po);
-    }
-    physicsObjects.push_back(new PhysicsObject(new Container(), 0.f));
-
-    po = new GlassPhysicsObject();
-    po->getShape()->move(Vec2(2.1f, 0.f));
-    physicsObjects.push_back(po);
-
-    po = new GlassPhysicsObject();
-    po->getShape()->move(Vec2(-2.1f, 0.f));
-    physicsObjects.push_back(po);
-
-    po = new GlassPhysicsObject();
-    po->getShape()->move(Vec2(-2.1f, 2.f));
-    physicsObjects.push_back(po);
-
-    po = new GlassPhysicsObject();
-    po->getShape()->move(Vec2(2.1f, 2.f));
-    physicsObjects.push_back(po);
-
-    gate = new PhysicsObject(new Gate(), 0.f);
-    physicsObjects.push_back(gate);
-}
+//
+//    PhysicsObject *po = NULL;
+//
+//    for (int i = 0; i < 40; i++) {
+//        po = new PhysicsObject(new Circle(0.06f), 0.1f);
+//        po->getShape()->move(Vec2((float) i * 0.001f, 0.15f * (float) i));
+//        physicsObjects.push_back(po);
+//    }
+//    physicsObjects.push_back(new PhysicsObject(new Container(), 0.f));
+//
+//    po = new GlassPhysicsObject();
+//    po->getShape()->move(Vec2(2.1f, 0.f));
+//    physicsObjects.push_back(po);
+//
+//    po = new GlassPhysicsObject();
+//    po->getShape()->move(Vec2(-2.1f, 0.f));
+//    physicsObjects.push_back(po);
+//
+//    po = new GlassPhysicsObject();
+//    po->getShape()->move(Vec2(-2.1f, 2.f));
+//    physicsObjects.push_back(po);
+//
+//    po = new GlassPhysicsObject();
+//    po->getShape()->move(Vec2(2.1f, 2.f));
+//    physicsObjects.push_back(po);
+//
+//    gate = new PhysicsObject(new Gate(), 0.f);
+//    physicsObjects.push_back(gate);
+//}
 
 //void *PhysicsService::threadFunc(void *ptr) {
 //    ((PhysicsService *) ptr)->run();
@@ -99,15 +102,17 @@ void PhysicsService::nextFrame() {
 }
 
 void PhysicsService::draw(float *projection) {
-    for (int i = 0; i < physicsObjects.size(); i++) {
-        physicsObjects[i]->draw(projection);
-    }
+//    for (int i = 0; i < physicsObjects.size(); i++) {
+//        physicsObjects[i]->draw(projection);
+//    }
+
+    textureRenderer->render(projection);
 }
 
 void PhysicsService::open() {
-    gate->setActive(false);
+//    gate->setActive(false);
 }
 
 void PhysicsService::close() {
-    gate->setActive(true);
+//    gate->setActive(true);
 }

@@ -1,6 +1,6 @@
 See file:///D:/workspace/AndroidStudioProjects/100Balls/app/build/tmp/compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainC/output.txt for all output for compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainC.
-compiling android_native_app_glue.c successful.
-
 compiling gl3stub.c successful.
+
+compiling android_native_app_glue.c successful.
 
 Finished compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainC, see full log file:///D:/workspace/AndroidStudioProjects/100Balls/app/build/tmp/compileArmeabi-v7aDebugArm7Native-activitySharedLibraryNative-activityMainC/output.txt.

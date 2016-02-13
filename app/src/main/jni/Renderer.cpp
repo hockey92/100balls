@@ -2,22 +2,23 @@
 
 //GLuint Renderer::program = 0;
 
-const char Renderer::VERTEX_SHADER[] =
-                "attribute vec3 pos;   \n"
-                "uniform mat4 projection;   \n"
-                "void main()                 \n"
-                "{                           \n"
-                "     gl_Position = projection * vec4(pos, 1.0); \n"
-                "}                           \n";
-
-const char Renderer::FRAGMENT_SHADER[] =
-                "precision mediump float;\n"
-                "varying vec4 vColor;\n"
-                "void main() {\n"
-                "    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);//vColor;\n"
-                "}\n";
-
 void Renderer::render(float* pm) {
+
+    char VERTEX_SHADER[] =
+            "attribute vec3 pos;   \n"
+                    "uniform mat4 projection;   \n"
+                    "void main()                 \n"
+                    "{                           \n"
+                    "     gl_Position = projection * vec4(pos, 1.0); \n"
+                    "}                           \n";
+
+    char FRAGMENT_SHADER[] =
+            "precision mediump float;\n"
+                    "varying vec4 vColor;\n"
+                    "void main() {\n"
+                    "    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);//vColor;\n"
+                    "}\n";
+
     if (!program) {
         program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER);
         mPosAttrib = glGetAttribLocation(program, "pos");

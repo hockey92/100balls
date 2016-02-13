@@ -11,7 +11,7 @@ class Renderer {
 
 public:
     Renderer() : program(0) {}
-    void render(float* pm);
+    virtual void render(float* pm);
 
 protected:
     GLuint vb;
@@ -24,12 +24,12 @@ protected:
     float mOffsets[2];
     float mScaleRot[4];
 
-    virtual void innerRender(float* pm) = 0;
+    virtual void innerRender(float* pm) {}
 
-private:
+protected:
     /*static*/ GLuint program;
-    static const char VERTEX_SHADER[];
-    static const char FRAGMENT_SHADER[];
+//    static char VERTEX_SHADER[];
+//    static char FRAGMENT_SHADER[];
 
     static GLuint createShader(GLenum shaderType, const char *src);
     static GLuint createProgram(const char *vtxSrc, const char *fragSrc);

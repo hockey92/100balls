@@ -27,9 +27,9 @@ extern "C" {
     #include <unistd.h>
 }
 
-#include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+//#include "glm/glm.hpp"
+//#include "glm/gtc/type_ptr.hpp"
+//#include "glm/gtc/matrix_transform.hpp"
 
 #define DEBUG_TAG "EndlessTunnel:Native"
 #define LOGD(...) ((void)__android_log_print(ANDROID_LOG_DEBUG, DEBUG_TAG, __VA_ARGS__))
@@ -57,7 +57,7 @@ class LogFunc {
   const char* name_;
 };
 
-#include "our_key_codes.hpp"
+//#include "our_key_codes.hpp"
 
 #endif
 

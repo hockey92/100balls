@@ -5,10 +5,14 @@
 #include <pthread.h>
 #include "PhysicsObject.h"
 #include "BaseShape.h"
+#include "TextureRenderer.h"
+#include "RendererPool.h"
 
 class PhysicsService {
 public:
-    PhysicsService();
+    PhysicsService() {
+        textureRenderer = RendererPool::getInstance()->getRenderer("circle");
+    }
 
     void nextFrame();
 
@@ -21,6 +25,7 @@ public:
 private:
     std::vector<PhysicsObject*> physicsObjects;
     PhysicsObject* gate;
+    Renderer* textureRenderer;
 
 //    pthread_t threadId;
 //
