@@ -1,0 +1,7 @@
+*.apk
+*.o
+*.dex
+*.bin
+app/build/*
+.gradle/*
+.idea/*
