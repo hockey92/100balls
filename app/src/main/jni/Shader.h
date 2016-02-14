@@ -21,8 +21,9 @@ public:
 
     void unbindShader();
 
-    // Prepares to render the given geometry.
     virtual void beginRender(VertexBuf *vbuf);
+
+    void setMVP(float* mvp);
 
     // Renders one copy of the prepared geometry, given a model-view-projection matrix.
 //    inline void Render(glm::mat4 *mvpMat) {
@@ -49,14 +50,11 @@ protected:
     // Push the vertex positions to the shader
     void PushPositions(int vbo_offset, int stride);
 
-    // Must return the vertex shader's GLSL source
-    virtual const char *getVertexShaderSource() = 0;
+    virtual const char *getVertexShaderSource();
 
-    // Must return the fragment shader's GLSL source
-    virtual const char *getFragmentShaderSource() = 0;
+    virtual const char *getFragmentShaderSource();
 
-    // Must return the shader's name (used for debug/logging purposes)
-    virtual const char *getShaderName() = 0;
+    virtual const char *getShaderName();
 };
 
 #endif //NATIVE_ACTIVITY_SHADER_H

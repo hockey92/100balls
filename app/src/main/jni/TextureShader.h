@@ -9,6 +9,7 @@ public:
     virtual void compile();
     void setTexture(Texture *texture);
     virtual void beginRender(VertexBuf *vbuf);
+    virtual void render();
 
 protected:
     int texCoordAttributeHandle;

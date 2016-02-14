@@ -4,17 +4,23 @@
 #include "TextureShader.h"
 #include "VertexBuf.h"
 #include "Texture.h"
+#include "PhysicsObject.h"
+#include "PhysicsService.h"
 
 class GameField {
 
 public:
+    GameField(PhysicsService *physicsService) : physicsService(physicsService) { }
+
     void init();
-    void doFrame();
+
+    void doFrame(float *projMat);
 
 private:
-    TextureShader* textureShader;
-    VertexBuf* vertexBuf;
-    Texture* texture;
+    PhysicsService *physicsService;
+    TextureShader *textureShader;
+    VertexBuf *vertexBuf;
+    Texture *texture;
 };
 
 #endif //NATIVE_ACTIVITY_GAMEFIELD_H

@@ -1,3 +1,4 @@
+#include <vecmath.h>
 #include "GameField.h"
 #include "FileBuf.h"
 
@@ -5,30 +6,42 @@ void GameField::init() {
     textureShader = new TextureShader();
     textureShader->compile();
 
-    float r = 0.5f;
+    float r = 0.06f;
 
-    GLfloat vertices[] = {-r, -r, 0.0f, // Position 0
+    GLfloat vertices[] = {-r, -r, 0.0f, 1.0f, // Position 0
                           0.0f, 0.0f, // TexCoord 0
-                          -r, r, 0.0f, // Position 1
+                          -r, r, 0.0f, 1.0f, // Position 1
                           0.0f, 1.0f, // TexCoord 1
-                          r, r, 0.0f, // Position 2
+                          r, r, 0.0f, 1.0f, // Position 2
                           1.0f, 1.0f, // TexCoord 2
-                          r, -r, 0.0f, // Position 3
+                          r, -r, 0.0f, 1.0f, // Position 3
                           1.0f, 0.0f}; // TexCoord 3
 
-    vertexBuf = new VertexBuf(&vertices[0], 20);
+    vertexBuf = new VertexBuf(&vertices[0], 24 * sizeof(float));
     texture = new Texture(FileBuf::getInstance()->getFile());
 }
 
-void GameField::doFrame() {
+void GameField::doFrame(float* projMat) {
 
-    glClearColor(0.5, 0.5, 0.0, 1.0);
+    glClearColor(0.1, 0.1, 0.1, 1.0);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    physicsService->nextFrame();
 
     textureShader->beginRender(vertexBuf);
     textureShader->setTexture(texture);
 
-    GLushort indices[] = {0, 1, 2, 0, 2, 3};
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin(); iter != physicsService->getObjects()->end(); iter++) {
+        BaseShape* shape = (*iter)->getShape();
+        if (shape->type() == 1) {
+            Vec2 center = shape->getCenter();
+            textureShader->setMVP((ndk_helper::Mat4(projMat) *
+                                   ndk_helper::Mat4::Translation(center.x(), center.y(),
+                                                                 0.0f)).Ptr());
+            textureShader->render();
+        }
+    }
 }

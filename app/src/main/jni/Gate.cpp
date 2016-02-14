@@ -1,7 +1,7 @@
 #include "Gate.h"
 #include "Circle.h"
 
-Gate::Gate() : BaseShape(NULL) {
+Gate::Gate() : BaseShape() {
     float points[] = {
             -0.12f, -1.15f,
             0.12f, -1.15f

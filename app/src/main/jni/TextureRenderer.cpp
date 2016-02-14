@@ -38,11 +38,12 @@ TextureRenderer::TextureRenderer(struct android_app *state) {
 //    projection = glGetUniformLocation(program, "projection");
 
     glGenTextures(1, &id);
-
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, id);
 
     TGAHeader* header = (TGAHeader*) buf;
+
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
     glTexImage2D(
             GL_TEXTURE_2D,
@@ -56,20 +57,22 @@ TextureRenderer::TextureRenderer(struct android_app *state) {
             (buf + sizeof(TGAHeader))
     );
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
 void TextureRenderer::render(float *pm) {
-    float r = 0.06;
+    float r = 0.05f;
     GLfloat vVertices[] = {-r, -r, 0.0f, // Position 0
                            0.0f, 0.0f, // TexCoord 0
                            -r, r, 0.0f, // Position 1
-                           0.0f, 1.0f, // TexCoord 1
+                           0.0f, r, // TexCoord 1
                            r, r, 0.0f, // Position 2
-                           1.0f, 1.0f, // TexCoord 2
+                           r, r, // TexCoord 2
                            r, -r, 0.0f, // Position 3
-                           1.0f, 0.0f // TexCoord 3
+                           r, 0.0f // TexCoord 3
     };
 
     GLushort indices[] = {0, 1, 2, 0, 2, 3};
@@ -96,4 +99,8 @@ void TextureRenderer::render(float *pm) {
     glUniform1i(m_samplerHandle, 0);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+}
+
+void TextureRenderer::render() {
+
 }

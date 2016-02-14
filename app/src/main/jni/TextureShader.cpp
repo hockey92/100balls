@@ -1,4 +1,5 @@
 #include <GLES2/gl2.h>
+#include <vecmath.h>
 #include "TextureShader.h"
 #include "common.hpp"
 
@@ -21,23 +22,24 @@ const char *TextureShader::getShaderName() {
     return "TextureShader";
 }
 
-const char *TextureShader::getFragmentShaderSource() {
-    return "precision highp float; \n"
-            "varying vec2 v_texCoord; \n"
-            "uniform sampler2D s_texture; \n"
-            "void main(){ \n"
-            "   gl_FragColor = texture2D(s_texture, v_texCoord); \n"
-            "} \n";
-}
-
 const char *TextureShader::getVertexShaderSource() {
-    return "attribute vec4 a_Position; \n"
+    return "precision highp float; \n"
+            "attribute vec4 a_Position; \n"
             "attribute vec2 a_texCoord; \n"
             "varying vec2 v_texCoord; \n"
             "uniform mat4 projection;   \n"
             "void main(){ \n"
             "   gl_Position = projection * a_Position; \n"
             "   v_texCoord = a_texCoord; \n"
+            "} \n";
+}
+
+const char *TextureShader::getFragmentShaderSource() {
+    return "precision highp float; \n"
+            "varying vec2 v_texCoord; \n"
+            "uniform sampler2D s_texture; \n"
+            "void main(){ \n"
+            "   gl_FragColor = texture2D(s_texture, v_texCoord); \n"
             "} \n";
 }
 
@@ -67,7 +69,13 @@ void TextureShader::setTexture(Texture *texture) {
 void TextureShader::beginRender(VertexBuf *vbuf) {
     Shader::beginRender(vbuf);
 
-    glVertexAttribPointer(texCoordAttributeHandle, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
-                          BUFFER_OFFSET(3));
+    glVertexAttribPointer(texCoordAttributeHandle, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                          BUFFER_OFFSET(4 * sizeof(float)));
     glEnableVertexAttribArray(texCoordAttributeHandle);
+}
+
+void TextureShader::render() {
+    Shader::render();
+    GLushort indices[] = {0, 1, 2, 0, 2, 3};
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
 }

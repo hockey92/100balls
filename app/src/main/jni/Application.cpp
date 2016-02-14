@@ -20,8 +20,8 @@ Application::Application(struct android_app *app) {
     mEglContext = EGL_NO_CONTEXT;
     mEglConfig = 0;
     mHasFocus = false, mIsVisible = false, mHasWindow = false;
-
-    gameField = new GameField();
+    physicsService = new PhysicsService();
+    gameField = new GameField(physicsService);
 }
 
 Application::~Application() {
@@ -57,12 +57,10 @@ bool Application::initSurface() {
     EGLint numConfigs, format;
 
     const EGLint attribs[] = {
-            EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, // request OpenGL ES 2.0
             EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
             EGL_BLUE_SIZE, 8,
             EGL_GREEN_SIZE, 8,
             EGL_RED_SIZE, 8,
-            EGL_DEPTH_SIZE, 16,
             EGL_NONE
     };
 
@@ -244,7 +242,6 @@ void Application::loop() {
                 source->process(app, source);
             }
 
-            // are we exiting?
             if (app->destroyRequested) {
                 return;
             }
@@ -297,7 +294,18 @@ void Application::doFrame() {
 //    // render!
 //    mgr->DoFrame();
 
-    gameField->doFrame();
+    float pM[16];
+    for (int i = 0; i < 16; i++) {
+        pM[i] = 0;
+    }
+
+    float rel = (float) width / (float) height;
+
+    pM[0] = 1.0f / 2.0f;
+    pM[5] = rel / 2.0f;
+    pM[15] = 1.0f;
+
+    gameField->doFrame(pM);
 
     if (EGL_FALSE == eglSwapBuffers(mEglDisplay, mEglSurface)) {
         LOGW("Application: eglSwapBuffers failed, EGL error %d", eglGetError());
@@ -316,7 +324,6 @@ void Application::doFrame() {
         }
     }
 }
-
 
 
 bool Application::prepareToRender() {
@@ -451,7 +458,7 @@ void Application::killGLObjects() {
 }
 
 void Application::configureOpenGL() {
-    glClearColor(0.5f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }

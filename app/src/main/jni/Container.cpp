@@ -1,7 +1,7 @@
 #include "Container.h"
 #include "Segment.h"
 
-Container::Container() : BaseShape(RendererPool::getInstance()->getRenderer("container")) {
+Container::Container() : BaseShape() {
     float points[] = {
             -1.50f, 0.80f,
             -1.50f, -0.20f,

@@ -10,9 +10,7 @@
 
 class PhysicsService {
 public:
-    PhysicsService() {
-        textureRenderer = RendererPool::getInstance()->getRenderer("circle");
-    }
+    PhysicsService();
 
     void nextFrame();
 
@@ -22,10 +20,14 @@ public:
 
     void close();
 
+    std::vector<PhysicsObject *> *getObjects() {
+        return &physicsObjects;
+    }
+
 private:
-    std::vector<PhysicsObject*> physicsObjects;
-    PhysicsObject* gate;
-    Renderer* textureRenderer;
+    std::vector<PhysicsObject *> physicsObjects;
+    PhysicsObject *gate;
+    Renderer *textureRenderer;
 
 //    pthread_t threadId;
 //

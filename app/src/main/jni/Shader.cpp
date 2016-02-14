@@ -1,3 +1,4 @@
+#include <vecmath.h>
 #include "Shader.h"
 #include "common.hpp"
 //#include "indexbuf.hpp"
@@ -26,6 +27,26 @@ Shader::~Shader() {
         glDeleteProgram(program);
         program = 0;
     }
+}
+
+const char *Shader::getShaderName() {
+    return "Shader";
+}
+
+const char *Shader::getVertexShaderSource() {
+    return "attribute vec4 a_Position; \n"
+            "uniform mat4 projection; \n"
+            "void main() \n"
+            "{ \n"
+            "     gl_Position = projection * a_Position; \n"
+            "} \n";
+}
+
+const char *Shader::getFragmentShaderSource() {
+    return "precision mediump float; \n"
+            "void main() { \n"
+            "    gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0); \n"
+            "} \n";
 }
 
 static void _printShaderLog(GLuint shader) {
@@ -144,7 +165,7 @@ void Shader::beginRender(VertexBuf *vbuf) {
     vbuf->bindBuffer();
 
     MY_ASSERT(positionAttrib >= 0);
-    glVertexAttribPointer(positionAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
+    glVertexAttribPointer(positionAttrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
                           BUFFER_OFFSET(0));
     glEnableVertexAttribArray(positionAttrib);
 
@@ -157,18 +178,21 @@ void Shader::beginRender(VertexBuf *vbuf) {
 void Shader::render() {
     MY_ASSERT(preparedVertexBuf != NULL);
 
+//    GLushort indices[] = {0, 1, 2, 0, 2, 3};
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+
     // push MVP matrix to shader
 //    PushMVPMatrix(mvpMat);
 
 //    if (ibuf) {
-        // draw with index buffer
+    // draw with index buffer
 //        ibuf->BindBuffer();
 //        glDrawElements(mPreparedVertexBuf->GetPrimitive(), ibuf->GetCount(), GL_UNSIGNED_SHORT,
 //                       BUFFER_OFFSET(0));
 //        ibuf->UnbindBuffer();
 //    } else {
-        // draw straight from vertex buffer
-        glDrawArrays(GL_TRIANGLES, 0, 4);
+    // draw straight from vertex buffer
+//        glDrawArrays(GL_TRIANGLES, 0, 4);
 //    }
 }
 
@@ -177,4 +201,8 @@ void Shader::endRender() {
 //        mPreparedVertexBuf->UnbindBuffer();
 //        mPreparedVertexBuf = NULL;
 //    }
+}
+
+void Shader::setMVP(float *mvp) {
+    glUniformMatrix4fv(MVPMatrix, 1, GL_FALSE, mvp);
 }

@@ -23,6 +23,7 @@ private:
     struct android_app *app;
 
     GameField* gameField;
+    PhysicsService* physicsService;
 
     EGLDisplay mEglDisplay;
     EGLSurface mEglSurface;

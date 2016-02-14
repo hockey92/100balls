@@ -8,9 +8,7 @@
 class BaseShape : public IShape {
 
 public:
-    BaseShape(Renderer *renderer)
-            : renderer(renderer),
-              _type(0),
+    BaseShape() : _type(0),
               parent(NULL),
               angle(0.f) { }
 
@@ -37,9 +35,6 @@ protected:
     float angle;
     BaseShape **children;
     BaseShape *parent;
-
-private:
-    Renderer *renderer;
 };
 
 #endif //TEAPOT_BASESHAPE_H

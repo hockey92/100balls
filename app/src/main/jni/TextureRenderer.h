@@ -24,6 +24,8 @@ class TextureRenderer : public Renderer {
 public:
     TextureRenderer(struct android_app *state);
 
+    virtual void render();
+
     virtual void render(float *pm);
 
 private:

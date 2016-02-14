@@ -2,7 +2,7 @@
 #include "RendererPool.h"
 
 Circle::Circle(float r)
-        : BaseShape(RendererPool::getInstance()->getRenderer("circle")),
+        : BaseShape(),
           r(r) {
     childCount = 1;
 

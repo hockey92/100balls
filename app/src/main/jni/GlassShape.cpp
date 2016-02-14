@@ -2,7 +2,7 @@
 #include "Segment.h"
 #include "RendererPool.h"
 
-GlassShape::GlassShape() : BaseShape(RendererPool::getInstance()->getRenderer("glass")) {
+GlassShape::GlassShape() : BaseShape() {
 
     float points[] = {
             -0.23f, 0.30f,
