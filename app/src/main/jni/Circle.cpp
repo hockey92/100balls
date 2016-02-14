@@ -1,5 +1,4 @@
 #include "Circle.h"
-#include "RendererPool.h"
 
 Circle::Circle(float r)
         : BaseShape(),

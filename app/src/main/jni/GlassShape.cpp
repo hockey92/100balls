@@ -1,6 +1,5 @@
 #include "GlassShape.h"
 #include "Segment.h"
-#include "RendererPool.h"
 
 GlassShape::GlassShape() : BaseShape() {
 

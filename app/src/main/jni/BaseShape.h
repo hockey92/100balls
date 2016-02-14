@@ -2,7 +2,6 @@
 #define TEAPOT_BASESHAPE_H
 
 #include "IShape.h"
-#include "Renderer.h"
 #include <pthread.h>
 
 class BaseShape : public IShape {

@@ -8,14 +8,14 @@ void GameField::init() {
 
     float r = 0.06f;
 
-    GLfloat vertices[] = {-r, -r, 0.0f, 1.0f, // Position 0
-                          0.0f, 0.0f, // TexCoord 0
-                          -r, r, 0.0f, 1.0f, // Position 1
-                          0.0f, 1.0f, // TexCoord 1
-                          r, r, 0.0f, 1.0f, // Position 2
-                          1.0f, 1.0f, // TexCoord 2
-                          r, -r, 0.0f, 1.0f, // Position 3
-                          1.0f, 0.0f}; // TexCoord 3
+    GLfloat vertices[] = {-r, -r, 0.0f, 1.0f, //vertex coordinates
+                          0.0f, 0.0f, //texture coordinates
+                          -r, r, 0.0f, 1.0f,
+                          0.0f, 1.0f,
+                          r, r, 0.0f, 1.0f,
+                          1.0f, 1.0f,
+                          r, -r, 0.0f, 1.0f,
+                          1.0f, 0.0f};
 
     vertexBuf = new VertexBuf(&vertices[0], 24 * sizeof(float));
     texture = new Texture(FileBuf::getInstance()->getFile());

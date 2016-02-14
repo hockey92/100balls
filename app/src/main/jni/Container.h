@@ -1,5 +1,4 @@
 #include "BaseShape.h"
-#include "RendererPool.h"
 
 #ifndef NATIVE_ACTIVITY_CONTAINER_H
 #define NATIVE_ACTIVITY_CONTAINER_H

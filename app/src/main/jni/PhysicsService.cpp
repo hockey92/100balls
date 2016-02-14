@@ -104,8 +104,6 @@ void PhysicsService::draw(float *projection) {
 //    for (int i = 0; i < physicsObjects.size(); i++) {
 //        physicsObjects[i]->draw(projection);
 //    }
-
-    textureRenderer->render(projection);
 }
 
 void PhysicsService::open() {
