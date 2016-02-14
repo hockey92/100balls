@@ -2,11 +2,18 @@
 #define NATIVE_ACTIVITY_TEXTURESHADER_H
 
 #include "Shader.h"
+#include "Texture.h"
 
 class TextureShader : public Shader {
 public:
+    virtual void compile();
+    void setTexture(Texture *texture);
+    virtual void beginRender(VertexBuf *vbuf);
 
 protected:
+    int texCoordAttributeHandle;
+    int samplerHandle;
+
     virtual const char *getVertexShaderSource();
 
     virtual const char *getFragmentShaderSource();

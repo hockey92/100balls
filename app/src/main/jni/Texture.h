@@ -9,9 +9,7 @@ private:
     GLuint texture;
 
 public:
-    Texture() : texture(0) { }
-
-    void init(File *file);
+    Texture(File *file);
 
     void bind(int unit);
 

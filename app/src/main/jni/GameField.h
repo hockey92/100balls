@@ -9,6 +9,7 @@ class GameField {
 
 public:
     void init();
+    void doFrame();
 
 private:
     TextureShader* textureShader;

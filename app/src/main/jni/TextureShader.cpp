@@ -1,4 +1,6 @@
+#include <GLES2/gl2.h>
 #include "TextureShader.h"
+#include "common.hpp"
 
 struct TGAHeader {
     unsigned char m_idSize;
@@ -37,4 +39,35 @@ const char *TextureShader::getVertexShaderSource() {
             "   gl_Position = projection * a_Position; \n"
             "   v_texCoord = a_texCoord; \n"
             "} \n";
+}
+
+void TextureShader::compile() {
+    Shader::compile();
+
+    bindShader();
+    texCoordAttributeHandle = glGetAttribLocation(program, "a_texCoord");
+    if (texCoordAttributeHandle < 0) {
+        LOGE("*** Couldn't get shader's a_texCoord location.");
+        ABORT_GAME;
+    }
+    samplerHandle = glGetUniformLocation(program, "s_texture");
+    if (samplerHandle < 0) {
+        LOGE("*** Couldn't get shader's s_texture location.");
+        ABORT_GAME;
+    }
+    unbindShader();
+}
+
+void TextureShader::setTexture(Texture *texture) {
+    MY_ASSERT(preparedVertexBuf != NULL);
+    texture->bind(GL_TEXTURE0);
+    glUniform1i(samplerHandle, 0);
+}
+
+void TextureShader::beginRender(VertexBuf *vbuf) {
+    Shader::beginRender(vbuf);
+
+    glVertexAttribPointer(texCoordAttributeHandle, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
+                          BUFFER_OFFSET(3));
+    glEnableVertexAttribArray(texCoordAttributeHandle);
 }

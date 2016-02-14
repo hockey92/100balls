@@ -1,11 +1,14 @@
 #ifndef NATIVE_ACTIVITY_SHADER_H
 #define NATIVE_ACTIVITY_SHADER_H
 
+#include "VertexBuf.h"
+
 class Shader {
 protected:
     int vertShader, fragShader, program;
     int MVPMatrix;
     int positionAttrib;
+    VertexBuf *preparedVertexBuf;
 
 public:
     Shader();
@@ -19,7 +22,7 @@ public:
     void unbindShader();
 
     // Prepares to render the given geometry.
-    virtual void beginRender(/*VertexBuf *vbuf*/);
+    virtual void beginRender(VertexBuf *vbuf);
 
     // Renders one copy of the prepared geometry, given a model-view-projection matrix.
 //    inline void Render(glm::mat4 *mvpMat) {
@@ -28,7 +31,7 @@ public:
 
     // Renders a subset (given by the index buffer) of the prepared geometry, using
     // the given model-view-projection matrix.
-//    virtual void Render(IndexBuf *ibuf, glm::mat4* mvpMat);
+    virtual void render();
 
     // Finishes rendering (call this after you're done making calls to Render())
     virtual void endRender();

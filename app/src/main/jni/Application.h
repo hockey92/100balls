@@ -5,6 +5,7 @@
 #include <EGL/egl.h>
 
 #include <android/input.h>
+#include "GameField.h"
 
 class Application {
 public:
@@ -15,24 +16,23 @@ public:
     ~Application();
 
     void handleCommand(int32_t cmd);
+
     bool handleInput(AInputEvent *event);
 
 private:
     struct android_app *app;
 
-    // EGL stuff
+    GameField* gameField;
+
     EGLDisplay mEglDisplay;
     EGLSurface mEglSurface;
     EGLContext mEglContext;
     EGLConfig mEglConfig;
 
-    // variables to track Android lifecycle:
     bool mHasFocus, mIsVisible, mHasWindow;
 
-    // are our OpenGL objects (textures, etc) currently loaded?
     bool mHasGLObjects;
 
-    // android API version (0 if not yet queried)
     int mApiVersion;
 
     bool initDisplay();
@@ -49,12 +49,14 @@ private:
 
     bool handleEglError(EGLint error);
 
-// kill context
     void killContext();
+
     void killSurface();
+
     void killDisplay(); // also causes context and surface to get killed
 
     bool initGLObjects();
+
     void killGLObjects();
 
     void configureOpenGL();

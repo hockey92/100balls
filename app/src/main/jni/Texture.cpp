@@ -15,7 +15,8 @@ struct TGAHeader {
     unsigned char descriptor;
 } __attribute__ ((packed));
 
-void Texture::init(File* file) {
+Texture::Texture(File *file) {
+    texture = 0;
     GLenum format = GL_RGBA;
 
     glGenTextures(1, &texture);
@@ -31,8 +32,8 @@ void Texture::init(File* file) {
             GL_TEXTURE_2D,
             0,
             format,
-            ((TGAHeader*) file->getBuf())->width,
-            ((TGAHeader*) file->getBuf())->height,
+            ((TGAHeader *) file->getBuf())->width,
+            ((TGAHeader *) file->getBuf())->height,
             0,
             format,
             GL_UNSIGNED_BYTE,

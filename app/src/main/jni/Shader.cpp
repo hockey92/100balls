@@ -1,12 +1,13 @@
 #include "Shader.h"
-
 #include "common.hpp"
 //#include "indexbuf.hpp"
 #include "Shader.h"
 //#include "vertexbuf.hpp"
 
 Shader::Shader() {
-    vertShader = fragShader = program = 0;
+    vertShader = 0;
+    fragShader = 0;
+    program = 0;
 //    mMVPMatrixLoc = -1;
 //    mPositionAttribLoc = -1;
 //    mPreparedVertexBuf = NULL;
@@ -138,37 +139,38 @@ void Shader::PushPositions(int vbo_offset, int stride) {
 //    glEnableVertexAttribArray(mPositionAttribLoc);
 }
 
-void Shader::beginRender(/*VertexBuf *vbuf*/) {
-    // Activate shader
+void Shader::beginRender(VertexBuf *vbuf) {
     bindShader();
+    vbuf->bindBuffer();
 
-    // bind geometry's VBO
-//    vbuf->BindBuffer();
+    MY_ASSERT(positionAttrib >= 0);
+    glVertexAttribPointer(positionAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
+                          BUFFER_OFFSET(0));
+    glEnableVertexAttribArray(positionAttrib);
 
     // push positions to shader
 //    PushPositions(vbuf->GetPositionsOffset(), vbuf->GetStride());
 
-    // store geometry
-//    mPreparedVertexBuf = vbuf;
+    preparedVertexBuf = vbuf;
 }
 
-//void Shader::Render(IndexBuf *ibuf, glm::mat4* mvpMat) {
-//    MY_ASSERT(mPreparedVertexBuf != NULL);
-//
-//    // push MVP matrix to shader
+void Shader::render() {
+    MY_ASSERT(preparedVertexBuf != NULL);
+
+    // push MVP matrix to shader
 //    PushMVPMatrix(mvpMat);
-//
+
 //    if (ibuf) {
-//        // draw with index buffer
+        // draw with index buffer
 //        ibuf->BindBuffer();
 //        glDrawElements(mPreparedVertexBuf->GetPrimitive(), ibuf->GetCount(), GL_UNSIGNED_SHORT,
 //                       BUFFER_OFFSET(0));
 //        ibuf->UnbindBuffer();
 //    } else {
-//        // draw straight from vertex buffer
-//        glDrawArrays(mPreparedVertexBuf->GetPrimitive(), 0, mPreparedVertexBuf->GetCount());
+        // draw straight from vertex buffer
+        glDrawArrays(GL_TRIANGLES, 0, 4);
 //    }
-//}
+}
 
 void Shader::endRender() {
 //    if (mPreparedVertexBuf) {

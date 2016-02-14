@@ -2,7 +2,6 @@
 #include "common.hpp"
 #include "FileBuf.h"
 
-// verbose debug logs on?
 #define VERBOSE_LOGGING 1
 
 #if VERBOSE_LOGGING
@@ -21,10 +20,12 @@ Application::Application(struct android_app *app) {
     mEglContext = EGL_NO_CONTEXT;
     mEglConfig = 0;
     mHasFocus = false, mIsVisible = false, mHasWindow = false;
+
+    gameField = new GameField();
 }
 
 Application::~Application() {
-
+    killContext();
 }
 
 bool Application::initDisplay() {
@@ -275,8 +276,8 @@ void Application::doFrame() {
     eglQuerySurface(mEglDisplay, mEglSurface, EGL_WIDTH, &width);
     eglQuerySurface(mEglDisplay, mEglSurface, EGL_HEIGHT, &height);
 
-    glClearColor(0.5f, 0.0f, 0.0f, 1.0f);
-
+//    glClearColor(0.5f, 0.0f, 0.0f, 1.0f);
+//
 //    if (width != mSurfWidth || height != mSurfHeight) {
 //        // notify scene manager that the surface has changed size
 //        LOGD("NativeEngine: surface changed size %dx%d --> %dx%d", mSurfWidth, mSurfHeight,
@@ -296,14 +297,13 @@ void Application::doFrame() {
 //    // render!
 //    mgr->DoFrame();
 
-    // swap buffers
+    gameField->doFrame();
+
     if (EGL_FALSE == eglSwapBuffers(mEglDisplay, mEglSurface)) {
-        // failed to swap buffers...
-        LOGW("NativeEngine: eglSwapBuffers failed, EGL error %d", eglGetError());
+        LOGW("Application: eglSwapBuffers failed, EGL error %d", eglGetError());
         handleEglError(eglGetError());
     }
 
-    // print out GL errors, if any
     GLenum e;
     static int errorsPrinted = 0;
     while ((e = glGetError()) != GL_NO_ERROR) {
@@ -311,7 +311,7 @@ void Application::doFrame() {
             _log_opengl_error(e);
             ++errorsPrinted;
             if (errorsPrinted >= MAX_GL_ERRORS) {
-                LOGE("*** NativeEngine: TOO MANY OPENGL ERRORS. NO LONGER PRINTING.");
+                LOGE("*** Application: TOO MANY OPENGL ERRORS. NO LONGER PRINTING.");
             }
         }
     }
@@ -438,6 +438,11 @@ void Application::killDisplay() {
 }
 
 bool Application::initGLObjects() {
+    if (!mHasGLObjects) {
+        gameField->init();
+        _log_opengl_error(glGetError());
+        mHasGLObjects = true;
+    }
     return true;
 }
 
