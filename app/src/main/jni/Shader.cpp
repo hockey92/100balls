@@ -45,7 +45,7 @@ const char *Shader::getVertexShaderSource() {
 const char *Shader::getFragmentShaderSource() {
     return "precision mediump float; \n"
             "void main() { \n"
-            "    gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0); \n"
+            "    gl_FragColor = vec4(1.0, 1.0, 1.0, 0.2); \n"
             "} \n";
 }
 

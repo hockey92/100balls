@@ -31,8 +31,16 @@ void GameField::init() {
             1.50f, 0.80f, 0.0f, 1.0f
     };
 
+    float glass[] = {
+            -0.23f, 0.30f, 0.1f, 1.0f,
+            -0.15f, -0.30f, 0.1f, 1.0f,
+            0.15f, -0.30f, 0.1f, 1.0f,
+            0.23f, 0.30f, 0.1f, 1.0f
+    };
+
     circleVertices = new VertexBuf(&vertices[0], 24 * sizeof(float));
     containerVertices = new VertexBuf(&container[0], 32 * sizeof(float));
+    glassVertices = new VertexBuf(&glass[0], 16 * sizeof(float));
     texture = new Texture(FileBuf::getInstance()->getFile());
 }
 
@@ -62,6 +70,19 @@ void GameField::doFrame(float* projMat) {
                                    ndk_helper::Mat4::Translation(center.x(), center.y(),
                                                                  0.0f)).Ptr());
             textureShader->render();
+        }
+    }
+
+    simpleShader->beginRender(glassVertices, 4, 4);
+    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin(); iter != physicsService->getObjects()->end(); iter++) {
+        BaseShape* shape = (*iter)->getShape();
+        if (shape->type() == 10) {
+            Vec2 center = shape->getCenter();
+            simpleShader->setMVP((ndk_helper::Mat4(projMat) *
+                                   ndk_helper::Mat4::Translation(center.x(), center.y(),
+                                                                 0.0f)).Ptr());
+            GLushort indices[] = {0, 1, 2, 0, 2, 3};
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
         }
     }
 }

@@ -20,9 +20,9 @@ PhysicsService::PhysicsService() {
     }
     physicsObjects.push_back(new PhysicsObject(new Container(), 0.f));
 
-//    po = new GlassPhysicsObject();
-//    po->getShape()->move(Vec2(2.1f, 0.f));
-//    physicsObjects.push_back(po);
+    po = new GlassPhysicsObject();
+    po->getShape()->move(Vec2(2.1f, 0.f));
+    physicsObjects.push_back(po);
 //
 //    po = new GlassPhysicsObject();
 //    po->getShape()->move(Vec2(-2.1f, 0.f));
@@ -107,9 +107,9 @@ void PhysicsService::draw(float *projection) {
 }
 
 void PhysicsService::open() {
-//    gate->setActive(false);
+    gate->setActive(false);
 }
 
 void PhysicsService::close() {
-//    gate->setActive(true);
+    gate->setActive(true);
 }

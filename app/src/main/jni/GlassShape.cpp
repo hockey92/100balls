@@ -20,6 +20,8 @@ GlassShape::GlassShape() : BaseShape() {
         );
     }
 
+    _type = 10;
+
 //    childCount = 2;
 //    children = new BaseShape *[2];
 //    children[0] = new Segment(
