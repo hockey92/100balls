@@ -19,7 +19,10 @@ public:
 private:
     PhysicsService *physicsService;
     TextureShader *textureShader;
-    VertexBuf *vertexBuf;
+    Shader* simpleShader;
+    VertexBuf *circleVertices;
+    VertexBuf* glassVertices;
+    VertexBuf* containerVertices;
     Texture *texture;
 };
 

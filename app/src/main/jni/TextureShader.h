@@ -8,7 +8,7 @@ class TextureShader : public Shader {
 public:
     virtual void compile();
     void setTexture(Texture *texture);
-    virtual void beginRender(VertexBuf *vbuf);
+    virtual void beginRender(VertexBuf *vbuf, int size, int stride);
     virtual void render();
 
 protected:

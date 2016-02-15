@@ -21,7 +21,7 @@ public:
 
     void unbindShader();
 
-    virtual void beginRender(VertexBuf *vbuf);
+    virtual void beginRender(VertexBuf *vbuf, int size, int stride);
 
     void setMVP(float* mvp);
 

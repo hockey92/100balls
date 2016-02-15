@@ -160,12 +160,12 @@ void Shader::PushPositions(int vbo_offset, int stride) {
 //    glEnableVertexAttribArray(mPositionAttribLoc);
 }
 
-void Shader::beginRender(VertexBuf *vbuf) {
+void Shader::beginRender(VertexBuf *vbuf, int size, int stride) {
     bindShader();
     vbuf->bindBuffer();
 
     MY_ASSERT(positionAttrib >= 0);
-    glVertexAttribPointer(positionAttrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+    glVertexAttribPointer(positionAttrib, size, GL_FLOAT, GL_FALSE, stride * sizeof(float),
                           BUFFER_OFFSET(0));
     glEnableVertexAttribArray(positionAttrib);
 

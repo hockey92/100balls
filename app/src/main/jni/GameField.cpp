@@ -6,6 +6,9 @@ void GameField::init() {
     textureShader = new TextureShader();
     textureShader->compile();
 
+    simpleShader = new Shader();
+    simpleShader->compile();
+
     float r = 0.06f;
 
     GLfloat vertices[] = {-r, -r, 0.0f, 1.0f, //vertex coordinates
@@ -17,13 +20,25 @@ void GameField::init() {
                           r, -r, 0.0f, 1.0f,
                           1.0f, 0.0f};
 
-    vertexBuf = new VertexBuf(&vertices[0], 24 * sizeof(float));
+    float container[] = {
+            -1.50f, 0.80f, 0.0f, 1.0f,
+            -1.50f, -0.20f, 0.0f, 1.0f,
+            -0.12f, -0.90f, 0.0f, 1.0f,
+            -0.12f, -1.15f, 0.0f, 1.0f,
+            0.12f, -1.15f, 0.0f, 1.0f,
+            0.12f, -0.90f, 0.0f, 1.0f,
+            1.50f, -0.20f, 0.0f, 1.0f,
+            1.50f, 0.80f, 0.0f, 1.0f
+    };
+
+    circleVertices = new VertexBuf(&vertices[0], 24 * sizeof(float));
+    containerVertices = new VertexBuf(&container[0], 32 * sizeof(float));
     texture = new Texture(FileBuf::getInstance()->getFile());
 }
 
 void GameField::doFrame(float* projMat) {
 
-    glClearColor(0.1, 0.1, 0.1, 1.0);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -31,7 +46,12 @@ void GameField::doFrame(float* projMat) {
 
     physicsService->nextFrame();
 
-    textureShader->beginRender(vertexBuf);
+    simpleShader->beginRender(containerVertices, 4, 4);
+    textureShader->setMVP(ndk_helper::Mat4(projMat).Ptr());
+    GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7};
+    glDrawElements(GL_LINES, 14, GL_UNSIGNED_SHORT, indices);
+
+    textureShader->beginRender(circleVertices, 4, 6);
     textureShader->setTexture(texture);
 
     for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin(); iter != physicsService->getObjects()->end(); iter++) {
