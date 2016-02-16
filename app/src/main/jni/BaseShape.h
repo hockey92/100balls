@@ -8,12 +8,16 @@ class BaseShape : public IShape {
 
 public:
     BaseShape() : _type(0),
-              parent(NULL),
-              angle(0.f) { }
+                  parent(NULL),
+                  angle(0.f) { }
 
     void move(const Vec2 &coords);
 
+    void rotate(const float angle);
+
     Vec2 getCenter() const;
+
+    float getAngel() const;
 
     void draw(float *projection);
 
@@ -23,9 +27,7 @@ public:
 
     virtual BaseShape *getChildren(int i);
 
-    virtual int type() const {
-        return _type;
-    }
+    virtual int type() const { return 0; }
 
 protected:
     Vec2 center;
@@ -34,6 +36,8 @@ protected:
     float angle;
     BaseShape **children;
     BaseShape *parent;
+
+    virtual void innerRotate(float angle);
 };
 
 #endif //TEAPOT_BASESHAPE_H

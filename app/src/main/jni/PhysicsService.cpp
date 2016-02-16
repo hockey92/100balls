@@ -13,7 +13,7 @@ PhysicsService::PhysicsService() {
 //
     PhysicsObject *po = NULL;
 
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 1; i++) {
         po = new PhysicsObject(new Circle(0.06f), 0.1f);
         po->getShape()->move(Vec2((float) i * 0.001f, 0.15f * (float) i));
         physicsObjects.push_back(po);

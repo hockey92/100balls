@@ -12,9 +12,7 @@ public:
         return r;
     }
 
-//    virtual int type () {
-//        return 1;
-//    }
+    virtual int type() const { return 1; }
 
 private:
     float r;
