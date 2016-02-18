@@ -32,6 +32,8 @@ public:
         return sqrtf(values[0] * values[0] + values[1] * values[1]);
     }
 
+    Vec2 rotate(float angle) const;
+
     static float dot(const Vec2 &v1, const Vec2 &v2) {
         return v1.values[0] * v2.values[0] + v1.values[1] * v2.values[1];
     }

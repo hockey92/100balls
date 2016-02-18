@@ -80,7 +80,7 @@ void GameField::doFrame(float* projMat) {
             Vec2 center = shape->getCenter();
             simpleShader->setMVP((ndk_helper::Mat4(projMat) *
                                    ndk_helper::Mat4::Translation(center.x(), center.y(),
-                                                                 0.0f)).Ptr());
+                                                                 0.0f) * ndk_helper::Mat4::RotationZ(-shape->getAngel())).Ptr());
             GLushort indices[] = {0, 1, 2, 0, 2, 3};
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
         }

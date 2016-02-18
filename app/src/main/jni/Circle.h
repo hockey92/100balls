@@ -8,11 +8,9 @@ class Circle : public BaseShape {
 public:
     Circle(float r);
 
-    float getR() const {
-        return r;
-    }
+    float getR() const;
 
-    virtual int type() const { return 1; }
+    virtual int type() const;
 
 private:
     float r;

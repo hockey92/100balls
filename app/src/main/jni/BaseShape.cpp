@@ -1,10 +1,7 @@
 #include <vecmath.h>
 #include "BaseShape.h"
 
-void BaseShape::move(const Vec2 &coords) {
-    if (parent != NULL) {
-        return parent->move(coords);
-    }
+void BaseShape::move(const Vec2& coords) {
     center += coords;
 }
 
@@ -26,14 +23,14 @@ void BaseShape::draw(float *projection) {
 }
 
 BaseShape *BaseShape::getChildren(int i) {
-    if (childCount == 0) {
-        return NULL;
+    if (realChildCount == 0) {
+        return this;
     }
     return children[i];
 }
 
 void BaseShape::rotate(const float angle) {
-    for (int i = 0; i < childCount; i++) {
+    for (int i = 0; i < realChildCount; i++) {
         getChildren(i)->rotate(angle);
     }
     innerRotate(angle);
@@ -48,4 +45,8 @@ float BaseShape::getAngel() const {
         return parent->getAngel();
     }
     return angle;
+}
+
+int virtual BaseShape::getChildCount() const {
+    return realChildCount == 0 ? 1 : realChildCount;
 }

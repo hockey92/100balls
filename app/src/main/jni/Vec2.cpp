@@ -54,3 +54,10 @@ Vec2 &Vec2::operator=(const Vec2 &v) {
     values[1] = v.values[1];
     return *this;
 }
+
+Vec2 Vec2::rotate(float angle) const {
+    return Vec2(
+            cosf(angle) * values[0] - sinf(angle) * values[1],
+            sinf(angle) * values[0] + cosf(angle) * values[1]
+    );
+}

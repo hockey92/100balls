@@ -7,6 +7,7 @@ void PhysicsObject::updateVel() {
 
 void PhysicsObject::updatePos() {
     if (shape) {
+        shape->rotate(angleVel * DT);
         shape->move(vel * DT);
     }
 }

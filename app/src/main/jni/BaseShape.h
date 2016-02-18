@@ -1,15 +1,13 @@
 #ifndef TEAPOT_BASESHAPE_H
 #define TEAPOT_BASESHAPE_H
 
-#include "IShape.h"
-#include <pthread.h>
+#include <cstddef>
+#include "Vec2.h"
 
-class BaseShape : public IShape {
+class BaseShape {
 
 public:
-    BaseShape() : _type(0),
-                  parent(NULL),
-                  angle(0.f) { }
+    BaseShape() : realChildCount(0), parent(NULL), angle(0.f) { }
 
     void move(const Vec2 &coords);
 
@@ -21,18 +19,15 @@ public:
 
     void draw(float *projection);
 
-    virtual int getChildCount() const {
-        return childCount;
-    }
-
-    virtual BaseShape *getChildren(int i);
+    virtual int getChildCount() const;
 
     virtual int type() const { return 0; }
 
+    virtual BaseShape *getChildren(int i);
+
 protected:
     Vec2 center;
-    int childCount;
-    int _type;
+    int realChildCount;
     float angle;
     BaseShape **children;
     BaseShape *parent;

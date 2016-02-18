@@ -1,9 +1,9 @@
 #ifndef NATIVE_ACTIVITY_GATE_H
 #define NATIVE_ACTIVITY_GATE_H
 
-#include "BaseShape.h"
+#include "Segment.h"
 
-class Gate : public BaseShape {
+class Gate : public Segment {
 public:
     Gate();
 };
