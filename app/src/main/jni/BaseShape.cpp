@@ -6,6 +6,9 @@ void BaseShape::move(const Vec2& coords) {
 }
 
 Vec2 BaseShape::getCenter() const {
+    if (parent != NULL) {
+        return parent->getCenter();
+    }
     return center;
 }
 
@@ -20,8 +23,30 @@ void BaseShape::draw(float *projection) {
 }
 
 BaseShape *BaseShape::getChildren(int i) {
-    if (childCount == 0) {
-        return NULL;
+    if (realChildCount == 0) {
+        return this;
     }
     return children[i];
+}
+
+void BaseShape::rotate(const float angle) {
+    for (int i = 0; i < realChildCount; i++) {
+        getChildren(i)->rotate(angle);
+    }
+    innerRotate(angle);
+}
+
+void BaseShape::innerRotate(float angle) {
+    this->angle += angle;
+}
+
+float BaseShape::getAngel() const {
+    if (parent != NULL) {
+        return parent->getAngel();
+    }
+    return angle;
+}
+
+int virtual BaseShape::getChildCount() const {
+    return realChildCount == 0 ? 1 : realChildCount;
 }

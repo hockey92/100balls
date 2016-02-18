@@ -1,12 +1,11 @@
 #include "Circle.h"
 
-Circle::Circle(float r)
-        : BaseShape(),
-          r(r) {
-    childCount = 1;
+Circle::Circle(float r) : BaseShape(), r(r) { }
 
-    _type = 1;
+float Circle::getR() const {
+    return r;
+}
 
-    children = new BaseShape *[1];
-    children[0] = this;
+int Circle::type() const {
+    return 1;
 }

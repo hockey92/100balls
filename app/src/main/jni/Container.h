@@ -6,7 +6,9 @@
 class Container : public BaseShape {
 
 public:
-    Container();// : BaseShape(RendererPool::getInstance()->getRenderer("container")) { }
+    Container();
+
+    virtual int type() const { return 9; }
 };
 
 #endif //NATIVE_ACTIVITY_CONTAINER_H

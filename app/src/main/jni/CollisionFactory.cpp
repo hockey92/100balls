@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include "CollisionFactory.h"
 #include "Line.h"
 
