@@ -4,7 +4,6 @@
 float ImpulseFactory::createImpulse(const PhysicsObject *o1, const PhysicsObject *o2,
                                     const Collision *c) {
 
-
     Vec2 v1 = o1->getVel() + (Vec2::cross(o1->getAngleVel(), c->getR1()));
     Vec2 v2 = o2->getVel() + (Vec2::cross(o2->getAngleVel(), c->getR2()));
 

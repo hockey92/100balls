@@ -61,7 +61,7 @@ void TextureShader::compile() {
 }
 
 void TextureShader::setTexture(Texture *texture) {
-    MY_ASSERT(preparedVertexBuf != NULL);
+    ASSERT(preparedVertexBuf != NULL);
     texture->bind(GL_TEXTURE0);
     glUniform1i(samplerHandle, 0);
 }

@@ -23,8 +23,8 @@ void GlassPhysicsObject::update() {
     Vec2 dist;
     float len = 0;
     for (int i = 0; i < 4; i++) {
-        Vec2 crossPoint;
-        Vec2 tempDist = CollisionFactory::createDistance(getShape()->getCenter(), path[i], crossPoint);
+        Vec2 dump;
+        Vec2 tempDist = CollisionFactory::createDistance(getShape()->getCenter(), path[i], dump);
         float tempLen = tempDist.len();
         if (i == 0 || tempLen < len) {
             dist = tempDist;

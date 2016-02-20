@@ -47,6 +47,6 @@ float BaseShape::getAngel() const {
     return angle;
 }
 
-int virtual BaseShape::getChildCount() const {
+int BaseShape::getChildCount() const {
     return realChildCount == 0 ? 1 : realChildCount;
 }

@@ -44,7 +44,7 @@ bool Application::initDisplay() {
 }
 
 bool Application::initSurface() {
-    MY_ASSERT(mEglDisplay != EGL_NO_DISPLAY);
+    ASSERT(mEglDisplay != EGL_NO_DISPLAY);
 
     if (mEglSurface != EGL_NO_SURFACE) {
         // nothing to do
@@ -110,7 +110,7 @@ static const char *_log_opengl_error(GLenum err) {
 }
 
 bool Application::initContext() {
-    MY_ASSERT(mEglDisplay != EGL_NO_DISPLAY);
+    ASSERT(mEglDisplay != EGL_NO_DISPLAY);
 
     EGLint attrList[] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE};
 

@@ -5,7 +5,7 @@ FileBuf *FileBuf::instance = NULL;
 struct android_app *FileBuf::app = NULL;
 
 FileBuf::FileBuf() {
-    MY_ASSERT(FileBuf::app != NULL);
+    ASSERT(FileBuf::app != NULL);
     file = new File("circle.tga", FileBuf::app);
 }
 

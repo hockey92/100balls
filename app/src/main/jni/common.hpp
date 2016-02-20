@@ -24,7 +24,7 @@ extern "C" {
 #define ABORT_GAME { LOGE("*** GAME ABORTING."); *((char*)0) = 'a'; }
 #define DEBUG_BLIP LOGD("[ BLIP ]: %s:%d", __FILE__, __LINE__)
 
-#define MY_ASSERT(cond) { if (!(cond)) { LOGE("ASSERTION FAILED: %s", #cond); \
+#define ASSERT(cond) { if (!(cond)) { LOGE("ASSERTION FAILED: %s", #cond); \
    ABORT_GAME; } }
 
 #define BUFFER_OFFSET(i) ((char*)NULL + (i))

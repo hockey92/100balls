@@ -148,13 +148,13 @@ void Shader::unbindShader() {
 
 // To be called by child classes only.
 //void Shader::PushMVPMatrix(glm::mat4 *mat) {
-//    MY_ASSERT(mMVPMatrixLoc >= 0);
+//    ASSERT(mMVPMatrixLoc >= 0);
 //    glUniformMatrix4fv(mMVPMatrixLoc, 1, GL_FALSE, glm::value_ptr(*mat));
 //}
 
 // To be called by child classes only.
 void Shader::PushPositions(int vbo_offset, int stride) {
-//    MY_ASSERT(mPositionAttribLoc >= 0);
+//    ASSERT(mPositionAttribLoc >= 0);
 //    glVertexAttribPointer(mPositionAttribLoc, 3, GL_FLOAT, GL_FALSE, stride,
 //                          BUFFER_OFFSET(vbo_offset));
 //    glEnableVertexAttribArray(mPositionAttribLoc);
@@ -164,7 +164,7 @@ void Shader::beginRender(VertexBuf *vbuf, int size, int stride) {
     bindShader();
     vbuf->bindBuffer();
 
-    MY_ASSERT(positionAttrib >= 0);
+    ASSERT(positionAttrib >= 0);
     glVertexAttribPointer(positionAttrib, size, GL_FLOAT, GL_FALSE, stride * sizeof(float),
                           BUFFER_OFFSET(0));
     glEnableVertexAttribArray(positionAttrib);
@@ -176,7 +176,7 @@ void Shader::beginRender(VertexBuf *vbuf, int size, int stride) {
 }
 
 void Shader::render() {
-    MY_ASSERT(preparedVertexBuf != NULL);
+    ASSERT(preparedVertexBuf != NULL);
 
 //    GLushort indices[] = {0, 1, 2, 0, 2, 3};
 //    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);

@@ -11,6 +11,8 @@ public:
 
 private:
     Segment*path[4];
+    GlassPhysicsObject* parend;
+    GlassPhysicsObject* child;
 
 };
 
