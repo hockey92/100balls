@@ -12,9 +12,9 @@ Container::Container() : BaseShape() {
             1.50f, -0.20f,
             1.50f, 0.80f
     };
-    childCount = 6;
+    realChildCount = 6;
     children = new BaseShape *[6];
-    for (int i = 0; i < childCount + 1; i++) {
+    for (int i = 0; i < realChildCount + 1; i++) {
         if (i == 3) {
             continue;
         }
