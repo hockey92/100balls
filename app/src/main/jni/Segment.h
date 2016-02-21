@@ -7,7 +7,7 @@
 class Segment : public BaseShape {
 
 public:
-    Segment() {}
+    Segment() { }
 
     Segment(Vec2 p1, Vec2 p2);
 
