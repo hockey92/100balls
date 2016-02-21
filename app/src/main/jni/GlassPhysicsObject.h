@@ -12,15 +12,6 @@ public:
 
     void setChildren(GlassPhysicsObject *children);
 
-protected:
-    void setParent(GlassPhysicsObject *parent);
-
-    void innerUpdate();
-
-    float getPositionOnPath(Vec2 normal, Vec2 point);
-
-    bool isZero(float value);
-
 private:
     Segment *path[4];
     GlassPhysicsObject *parent;
@@ -31,6 +22,16 @@ private:
     float up;
     float pathLen;
     float distFromPath;
+    float positionOnPath;
+    float clearVel;
+
+    void setParent(GlassPhysicsObject *parent);
+
+    void innerUpdate();
+
+    float getPositionOnPath(Vec2 normal, Vec2 point);
+
+    bool isZero(float value);
 };
 
 #endif //NATIVE_ACTIVITY_GLASSPHYSICSOBJECT_H

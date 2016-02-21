@@ -53,12 +53,22 @@ void GlassPhysicsObject::innerUpdate() {
         }
     }
     Vec2 normal = dist * (1 / len);
+    positionOnPath = getPositionOnPath(normal, point);
 
+    if (!parent) {
+        clearVel = initVelValue;
+    } else {
+        float parentPositionOnPath = parent->positionOnPath;
+        float distanceFromParent = parentPositionOnPath >= positionOnPath
+                                    ? parentPositionOnPath - positionOnPath
+                                    : parentPositionOnPath + (pathLen - positionOnPath);
+        float parentClearVel = parent->clearVel;
+        clearVel = parentClearVel - 0.01f * (distanceFromParent - distanceBetweenTwoGlasses) / DT;
+    }
 
-    float velValue = initVelValue;
-    setVel((Vec2::cross(normal, 1) * velValue) + (normal * (((len - distFromPath) * 0.1f) / DT)));
+    setVel((Vec2::cross(normal, 1) * clearVel) + (normal * (((len - distFromPath) * 0.1f) / DT)));
 
-    LOGE("values %f", getPositionOnPath(normal, point));
+    if (!parent) LOGE("values %f", getPositionOnPath(normal, point));
 
     if (children) {
         children->innerUpdate();
@@ -76,20 +86,21 @@ float GlassPhysicsObject::getPositionOnPath(Vec2 normal, Vec2 point) {
     } else if (!isXZero && x > 0 && isYZero) {
         return (up - down) + (right - left) + 2 * quartOfCircleLen + (point.y() - down);
     } else if (isXZero && !isYZero && y < 0) {
-        return (up - down) * 2 + (right - left) + 2 * quartOfCircleLen + (point.x() - left);
+        return (up - down) * 2 + (right - left) + 3 * quartOfCircleLen + (point.x() - left);
     }
 
-    float absX = fabsf(x), absY = fabsf(y);
-    float currentAngle = atanf(absY / absX);
+    float currentAngle = atanf(fabsf(y) / fabsf(x));
 
-    if (x > 0 && isYZero) {
-
-    } else if (isXZero && y < 0) {
-
-    } else if (x < 0 && isYZero) {
-
-    } else if (isXZero && y > 0) {
-
+    if (x < 0 && y > 0) {
+        return (up - down) + quartOfCircleLen * (currentAngle / (PI / 2.0f));
+    } else if (x > 0 && y > 0) {
+        return (up - down) + (right - left) + quartOfCircleLen + quartOfCircleLen * (1 - currentAngle / (PI / 2.0f));
+    } else if (x > 0 && y < 0) {
+        return (up - down) * 2.0f + (right - left) + quartOfCircleLen * 2.0f +
+        quartOfCircleLen * (currentAngle / (PI / 2.0f));
+    } else if (x < 0 && y < 0) {
+        return (up - down) * 2.0f + (right - left) * 2.0f + quartOfCircleLen * 3.0f +
+               quartOfCircleLen * (1 - currentAngle / (PI / 2.0f));
     }
 
     return 0;
