@@ -2,5 +2,6 @@
 #define NATIVE_ACTIVITY_CONSTANTS_H
 
 #define DT 0.025f
+#define PI 3.141592f
 
 #endif //NATIVE_ACTIVITY_CONSTANTS_H
