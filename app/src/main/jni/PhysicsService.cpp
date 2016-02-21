@@ -13,20 +13,33 @@ PhysicsService::PhysicsService() {
 //
     PhysicsObject *po = NULL;
 
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 40; i++) {
         po = new PhysicsObject(new Circle(0.06f), 0.1f);
         po->getShape()->move(Vec2((float) i * 0.001f, 0.15f * (float) i));
         physicsObjects.push_back(po);
     }
     physicsObjects.push_back(new PhysicsObject(new Container(), 0.f));
 
-    po = new GlassPhysicsObject();
-    po->getShape()->move(Vec2(2.1f, 0.f));
-    physicsObjects.push_back(po);
+    GlassPhysicsObject *po1 = new GlassPhysicsObject();
+    po1->getShape()->move(Vec2(2.1f, 0.f));
+    physicsObjects.push_back(po1);
+
+    GlassPhysicsObject *parent = po1;
+    for (int i = 0; i < 6; i++) {
+        GlassPhysicsObject *po2 = new GlassPhysicsObject();
+        po2->getShape()->move(Vec2(-2.1f, 0.f));
+        physicsObjects.push_back(po2);
+
+        parent->setChildren(po2);
+        parent = po2;
+    }
+
+//    GlassPhysicsObject* po3 = new GlassPhysicsObject();
+//    po3->getShape()->move(Vec2(-2.1f, 0.f));
+//    physicsObjects.push_back(po3);
 //
-//    po = new GlassPhysicsObject();
-//    po->getShape()->move(Vec2(-2.1f, 0.f));
-//    physicsObjects.push_back(po);
+//    po2->setChildren(po3);
+//
 //
 //    po = new GlassPhysicsObject();
 //    po->getShape()->move(Vec2(-2.1f, 2.f));
