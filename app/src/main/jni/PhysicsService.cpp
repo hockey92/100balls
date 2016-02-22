@@ -21,15 +21,15 @@ PhysicsService::PhysicsService() {
     po1->getShape()->move(Vec2(2.1f, 0.f));
     physicsObjects.push_back(po1);
 
-//    GlassPhysicsObject *parent = po1;
-//    for (int i = 0; i < 6; i++) {
-//        GlassPhysicsObject *po2 = new GlassPhysicsObject();
-//        po2->getShape()->move(Vec2(-2.1f, 0.f));
-//        physicsObjects.push_back(po2);
-//
-//        parent->setChildren(po2);
-//        parent = po2;
-//    }
+    GlassPhysicsObject *parent = po1;
+    for (int i = 0; i < 6; i++) {
+        GlassPhysicsObject *po2 = new GlassPhysicsObject();
+        po2->getShape()->move(Vec2(-2.1f, 0.f));
+        physicsObjects.push_back(po2);
+
+        parent->setChildren(po2);
+        parent = po2;
+    }
 
     gate = new PhysicsObject(new Gate(), 0.f);
     physicsObjects.push_back(gate);

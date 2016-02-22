@@ -68,7 +68,9 @@ void GlassPhysicsObject::innerUpdate() {
 
     setVel((Vec2::cross(normal, 1) * clearVel) + (normal * (((len - distFromPath) * 0.1f) / DT)));
 
-    if (!parent) LOGE("values %f", getPositionOnPath(normal, point));
+//    if (!parent) {
+//        LOGE("values %f", getPositionOnPath(normal, point));
+//    }
 
     if (children) {
         children->innerUpdate();
@@ -107,6 +109,6 @@ float GlassPhysicsObject::getPositionOnPath(Vec2 normal, Vec2 point) {
 }
 
 bool GlassPhysicsObject::isZero(float value) {
-    float d = 0.0001f;
+    float d = 0.001f;
     return value < d && value > -d;
 }
