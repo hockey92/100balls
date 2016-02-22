@@ -9,7 +9,7 @@ void GameField::init() {
     simpleShader = new Shader();
     simpleShader->compile();
 
-    float r = 0.06f;
+    float r = 0.055f;
 
     GLfloat vertices[] = {-r, -r, 0.0f, 1.0f, //vertex coordinates
                           0.0f, 0.0f, //texture coordinates

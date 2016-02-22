@@ -3,11 +3,17 @@
 
 GlassShape::GlassShape() : BaseShape() {
 
+    float left = -0.23f;
+    float down = -0.3f;
+
+    float right = 0.23f;
+    float up = 0.3f;
+
     float points[] = {
-            -0.23f, 0.30f,
-            -0.15f, -0.30f,
-            0.15f, -0.30f,
-            0.23f, 0.30f
+            left, up,
+            0.65f * left, down,
+            0.65f * right, down,
+            right, up
     };
 
     realChildCount = 3;
