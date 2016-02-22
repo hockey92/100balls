@@ -4,17 +4,14 @@
 #include "Container.h"
 #include "GlassPhysicsObject.h"
 #include "Gate.h"
+#include "common.hpp"
 #include <list>
 
 PhysicsService::PhysicsService() {
-//     textureRenderer =
-//
-//    pthread_create(&threadId, NULL, threadFunc, this);
-//
     PhysicsObject *po = NULL;
 
-    for (int i = 0; i < 40; i++) {
-        po = new PhysicsObject(new Circle(0.06f), 0.1f);
+    for (int i = 0; i < 100; i++) {
+        po = new PhysicsObject(new Circle(0.055f), 0.1f);
         po->getShape()->move(Vec2((float) i * 0.001f, 0.15f * (float) i));
         physicsObjects.push_back(po);
     }
@@ -34,39 +31,16 @@ PhysicsService::PhysicsService() {
         parent = po2;
     }
 
-//    GlassPhysicsObject* po3 = new GlassPhysicsObject();
-//    po3->getShape()->move(Vec2(-2.1f, 0.f));
-//    physicsObjects.push_back(po3);
-//
-//    po2->setChildren(po3);
-//
-//
-//    po = new GlassPhysicsObject();
-//    po->getShape()->move(Vec2(-2.1f, 2.f));
-//    physicsObjects.push_back(po);
-//
-//    po = new GlassPhysicsObject();
-//    po->getShape()->move(Vec2(2.1f, 2.f));
-//    physicsObjects.push_back(po);
-//
     gate = new PhysicsObject(new Gate(), 0.f);
     physicsObjects.push_back(gate);
 }
 
-//void *PhysicsService::threadFunc(void *ptr) {
-//    ((PhysicsService *) ptr)->run();
-//}
-//
-//void PhysicsService::run() {
-//
-//}
-
 void PhysicsService::nextFrame() {
 
     for (int i = 0; i < physicsObjects.size(); i++) {
-//        physicsObjects[i]->updateVel();
         physicsObjects[i]->update();
         physicsObjects[i]->applyGravity();
+        physicsObjects[i]->calculateExtendedAABB();
     }
 
     std::list<Constraint *> constraints;
@@ -80,12 +54,14 @@ void PhysicsService::nextFrame() {
             if (!po2->isActive()) {
                 continue;
             }
-            for (int k = 0; k < po1->getShape()->getChildCount(); k++) {
-                for (int l = 0; l < po2->getShape()->getChildCount(); l++) {
-                    Collision *c = CollisionFactory::createCollision(
-                            po1->getShape()->getChildren(k),
-                            po2->getShape()->getChildren(l)
-                    );
+            for (int k = 0; k < po1->getShape()->getSimpleShapesCount(); k++) {
+                for (int l = 0; l < po2->getShape()->getSimpleShapesCount(); l++) {
+                    BaseShape *shape1 = po1->getShape()->getChildren(k);
+                    BaseShape *shape2 = po2->getShape()->getChildren(l);
+                    if (!AABB::isIntersect(shape1->getExtendedAABB(), shape2->getExtendedAABB())) {
+                        continue;
+                    }
+                    Collision *c = CollisionFactory::createCollision(shape1, shape2);
                     if (c != NULL) {
                         constraints.push_back(
                                 new Constraint(physicsObjects[i], physicsObjects[j], c)
@@ -95,6 +71,8 @@ void PhysicsService::nextFrame() {
             }
         }
     }
+
+//    LOGE("num of constraints %d", constraints.size());
 
     for (int i = 0; i < 10; i++) {
         for (std::list<Constraint *>::iterator iter = constraints.begin();

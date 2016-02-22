@@ -52,6 +52,8 @@ public:
         this->active = active;
     }
 
+    void calculateExtendedAABB();
+
 private:
     static const float G = 10.f;
 

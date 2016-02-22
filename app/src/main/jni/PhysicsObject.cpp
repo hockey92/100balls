@@ -7,7 +7,7 @@ void PhysicsObject::updateVel() {
 
 void PhysicsObject::updatePos() {
     if (shape) {
-        shape->rotate(angleVel * DT);
+//        shape->rotate(angleVel * DT);
         shape->move(vel * DT);
     }
 }
@@ -28,4 +28,8 @@ void PhysicsObject::draw(float* projection) {
 //    if (shape) {
         shape->draw(projection);
 //    }
+}
+
+void PhysicsObject::calculateExtendedAABB() {
+    shape->calculateExtendAABB(vel * DT);
 }

@@ -7,7 +7,7 @@
 class Segment : public BaseShape {
 
 public:
-    Segment() {}
+    Segment() { }
 
     Segment(Vec2 p1, Vec2 p2);
 
@@ -18,6 +18,8 @@ public:
     virtual int type() const { return 2; }
 
     virtual void innerRotate(float angle);
+
+    virtual void setAABB();
 
 protected:
     void init(Vec2 p1, Vec2 p2);

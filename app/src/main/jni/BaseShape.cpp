@@ -1,8 +1,19 @@
 #include <vecmath.h>
 #include "BaseShape.h"
 
-void BaseShape::move(const Vec2& coords) {
-    center += coords;
+BaseShape::BaseShape() : realChildCount(0), parent(NULL), angle(0.f), aabb(NULL), extendedAABB(NULL) {
+}
+
+void BaseShape::move(const Vec2 &coords) {
+    if (!parent) {
+        center += coords;
+    }
+    if (aabb) {
+        aabb->move(coords);
+    }
+    for (int i = 0; i < realChildCount; i++) {
+        children[i]->move(coords);
+    }
 }
 
 Vec2 BaseShape::getCenter() const {
@@ -47,6 +58,32 @@ float BaseShape::getAngel() const {
     return angle;
 }
 
-int BaseShape::getChildCount() const {
+int BaseShape::getSimpleShapesCount() const {
     return realChildCount == 0 ? 1 : realChildCount;
+}
+
+void BaseShape::setAABB() {
+
+}
+
+BaseShape::~BaseShape() {
+    if (aabb) {
+        delete aabb;
+    }
+}
+
+void BaseShape::calculateExtendAABB(const Vec2 &moveVec) {
+    if (aabb) {
+        if (!extendedAABB) {
+            extendedAABB = new AABB(aabb, moveVec);
+        }
+        extendedAABB->set(aabb, moveVec);
+    }
+    for (int i = 0; i < realChildCount; i++) {
+        children[i]->calculateExtendAABB(moveVec);
+    }
+}
+
+AABB *BaseShape::getExtendedAABB() {
+    return extendedAABB;
 }
