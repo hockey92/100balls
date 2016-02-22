@@ -3,11 +3,13 @@
 
 #include <cstddef>
 #include "Vec2.h"
+#include "AABB.h"
 
 class BaseShape {
-
 public:
-    BaseShape() : realChildCount(0), parent(NULL), angle(0.f) { }
+    BaseShape();
+
+    virtual ~BaseShape();
 
     void move(const Vec2 &coords);
 
@@ -19,11 +21,15 @@ public:
 
     void draw(float *projection);
 
-    virtual int getChildCount() const;
+    virtual int getSimpleShapesCount() const;
 
     virtual int type() const { return 0; }
 
     virtual BaseShape *getChildren(int i);
+
+    void calculateExtendAABB(const Vec2 &moveVec);
+
+    AABB *getExtendedAABB();
 
 protected:
     Vec2 center;
@@ -31,8 +37,12 @@ protected:
     float angle;
     BaseShape **children;
     BaseShape *parent;
+    AABB *aabb;
+    AABB *extendedAABB;
 
     virtual void innerRotate(float angle);
+
+    virtual void setAABB();
 };
 
 #endif //TEAPOT_BASESHAPE_H
