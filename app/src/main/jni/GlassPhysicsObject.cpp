@@ -3,13 +3,16 @@
 #include "CollisionFactory.h"
 #include "Constants.h"
 #include "common.hpp"
+#include "GameCoords.h"
 
 GlassPhysicsObject::GlassPhysicsObject() : PhysicsObject(new GlassShape(), 0.f), children(NULL),
                                            parent(NULL) {
-    right = 1.5f;
-    left = -1.5f;
-    down = -3;
-    up = 1.0f;
+    right = GameCoords::getInstance()->getCoords(PATH)->getData()[RIGHT];
+    left = GameCoords::getInstance()->getCoords(PATH)->getData()[LEFT];
+    down = GameCoords::getInstance()->getCoords(PATH)->getData()[DOWN];
+    up = GameCoords::getInstance()->getCoords(PATH)->getData()[UP];
+
+    distFromPath = GameCoords::getInstance()->getCoords(PATH)->getData()[DIST_FROM_PATH];
 
     path[0] = new Segment(Vec2(right, up), Vec2(right, down));
     path[1] = new Segment(Vec2(right, down), Vec2(left, down));
@@ -33,8 +36,7 @@ void GlassPhysicsObject::setParent(GlassPhysicsObject *parent) {
 }
 
 void GlassPhysicsObject::innerUpdate() {
-    float initVelValue = -1.5f;
-    distFromPath = 0.3f;
+    float initVelValue = -0.8f;
     pathLen = 2.0f * (up - down) + 2.0f * (right - left) + 2.0f * PI * distFromPath;
     float distanceBetweenTwoGlasses = pathLen / 7.0f;
 
@@ -60,8 +62,8 @@ void GlassPhysicsObject::innerUpdate() {
     } else {
         float parentPositionOnPath = parent->positionOnPath;
         float distanceFromParent = parentPositionOnPath >= positionOnPath
-                                    ? parentPositionOnPath - positionOnPath
-                                    : parentPositionOnPath + (pathLen - positionOnPath);
+                                   ? parentPositionOnPath - positionOnPath
+                                   : parentPositionOnPath + (pathLen - positionOnPath);
         float parentClearVel = parent->clearVel;
         clearVel = parentClearVel - 0.01f * (distanceFromParent - distanceBetweenTwoGlasses) / DT;
     }
@@ -96,10 +98,11 @@ float GlassPhysicsObject::getPositionOnPath(Vec2 normal, Vec2 point) {
     if (x < 0 && y > 0) {
         return (up - down) + quartOfCircleLen * (currentAngle / (PI / 2.0f));
     } else if (x > 0 && y > 0) {
-        return (up - down) + (right - left) + quartOfCircleLen + quartOfCircleLen * (1 - currentAngle / (PI / 2.0f));
+        return (up - down) + (right - left) + quartOfCircleLen +
+               quartOfCircleLen * (1 - currentAngle / (PI / 2.0f));
     } else if (x > 0 && y < 0) {
         return (up - down) * 2.0f + (right - left) + quartOfCircleLen * 2.0f +
-        quartOfCircleLen * (currentAngle / (PI / 2.0f));
+               quartOfCircleLen * (currentAngle / (PI / 2.0f));
     } else if (x < 0 && y < 0) {
         return (up - down) * 2.0f + (right - left) * 2.0f + quartOfCircleLen * 3.0f +
                quartOfCircleLen * (1 - currentAngle / (PI / 2.0f));

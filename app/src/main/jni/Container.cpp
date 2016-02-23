@@ -1,17 +1,9 @@
 #include "Container.h"
 #include "Segment.h"
+#include "GameCoords.h"
 
 Container::Container() : BaseShape() {
-    float points[] = {
-            -1.50f, 0.80f,
-            -1.50f, -0.20f,
-            -0.12f, -0.90f,
-            -0.12f, -1.15f,
-            0.12f, -1.15f,
-            0.12f, -0.90f,
-            1.50f, -0.20f,
-            1.50f, 0.80f
-    };
+    float *points = GameCoords::getInstance()->getCoords(CONTAINER)->getData();
     realChildCount = 6;
     children = new BaseShape *[6];
     for (int i = 0; i < realChildCount + 1; i++) {

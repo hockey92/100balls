@@ -8,21 +8,22 @@
 #include "PhysicsService.h"
 
 class GameField {
-
 public:
-    GameField(PhysicsService *physicsService) : physicsService(physicsService) { }
+    GameField(PhysicsService *physicsService) : physicsService(NULL) { }
 
-    void init();
+    bool init();
 
     void doFrame(float *projMat);
+
+    PhysicsService *getPhysicsService();
 
 private:
     PhysicsService *physicsService;
     TextureShader *textureShader;
-    Shader* simpleShader;
+    Shader *simpleShader;
     VertexBuf *circleVertices;
-    VertexBuf* glassVertices;
-    VertexBuf* containerVertices;
+    VertexBuf *glassVertices;
+    VertexBuf *containerVertices;
     Texture *texture;
 };
 
