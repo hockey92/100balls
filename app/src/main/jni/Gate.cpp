@@ -1,10 +1,8 @@
 #include "Gate.h"
 #include "Circle.h"
+#include "GameCoords.h"
 
 Gate::Gate() {
-    float points[] = {
-            -0.12f, -1.15f,
-            0.12f, -1.15f
-    };
+    float *points = (GameCoords::getInstance()->getCoords(CONTAINER)->getData() + 6);
     init(Vec2(points[0], points[1]), Vec2(points[2], points[3]));
 }

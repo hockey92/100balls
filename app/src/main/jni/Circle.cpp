@@ -1,6 +1,8 @@
 #include "Circle.h"
+#include "GameCoords.h"
 
-Circle::Circle(float r) : BaseShape(), r(r) {
+Circle::Circle(float r) : BaseShape() {
+    this->r = GameCoords::getInstance()->getCoords(BALL)->getData()[0];
     setAABB();
 }
 

@@ -1,20 +1,10 @@
 #include "GlassShape.h"
 #include "Segment.h"
+#include "GameCoords.h"
 
 GlassShape::GlassShape() : BaseShape() {
 
-    float left = -0.23f;
-    float down = -0.3f;
-
-    float right = 0.23f;
-    float up = 0.3f;
-
-    float points[] = {
-            left, up,
-            0.65f * left, down,
-            0.65f * right, down,
-            right, up
-    };
+    float *points = GameCoords::getInstance()->getCoords(GLASS)->getData();
 
     realChildCount = 3;
     children = new BaseShape *[3];
