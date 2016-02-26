@@ -71,7 +71,7 @@ void GlassPhysicsObject::innerUpdate() {
 
     setVel((Vec2::cross(normal, 1) * clearVel) + (normal * (((len - distFromPath) * 0.1f) / DT)));
 
-    float startRotatePoint = (up - down) * 2.0f + (right - left) + quartOfCircleLen * 2.0f;
+    float startRotatePoint = (up - down) * 2.0f + (right - left) + quartOfCircleLen * 3.0f;
     float stopRotatePoint = (up - down) * 2.0f + (right - left) * 2.0f + quartOfCircleLen * 3.0f;
     float angleVel = (2.0f * PI) / (DT * ((stopRotatePoint - startRotatePoint) / (clearVel * DT)));
     if (startRotatePoint <= positionOnPath && positionOnPath <= stopRotatePoint) {
