@@ -3,7 +3,7 @@
 
 Circle::Circle(float r) : BaseShape() {
     this->r = GameCoords::getInstance()->getCoords(BALL)->getData()[0];
-    setAABB();
+    setInnerAABB();
 }
 
 float Circle::getR() const {
@@ -14,7 +14,7 @@ int Circle::type() const {
     return 1;
 }
 
-void Circle::setAABB() {
+void Circle::setInnerAABB() {
     float x = getCenter().x(), y = getCenter().y();
     float right = x + r;
     float up = y + r;

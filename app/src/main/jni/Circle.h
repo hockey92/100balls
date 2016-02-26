@@ -13,7 +13,7 @@ public:
 
     virtual int type() const;
 
-    virtual void setAABB();
+    virtual void setInnerAABB();
 
 private:
     float r;

@@ -39,7 +39,7 @@ void GameCoords::createGlassCoords(float w, float h) {
 }
 
 void GameCoords::createContainerCoords(float w, float h) {
-    float *container = new float[16];
+    float *container = new float[20];
 
     container[0] = -1.0f + 0.405f, container[1] = 1.0f;
     container[2] = -1.0f + 0.405f, container[3] = 0.2f;
@@ -49,8 +49,10 @@ void GameCoords::createContainerCoords(float w, float h) {
     container[10] = 0.07f, container[11] = -0.06f;
     container[12] = 1.0f - 0.405f, container[13] = 0.2f;
     container[14] = 1.0f - 0.405f, container[15] = 1.0f;
+    container[16] = 0.2f, container[17] = 1.0f;
+    container[18] = 0.2f, container[19] = 0.5f;
 
-    gameCoordsData[CONTAINER] = new GameCoordsData(container, 8, CONTAINER);
+    gameCoordsData[CONTAINER] = new GameCoordsData(container, 10, CONTAINER);
 }
 
 GameCoords *GameCoords::getInstance() {

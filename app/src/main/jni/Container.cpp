@@ -4,8 +4,8 @@
 
 Container::Container() : BaseShape() {
     float *points = GameCoords::getInstance()->getCoords(CONTAINER)->getData();
-    realChildCount = 6;
-    children = new BaseShape *[6];
+    realChildCount = GameCoords::getInstance()->getCoords(CONTAINER)->getSize() - 2;
+    children = new BaseShape *[realChildCount];
     for (int i = 0; i < realChildCount + 1; i++) {
         if (i == 3) {
             continue;

@@ -19,7 +19,7 @@ public:
 
     virtual void innerRotate(float angle);
 
-    virtual void setAABB();
+    virtual void setInnerAABB();
 
 protected:
     void init(Vec2 p1, Vec2 p2);
