@@ -45,10 +45,10 @@ void GameCoords::createContainerCoords(float w, float h) {
     container[2] = -0.2f, container[3] = 1.0f;
     container[4] = -1.0f + 0.405f, container[5] = 1.0f;
     container[6] = -1.0f + 0.405f, container[7] = 0.2f;
-    container[8] = -0.07f, container[9] = -0.06f;
-    container[10] = -0.07f, container[11] = -0.2f;
-    container[12] = 0.07f, container[13] = -0.2f;
-    container[14] = 0.07f, container[15] = -0.06f;
+    container[8] = -0.09f, container[9] = -0.04f;
+    container[10] = -0.09f, container[11] = -0.2f;
+    container[12] = 0.09f, container[13] = -0.2f;
+    container[14] = 0.09f, container[15] = -0.04f;
     container[16] = 1.0f - 0.405f, container[17] = 0.2f;
     container[18] = 1.0f - 0.405f, container[19] = 1.0f;
     container[20] = 0.2f, container[21] = 1.0f;
@@ -114,7 +114,7 @@ int GameCoordsData::getSize() { return size; }
 int GameCoordsData::getType() { return type; }
 
 void GameCoords::createCircleCoords(float w, float h) {
-    gameCoordsData[BALL] = new GameCoordsData(0.03f, BALL);
+    gameCoordsData[BALL] = new GameCoordsData(0.036f, BALL);
 }
 
 void GameCoords::createPathCoords(float w, float h) {

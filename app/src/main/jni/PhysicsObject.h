@@ -14,9 +14,9 @@ public:
 
     void updateVel();
 
-    void updatePos();
-
     virtual void update() { }
+
+    void updatePos();
 
     void applyGravity();
 

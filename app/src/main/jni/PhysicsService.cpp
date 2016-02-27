@@ -1,20 +1,41 @@
 #include "PhysicsService.h"
-#include "Constraint.h"
 #include "CollisionFactory.h"
 #include "Container.h"
 #include "GlassPhysicsObject.h"
 #include "Gate.h"
 #include "common.hpp"
-#include <list>
+#include "GameCoords.h"
 
-PhysicsService::PhysicsService() {
-    PhysicsObject *po = NULL;
-
-    for (int i = 0; i < 100; i++) {
-        po = new PhysicsObject(new Circle(0.055f), 0.1f);
-        po->getShape()->move(Vec2((float) i * 0.001f, 0.15f * (float) i));
+void PhysicsService::addCircles(float initX, float initY, float direction, float r,
+                                float distanceBetweenCircles, bool active, int numOfCircles) {
+    for (int i = 0; i < numOfCircles; i++) {
+        float x = initX + direction * (i % 5) * (2.0f * r + distanceBetweenCircles);
+        float y = initY - (i / 5) * (2.0f * r + distanceBetweenCircles);
+        PhysicsObject *po = new PhysicsObject(new Circle(r), 1.0f);
+        po->setActive(active);
+        po->getShape()->move(Vec2(x, y));
         physicsObjects.push_back(po);
     }
+}
+
+PhysicsService::PhysicsService() {
+    float distanceBetweenCircles = 0.005f;
+    float r = GameCoords::getInstance()->getCoords(BALL)->getData()[0];
+
+    addCircles(GameCoords::getInstance()->getCoords(CONTAINER)->getData()[4] + r +
+               distanceBetweenCircles,
+               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[5] - r -
+               distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, false, 45);
+
+    addCircles(GameCoords::getInstance()->getCoords(CONTAINER)->getData()[18] - r -
+               distanceBetweenCircles,
+               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[19] - r -
+               distanceBetweenCircles, -1.0f, r, distanceBetweenCircles, false, 45);
+
+    addCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
+               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[19] - r -
+               distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, true, 40);
+
     physicsObjects.push_back(new PhysicsObject(new Container(), 0.f));
 
     GlassPhysicsObject *po1 = new GlassPhysicsObject();
@@ -33,62 +54,6 @@ PhysicsService::PhysicsService() {
 
     gate = new PhysicsObject(new Gate(), 0.f);
     physicsObjects.push_back(gate);
-}
-
-void PhysicsService::nextFrame() {
-
-    for (int i = 0; i < physicsObjects.size(); i++) {
-        physicsObjects[i]->update();
-        physicsObjects[i]->applyGravity();
-        physicsObjects[i]->calculateExtendedAABB();
-    }
-
-    std::list<Constraint *> constraints;
-    for (int i = 0; i < physicsObjects.size(); i++) {
-        PhysicsObject *po1 = physicsObjects[i];
-        if (!po1->isActive()) {
-            continue;
-        }
-        for (int j = i + 1; j < physicsObjects.size(); j++) {
-            PhysicsObject *po2 = physicsObjects[j];
-            if (!po2->isActive()) {
-                continue;
-            }
-            for (int k = 0; k < po1->getShape()->getSimpleShapesCount(); k++) {
-                for (int l = 0; l < po2->getShape()->getSimpleShapesCount(); l++) {
-                    BaseShape *shape1 = po1->getShape()->getChildren(k);
-                    BaseShape *shape2 = po2->getShape()->getChildren(l);
-                    if (!AABB::isIntersect(shape1->getExtendedAABB(), shape2->getExtendedAABB())) {
-                        continue;
-                    }
-                    Collision *c = CollisionFactory::createCollision(shape1, shape2);
-                    if (c != NULL) {
-                        constraints.push_back(
-                                new Constraint(physicsObjects[i], physicsObjects[j], c)
-                        );
-                    }
-                }
-            }
-        }
-    }
-
-//    LOGE("num of constraints %d", constraints.size());
-
-    for (int i = 0; i < 10; i++) {
-        for (std::list<Constraint *>::iterator iter = constraints.begin();
-             iter != constraints.end(); ++iter) {
-            (*iter)->fix();
-        }
-    }
-
-    for (std::list<Constraint *>::iterator iter = constraints.begin();
-         iter != constraints.end(); ++iter) {
-        delete *iter;
-    }
-
-    for (int i = 0; i < physicsObjects.size(); i++) {
-        physicsObjects[i]->updatePos();
-    }
 }
 
 void PhysicsService::draw(float *projection) {

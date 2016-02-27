@@ -5,12 +5,11 @@
 #include <pthread.h>
 #include "PhysicsObject.h"
 #include "BaseShape.h"
+#include "BasePhysicsService.h"
 
-class PhysicsService {
+class PhysicsService : public BasePhysicsService {
 public:
     PhysicsService();
-
-    void nextFrame();
 
     void draw(float *projection);
 
@@ -18,13 +17,11 @@ public:
 
     void close();
 
-    std::vector<PhysicsObject *> *getObjects() {
-        return &physicsObjects;
-    }
-
 private:
-    std::vector<PhysicsObject *> physicsObjects;
     PhysicsObject *gate;
+
+    void addCircles(float initX, float initY, float direction, float r,
+                                    float distanceBetweenCircles, bool active, int numOfCircles);
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSSERVER_H
