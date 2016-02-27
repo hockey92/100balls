@@ -1,16 +1,17 @@
 #include <vecmath.h>
 #include "BaseShape.h"
 
-BaseShape::BaseShape() : realChildCount(0), parent(NULL), angle(0.f), aabb(NULL), extendedAABB(NULL) {
+BaseShape::BaseShape() : realChildCount(0), parent(NULL), angle(0.f), aabb(NULL),
+                         extendedAABB(NULL) {
 }
 
 void BaseShape::move(const Vec2 &coords) {
     if (!parent) {
         center += coords;
     }
-    if (aabb) {
-        aabb->move(coords);
-    }
+//    if (aabb) {
+//        aabb->move(coords);
+//    }
     for (int i = 0; i < realChildCount; i++) {
         children[i]->move(coords);
     }
@@ -62,7 +63,7 @@ int BaseShape::getSimpleShapesCount() const {
     return realChildCount == 0 ? 1 : realChildCount;
 }
 
-void BaseShape::setAABB() {
+void BaseShape::setInnerAABB() {
 
 }
 
@@ -86,4 +87,15 @@ void BaseShape::calculateExtendAABB(const Vec2 &moveVec) {
 
 AABB *BaseShape::getExtendedAABB() {
     return extendedAABB;
+}
+
+void BaseShape::setAngle(float angle) {
+    this->angle = angle;
+}
+
+void BaseShape::setAABB() {
+    for (int i = 0; i < realChildCount; i++) {
+        children[i]->setAABB();
+    }
+    setInnerAABB();
 }

@@ -4,13 +4,13 @@
 
 Container::Container() : BaseShape() {
     float *points = GameCoords::getInstance()->getCoords(CONTAINER)->getData();
-    realChildCount = 6;
-    children = new BaseShape *[6];
+    realChildCount = GameCoords::getInstance()->getCoords(CONTAINER)->getSize() - 2;
+    children = new BaseShape *[realChildCount];
     for (int i = 0; i < realChildCount + 1; i++) {
-        if (i == 3) {
+        if (i == 5) {
             continue;
         }
-        children[i > 3 ? i - 1 : i] = new Segment(
+        children[i > 5 ? i - 1 : i] = new Segment(
                 this,
                 Vec2(points[i * 2], points[i * 2 + 1]),
                 Vec2(points[i * 2 + 2], points[i * 2 + 3])

@@ -19,6 +19,8 @@ public:
 
     float getAngel() const;
 
+    void setAngle(float angle);
+
     void draw(float *projection);
 
     virtual int getSimpleShapesCount() const;
@@ -31,6 +33,10 @@ public:
 
     AABB *getExtendedAABB();
 
+    virtual void setInnerAABB();
+
+    virtual void setAABB();
+
 protected:
     Vec2 center;
     int realChildCount;
@@ -41,8 +47,6 @@ protected:
     AABB *extendedAABB;
 
     virtual void innerRotate(float angle);
-
-    virtual void setAABB();
 };
 
 #endif //TEAPOT_BASESHAPE_H

@@ -24,6 +24,8 @@ private:
     float distFromPath;
     float positionOnPath;
     float clearVel;
+    float quartOfCircleLen;
+    bool isRotate;
 
     void setParent(GlassPhysicsObject *parent);
 

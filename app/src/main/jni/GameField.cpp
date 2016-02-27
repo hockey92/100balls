@@ -20,7 +20,7 @@ bool GameField::init() {
     float *vertices = GameCoords::getInstance()->getCoords(BALL)->createCoordsForShader(0.0f);
 
     circleVertices = new VertexBuf(vertices, 24 * sizeof(float));
-    containerVertices = new VertexBuf(container, 32 * sizeof(float));
+    containerVertices = new VertexBuf(container, GameCoords::getInstance()->getCoords(CONTAINER)->getSize() * 4 * sizeof(float));
     glassVertices = new VertexBuf(glass, 16 * sizeof(float));
     texture = new Texture(FileBuf::getInstance()->getFile());
 
@@ -51,8 +51,8 @@ void GameField::doFrame(float *projMat) {
 
     simpleShader->beginRender(containerVertices, 4, 4);
     textureShader->setMVP(ndk_helper::Mat4(projMat).Ptr());
-    GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7};
-    glDrawElements(GL_LINES, 14, GL_UNSIGNED_SHORT, indices);
+    GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11};
+    glDrawElements(GL_LINES, 22, GL_UNSIGNED_SHORT, indices);
 
     textureShader->beginRender(circleVertices, 4, 6);
     textureShader->setTexture(texture);
