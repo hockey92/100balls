@@ -4,8 +4,6 @@
 #include "Vec2.h"
 #include "BaseShape.h"
 
-#endif //TEAPOT_SEGMENT_H
-
 class Segment : public BaseShape {
 
 public:
@@ -32,3 +30,5 @@ private:
     Vec2 points[2];
     Vec2 initPoints[2];
 };
+
+#endif //TEAPOT_SEGMENT_H
