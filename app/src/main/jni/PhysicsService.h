@@ -2,10 +2,12 @@
 #define NATIVE_ACTIVITY_PHYSICSSERVER_H
 
 #include <vector>
+#include <stack>
 #include <pthread.h>
 #include "PhysicsObject.h"
 #include "BaseShape.h"
 #include "BasePhysicsService.h"
+#include "GlassPhysicsObject.h"
 
 class PhysicsService : public BasePhysicsService {
 public:
@@ -17,11 +19,21 @@ public:
 
     void close();
 
+protected:
+    virtual void doActionBefore();
+
+    virtual void doActionAfter();
+
 private:
     PhysicsObject *gate;
+    std::stack<PhysicsObject *> frozenCircles;
+
+    std::vector<PhysicsObject *> circles;
+    std::vector<GlassPhysicsObject *> glasses;
+    PhysicsObject *container;
 
     void addCircles(float initX, float initY, float direction, float r,
-                                    float distanceBetweenCircles, bool active, int numOfCircles);
+                    float distanceBetweenCircles, bool active, int numOfCircles);
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSSERVER_H

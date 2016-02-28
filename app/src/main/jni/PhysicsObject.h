@@ -7,8 +7,8 @@
 class PhysicsObject {
 
 public:
-    PhysicsObject(BaseShape *shape, float invM) : angleVel(0), shape(shape),
-                                                  invM(invM), active(true) { }
+    PhysicsObject(BaseShape *shape, float invM) : angleVel(0), shape(shape), invM(invM),
+                                                  active(true), deleted(false) { }
 
     ~PhysicsObject();
 
@@ -16,7 +16,7 @@ public:
 
     virtual void update() { }
 
-    void updatePos();
+    virtual void updatePos();
 
     void applyGravity();
 
@@ -32,37 +32,32 @@ public:
 
     float getInvI() const { return invI; }
 
-    void setInvM(float invM) {
-        this->invM = invM;
-    }
+    void setInvM(float invM) { this->invM = invM; }
 
-    void applyImpulse(const Vec2 &dVel) {
-        vel += dVel;
-    }
+    void applyImpulse(const Vec2 &dVel) { vel += dVel; }
 
     BaseShape *getShape() const { return shape; }
 
     void draw(float *projection);
 
-    bool isActive() {
-        return active;
-    }
+    bool isActive();
 
-    void setActive(bool active) {
-        this->active = active;
-    }
+    bool isDeleted() { return deleted; }
+
+    void setDeleted(bool deleted) { this->deleted = deleted; }
+
+    void setActive(bool active) { this->active = active; }
 
     void calculateExtendedAABB();
 
 private:
-    static const float G = 10.f;
-
     Vec2 vel;
     float angleVel;
     BaseShape *shape;
     float invM;
     float invI;
     bool active;
+    bool deleted;
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSOBJECT_H

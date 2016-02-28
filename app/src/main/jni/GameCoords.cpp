@@ -10,7 +10,7 @@ GameCoordsData *GameCoords::getCoords(int type) {
 GameCoords::GameCoords(float w, float h) {
     createGlassCoords(w, h);
     createCircleCoords(w, h);
-    createPathCoords(w, h);
+    createPathCoordsAndScreenBorders(w, h);
     createContainerCoords(w, h);
 }
 
@@ -67,6 +67,9 @@ void GameCoords::init(float w, float h) {
     }
 }
 
+GameCoordsData::GameCoordsData(float *flatCoords, int type) : data(flatCoords), size(0),
+                                                              type(type) { }
+
 float *GameCoordsData::createCoordsForShader(float zCoord) {
     float *result = NULL;
     switch (type) {
@@ -80,7 +83,7 @@ float *GameCoordsData::createCoordsForShader(float zCoord) {
                 result[i * 4 + 3] = 1.0f;
             }
             break;
-        case BALL:
+        case CIRCLE:
             result = new float[4 * 6];
             result[0] = -data[0], result[1] = -data[0], result[2] = zCoord, result[3] = 1.0f;
             result[4] = 0.0f, result[5] = 0.0f;
@@ -114,10 +117,10 @@ int GameCoordsData::getSize() { return size; }
 int GameCoordsData::getType() { return type; }
 
 void GameCoords::createCircleCoords(float w, float h) {
-    gameCoordsData[BALL] = new GameCoordsData(0.036f, BALL);
+    gameCoordsData[CIRCLE] = new GameCoordsData(0.036f, CIRCLE);
 }
 
-void GameCoords::createPathCoords(float w, float h) {
+void GameCoords::createPathCoordsAndScreenBorders(float w, float h) {
     float *path = new float[5];
 
     float rel = h / w;
@@ -135,7 +138,8 @@ void GameCoords::createPathCoords(float w, float h) {
     path[DIST_FROM_PATH] = 0.2f;
 
     gameCoordsData[PATH] = new GameCoordsData(path, PATH);
-}
 
-GameCoordsData::GameCoordsData(float *flatCoords, int type) : data(flatCoords), size(0),
-                                                              type(type) { }
+    float *screenBorders = new float[2];
+    screenBorders[WIDTH] = 1.0f, screenBorders[HEIGHT] = rel;
+    gameCoordsData[SCREEN_BORDERS] = new GameCoordsData(screenBorders, SCREEN_BORDERS);
+}

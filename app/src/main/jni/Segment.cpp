@@ -38,3 +38,7 @@ void Segment::setInnerAABB() {
         aabb->set(left, down, right, up);
     }
 }
+
+Vec2 Segment::getPoint(int i) const {
+    return points[i];
+}

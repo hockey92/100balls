@@ -3,14 +3,21 @@
 
 #include "PhysicsObject.h"
 #include "Segment.h"
+#include "Line.h"
 
 class GlassPhysicsObject : public PhysicsObject {
 public:
     GlassPhysicsObject();
 
+    ~GlassPhysicsObject();
+
     void update();
 
     void setChildren(GlassPhysicsObject *children);
+
+    void setContainsCircles(bool containsCircles);
+
+    bool isContainsCircles();
 
 private:
     Segment *path[4];
@@ -26,6 +33,8 @@ private:
     float clearVel;
     float quartOfCircleLen;
     bool isRotate;
+    bool containsCircles;
+    Line *lines[4];
 
     void setParent(GlassPhysicsObject *parent);
 

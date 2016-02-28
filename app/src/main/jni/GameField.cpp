@@ -17,10 +17,12 @@ bool GameField::init() {
 
     float *container = GameCoords::getInstance()->getCoords(CONTAINER)->createCoordsForShader(0.0f);
     float *glass = GameCoords::getInstance()->getCoords(GLASS)->createCoordsForShader(0.1f);
-    float *vertices = GameCoords::getInstance()->getCoords(BALL)->createCoordsForShader(0.0f);
+    float *vertices = GameCoords::getInstance()->getCoords(CIRCLE)->createCoordsForShader(0.0f);
 
     circleVertices = new VertexBuf(vertices, 24 * sizeof(float));
-    containerVertices = new VertexBuf(container, GameCoords::getInstance()->getCoords(CONTAINER)->getSize() * 4 * sizeof(float));
+    containerVertices = new VertexBuf(container,
+                                      GameCoords::getInstance()->getCoords(CONTAINER)->getSize() *
+                                      4 * sizeof(float));
     glassVertices = new VertexBuf(glass, 16 * sizeof(float));
     texture = new Texture(FileBuf::getInstance()->getFile());
 
@@ -59,6 +61,7 @@ void GameField::doFrame(float *projMat) {
 
     for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
          iter != physicsService->getObjects()->end(); iter++) {
+        if ((*iter)->isDeleted()) continue;
         BaseShape *shape = (*iter)->getShape();
         if (shape->type() == 1) {
             Vec2 center = shape->getCenter();

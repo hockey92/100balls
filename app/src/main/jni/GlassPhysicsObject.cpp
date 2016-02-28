@@ -18,6 +18,17 @@ GlassPhysicsObject::GlassPhysicsObject() : PhysicsObject(new GlassShape(), 0.f),
     path[1] = new Segment(Vec2(right, down), Vec2(left, down));
     path[2] = new Segment(Vec2(left, down), Vec2(left, up));
     path[3] = new Segment(Vec2(left, up), Vec2(right, up));
+
+    for (int i = 0; i < 3; i++) {
+        lines[i] = new Line(
+                ((Segment *) getShape()->getChildren(i))->getPoint(0),
+                ((Segment *) getShape()->getChildren(i))->getPoint(1)
+        );
+    }
+    lines[3] = new Line(
+            ((Segment *) getShape()->getChildren(2))->getPoint(1),
+            ((Segment *) getShape()->getChildren(0))->getPoint(0)
+    );
 }
 
 void GlassPhysicsObject::update() {
@@ -39,7 +50,7 @@ void GlassPhysicsObject::innerUpdate() {
     float initVelValue = -0.5f;
     pathLen = 2.0f * (up - down) + 2.0f * (right - left) + 2.0f * PI * distFromPath;
     quartOfCircleLen = PI * distFromPath / 2.0f;
-    float distanceBetweenTwoGlasses = pathLen / 7.0f;
+    float distanceBetweenGlasses = pathLen / 7.0f;
 
     Vec2 dist;
     float len = 0;
@@ -66,7 +77,7 @@ void GlassPhysicsObject::innerUpdate() {
                                    ? parentPositionOnPath - positionOnPath
                                    : parentPositionOnPath + (pathLen - positionOnPath);
         float parentClearVel = parent->clearVel;
-        clearVel = parentClearVel - 0.01f * (distanceFromParent - distanceBetweenTwoGlasses) / DT;
+        clearVel = parentClearVel - 0.01f * (distanceFromParent - distanceBetweenGlasses) / DT;
     }
 
     setVel((Vec2::cross(normal, 1) * clearVel) + (normal * (((len - distFromPath) * 0.1f) / DT)));
@@ -132,4 +143,18 @@ float GlassPhysicsObject::getPositionOnPath(Vec2 normal, Vec2 point) {
 bool GlassPhysicsObject::isZero(float value) {
     float d = 0.001f;
     return value < d && value > -d;
+}
+
+void GlassPhysicsObject::setContainsCircles(bool containsCircles) {
+    this->containsCircles = containsCircles;
+}
+
+bool GlassPhysicsObject::isContainsCircles() {
+    return containsCircles;
+}
+
+GlassPhysicsObject::~GlassPhysicsObject() {
+    for (int i = 0; i < 4; i++) {
+        delete lines[i];
+    }
 }

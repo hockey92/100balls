@@ -8,7 +8,7 @@
 
 class BasePhysicsService {
 public:
-    BasePhysicsService();
+    BasePhysicsService() { }
 
     void nextFrame();
 
@@ -18,6 +18,10 @@ public:
 
 protected:
     std::vector<PhysicsObject *> physicsObjects;
+
+    virtual void doActionBefore() { }
+
+    virtual void doActionAfter() { }
 };
 
 #endif //NATIVE_ACTIVITY_BASEPHYSICSSERVICE_H

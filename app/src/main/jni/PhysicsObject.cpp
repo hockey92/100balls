@@ -25,12 +25,16 @@ PhysicsObject::~PhysicsObject() {
     }
 }
 
-void PhysicsObject::draw(float* projection) {
-//    if (shape) {
+void PhysicsObject::draw(float *projection) {
+    if (shape) {
         shape->draw(projection);
-//    }
+    }
 }
 
 void PhysicsObject::calculateExtendedAABB() {
     shape->calculateExtendAABB(vel * DT);
+}
+
+bool PhysicsObject::isActive() {
+    return active && !deleted;
 }

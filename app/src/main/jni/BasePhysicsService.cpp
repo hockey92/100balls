@@ -3,12 +3,9 @@
 #include "CollisionFactory.h"
 #include <list>
 
-BasePhysicsService::BasePhysicsService() {
-
-}
-
 void BasePhysicsService::nextFrame() {
 
+    doActionBefore();
     for (int i = 0; i < physicsObjects.size(); i++) {
         PhysicsObject *po = physicsObjects[i];
         if (!po->isActive()) {
@@ -69,4 +66,6 @@ void BasePhysicsService::nextFrame() {
         }
         po->updatePos();
     }
+
+    doActionAfter();
 }
