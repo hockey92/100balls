@@ -2,8 +2,8 @@
 #include "GameCoords.h"
 #include "Circle.h"
 
-CirclePhysicsObject::CirclePhysicsObject(float r, float invM) : PhysicsObject(new Circle(r),
-                                                                              invM) { }
+CirclePhysicsObject::CirclePhysicsObject(float r, float invM) : PhysicsObject(new Circle(r), invM),
+                                                                insideGlass(false) { }
 
 void CirclePhysicsObject::updatePos() {
     PhysicsObject::updatePos();
@@ -13,4 +13,12 @@ void CirclePhysicsObject::updatePos() {
             setDeleted(true);
         }
     }
+}
+
+bool CirclePhysicsObject::isInsideGlass() {
+    return insideGlass;
+}
+
+void CirclePhysicsObject::setInsideGlass(bool insideGlass) {
+    this->insideGlass = insideGlass;
 }

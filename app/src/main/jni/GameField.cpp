@@ -39,7 +39,7 @@ void GameField::doFrame(float *projMat) {
         physicsService = new PhysicsService();
     }
 
-    glClearColor(0.5, 0.0, 0.5, 1.0);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -82,8 +82,11 @@ void GameField::doFrame(float *projMat) {
                                   ndk_helper::Mat4::Translation(center.x(), center.y(),
                                                                 0.0f) *
                                   ndk_helper::Mat4::RotationZ(-shape->getAngel())).Ptr());
-            GLushort indices[] = {0, 1, 2, 0, 2, 3};
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+//            GLushort indices[] = {0, 1, 2, 0, 2, 3};
+//            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+
+            GLushort indices[] = {0, 1, 1, 2, 2, 3};
+            glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices);
         }
     }
 }

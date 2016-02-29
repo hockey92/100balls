@@ -1,27 +1,8 @@
 #include "PhysicsService.h"
-#include "CollisionFactory.h"
 #include "Container.h"
-#include "GlassPhysicsObject.h"
 #include "Gate.h"
 #include "common.hpp"
 #include "GameCoords.h"
-#include "CirclePhysicsObject.h"
-
-void PhysicsService::addCircles(float initX, float initY, float direction, float r,
-                                float distanceBetweenCircles, bool active, int numOfCircles) {
-    for (int i = 0; i < numOfCircles; i++) {
-        float x = initX + direction * (i % 5) * (2.0f * r + distanceBetweenCircles);
-        float y = initY - (i / 5) * (2.0f * r + distanceBetweenCircles);
-        PhysicsObject *po = new CirclePhysicsObject(r, 1.0f);
-        if (!active) {
-            frozenCircles.push(po);
-        }
-        po->setActive(active);
-        po->getShape()->move(Vec2(x, y));
-        physicsObjects.push_back(po);
-        circles.push_back(po);
-    }
-}
 
 PhysicsService::PhysicsService() {
     float distanceBetweenCircles = 0.005f;
@@ -60,6 +41,22 @@ PhysicsService::PhysicsService() {
     physicsObjects.push_back(gate);
 }
 
+void PhysicsService::addCircles(float initX, float initY, float direction, float r,
+                                float distanceBetweenCircles, bool active, int numOfCircles) {
+    for (int i = 0; i < numOfCircles; i++) {
+        float x = initX + direction * (i % 5) * (2.0f * r + distanceBetweenCircles);
+        float y = initY - (i / 5) * (2.0f * r + distanceBetweenCircles);
+        CirclePhysicsObject *po = new CirclePhysicsObject(r, 1.0f);
+        if (!active) {
+            frozenCircles.push(po);
+        }
+        po->setActive(active);
+        po->getShape()->move(Vec2(x, y));
+        physicsObjects.push_back(po);
+        circles.push_back(po);
+    }
+}
+
 void PhysicsService::draw(float *projection) {
 //    for (int i = 0; i < physicsObjects.size(); i++) {
 //        physicsObjects[i]->draw(projection);
@@ -80,18 +77,25 @@ void PhysicsService::doActionBefore() {
 
 void PhysicsService::doActionAfter() {
     int MAX_NUM_OF_ACTIVE_CIRCLES = 40;
-    int numOfActiveCircles = 0;
+    int realNumOfActiveCircles = 0;
     for (int i = 0; i < circles.size(); i++) {
-        PhysicsObject *circle = circles[i];
+        CirclePhysicsObject *circle = circles[i];
         if (circle->isActive()) {
-            numOfActiveCircles++;
+            realNumOfActiveCircles++;
+            bool insideGlass = false;
             for (int j = 0; j < glasses.size(); j++) {
-                PhysicsObject *glass = glasses[j];
-
+                GlassPhysicsObject *glass = glasses[j];
+                if (glass->isActive() && glass->containsPoint(circle->getShape()->getCenter())) {
+                    insideGlass = true;
+                    if (!circle->isInsideGlass()) {
+                        glass->addCircle(circle);
+                    }
+                }
             }
+            circle->setInsideGlass(insideGlass);
         }
     }
-    if (numOfActiveCircles < MAX_NUM_OF_ACTIVE_CIRCLES) {
+    if (realNumOfActiveCircles < MAX_NUM_OF_ACTIVE_CIRCLES) {
         if (!frozenCircles.empty()) {
             frozenCircles.top()->setActive(true);
             frozenCircles.pop();

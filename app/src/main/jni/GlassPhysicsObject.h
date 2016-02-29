@@ -4,6 +4,8 @@
 #include "PhysicsObject.h"
 #include "Segment.h"
 #include "Line.h"
+#include "CirclePhysicsObject.h"
+#include <list>
 
 class GlassPhysicsObject : public PhysicsObject {
 public:
@@ -15,14 +17,25 @@ public:
 
     void setChildren(GlassPhysicsObject *children);
 
-    void setContainsCircles(bool containsCircles);
+    bool containsCircles();
 
-    bool isContainsCircles();
+    void clear();
+
+    void addCircle(CirclePhysicsObject *circlePhysicsObject);
+
+    bool containsPoint(const Vec2 &point) const;
+
+    static float getDistanceBetweenGlasses(GlassPhysicsObject *glass1,
+                                           GlassPhysicsObject *glass);
+
+    GlassPhysicsObject *getTail();
+
+    GlassPhysicsObject *getHead();
 
 private:
     Segment *path[4];
     GlassPhysicsObject *parent;
-    GlassPhysicsObject *children;
+    GlassPhysicsObject *child;
     float right;
     float left;
     float down;
@@ -33,14 +46,15 @@ private:
     float clearVel;
     float quartOfCircleLen;
     bool isRotate;
-    bool containsCircles;
     Line *lines[4];
+    int numOfCircles;
+    std::list<CirclePhysicsObject *> circles;
 
     void setParent(GlassPhysicsObject *parent);
 
     void innerUpdate();
 
-    float getPositionOnPath(Vec2 normal, Vec2 point);
+    float getPositionOnPath(const Vec2 &center, float &len, Vec2 &normal);
 
     bool isZero(float value);
 };

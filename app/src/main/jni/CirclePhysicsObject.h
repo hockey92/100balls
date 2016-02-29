@@ -9,6 +9,13 @@ public:
 
     virtual void updatePos();
 
+    bool isInsideGlass();
+
+    void setInsideGlass(bool insideGlass);
+
+private:
+    bool insideGlass;
+
 };
 
 #endif //NATIVE_ACTIVITY_CIRCLEPHYSICSOBJECT_H

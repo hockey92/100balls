@@ -8,7 +8,7 @@ class PhysicsObject {
 
 public:
     PhysicsObject(BaseShape *shape, float invM) : angleVel(0), shape(shape), invM(invM),
-                                                  active(true), deleted(false) { }
+                                                  active(true), deleted(false), visible(true) { }
 
     ~PhysicsObject();
 
@@ -50,6 +50,10 @@ public:
 
     void calculateExtendedAABB();
 
+    bool isVisible() { return visible && !deleted; }
+
+    void setVisible(bool visible) { this->visible = visible; }
+
 private:
     Vec2 vel;
     float angleVel;
@@ -58,6 +62,7 @@ private:
     float invI;
     bool active;
     bool deleted;
+    bool visible;
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSOBJECT_H

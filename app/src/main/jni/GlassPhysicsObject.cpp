@@ -5,8 +5,8 @@
 #include "common.hpp"
 #include "GameCoords.h"
 
-GlassPhysicsObject::GlassPhysicsObject() : PhysicsObject(new GlassShape(), 0.f), children(NULL),
-                                           parent(NULL), isRotate(false) {
+GlassPhysicsObject::GlassPhysicsObject() : PhysicsObject(new GlassShape(), 0.f), child(NULL),
+                                           parent(NULL), isRotate(false), numOfCircles(0) {
     right = GameCoords::getInstance()->getCoords(PATH)->getData()[RIGHT];
     left = GameCoords::getInstance()->getCoords(PATH)->getData()[LEFT];
     down = GameCoords::getInstance()->getCoords(PATH)->getData()[DOWN];
@@ -31,6 +31,12 @@ GlassPhysicsObject::GlassPhysicsObject() : PhysicsObject(new GlassShape(), 0.f),
     );
 }
 
+GlassPhysicsObject::~GlassPhysicsObject() {
+    for (int i = 0; i < 4; i++) {
+        delete lines[i];
+    }
+}
+
 void GlassPhysicsObject::update() {
     if (!parent) {
         innerUpdate();
@@ -38,7 +44,7 @@ void GlassPhysicsObject::update() {
 }
 
 void GlassPhysicsObject::setChildren(GlassPhysicsObject *children) {
-    this->children = children;
+    this->child = children;
     children->setParent(this);
 }
 
@@ -52,22 +58,10 @@ void GlassPhysicsObject::innerUpdate() {
     quartOfCircleLen = PI * distFromPath / 2.0f;
     float distanceBetweenGlasses = pathLen / 7.0f;
 
-    Vec2 dist;
-    float len = 0;
-    Vec2 point;
-    for (int i = 0; i < 4; i++) {
-        Vec2 tempPoint;
-        Vec2 tempDist = CollisionFactory::createDistance(getShape()->getCenter(), path[i],
-                                                         tempPoint);
-        float tempLen = tempDist.len();
-        if (i == 0 || tempLen < len) {
-            dist = tempDist;
-            len = tempLen;
-            point = tempPoint;
-        }
-    }
-    Vec2 normal = dist * (1 / len);
-    positionOnPath = getPositionOnPath(normal, point);
+    float len;
+    Vec2 normal;
+
+    positionOnPath = getPositionOnPath(getShape()->getCenter(), len, normal);
 
     if (!parent) {
         clearVel = initVelValue;
@@ -104,12 +98,27 @@ void GlassPhysicsObject::innerUpdate() {
 //        LOGE("values %f", getPositionOnPath(normal, point));
 //    }
 
-    if (children) {
-        children->innerUpdate();
+    if (child) {
+        child->innerUpdate();
     }
 }
 
-float GlassPhysicsObject::getPositionOnPath(Vec2 normal, Vec2 point) {
+float GlassPhysicsObject::getPositionOnPath(const Vec2 &center, float &len, Vec2 &normal) {
+    Vec2 dist;
+    len = 0;
+    Vec2 point;
+    for (int i = 0; i < 4; i++) {
+        Vec2 tempPoint;
+        Vec2 tempDist = CollisionFactory::createDistance(center, path[i], tempPoint);
+        float tempLen = tempDist.len();
+        if (i == 0 || tempLen < len) {
+            dist = tempDist;
+            len = tempLen;
+            point = tempPoint;
+        }
+    }
+    normal = dist * (1 / len);
+
     float x = normal.x(), y = normal.y();
     bool isXZero = isZero(x), isYZero = isZero(y);
     if (!isXZero && x < 0 && isYZero) {
@@ -145,16 +154,43 @@ bool GlassPhysicsObject::isZero(float value) {
     return value < d && value > -d;
 }
 
-void GlassPhysicsObject::setContainsCircles(bool containsCircles) {
-    this->containsCircles = containsCircles;
-}
-
-bool GlassPhysicsObject::isContainsCircles() {
-    return containsCircles;
-}
-
-GlassPhysicsObject::~GlassPhysicsObject() {
+bool GlassPhysicsObject::containsPoint(const Vec2 &point) const {
+    Vec2 relPoint = point - getShape()->getCenter();
     for (int i = 0; i < 4; i++) {
-        delete lines[i];
+        if (lines[i]->getValue(relPoint) < 0) {
+            return false;
+        }
     }
+    return true;
+}
+
+bool GlassPhysicsObject::containsCircles() {
+    return !circles.empty();
+}
+
+void GlassPhysicsObject::clear() {
+    circles.clear();
+}
+
+void GlassPhysicsObject::addCircle(CirclePhysicsObject *circlePhysicsObject) {
+    circles.push_back(circlePhysicsObject);
+}
+
+float GlassPhysicsObject::getDistanceBetweenGlasses(GlassPhysicsObject *glass1,
+                                                    GlassPhysicsObject *glass2) {
+    return 0;
+}
+
+GlassPhysicsObject *GlassPhysicsObject::getTail() {
+    if (child != NULL) {
+        return child->getTail();
+    }
+    return this;
+}
+
+GlassPhysicsObject *GlassPhysicsObject::getHead() {
+    if (parent != NULL) {
+        return parent->getHead();
+    }
+    return this;
 }

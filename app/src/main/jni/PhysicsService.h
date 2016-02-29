@@ -27,8 +27,9 @@ protected:
 private:
     PhysicsObject *gate;
     std::stack<PhysicsObject *> frozenCircles;
+    std::stack<GlassPhysicsObject *> frozenGlasses;
 
-    std::vector<PhysicsObject *> circles;
+    std::vector<CirclePhysicsObject *> circles;
     std::vector<GlassPhysicsObject *> glasses;
     PhysicsObject *container;
 
