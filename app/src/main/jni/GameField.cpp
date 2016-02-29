@@ -39,7 +39,7 @@ void GameField::doFrame(float *projMat) {
         physicsService = new PhysicsService();
     }
 
-    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClearColor(0.5, 0.5, 0.5, 1.0);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
