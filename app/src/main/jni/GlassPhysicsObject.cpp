@@ -81,11 +81,6 @@ void GlassPhysicsObject::innerUpdate() {
         setAngleVel(0.0f);
     }
 
-
-//    if (!parent) {
-//        LOGE("values %f", getPositionOnPath(normal, point));
-//    }
-
     if (child) {
         child->innerUpdate();
     }

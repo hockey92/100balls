@@ -21,6 +21,8 @@ public:
 
     float getDistFromPath() const;
 
+    Vec2 getStartPoint() const;
+
     bool isRight(const Vec2 &normal) const;
 
     bool isDownRightCurve(const Vec2 &normal) const;

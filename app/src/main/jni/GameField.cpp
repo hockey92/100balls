@@ -75,6 +75,7 @@ void GameField::doFrame(float *projMat) {
     simpleShader->beginRender(glassVertices, 4, 4);
     for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
          iter != physicsService->getObjects()->end(); iter++) {
+        if ((*iter)->isDeleted() || !(*iter)->isVisible()) continue;
         BaseShape *shape = (*iter)->getShape();
         if (shape->type() == 10) {
             Vec2 center = shape->getCenter();

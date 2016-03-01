@@ -25,21 +25,18 @@ PhysicsService::PhysicsService() {
     container = new PhysicsObject(new Container(), 0.f);
     physicsObjects.push_back(container);
 
-    GlassPhysicsObject *parent = NULL;
     for (int i = 0; i < 7; i++) {
         GlassPhysicsObject *po = new GlassPhysicsObject(&glassPath);
-        po->getShape()->move(Vec2(-2.1f, 0.f));
+        po->getShape()->move(glassPath.getStartPoint());
         physicsObjects.push_back(po);
         glasses.push_back(po);
-//        if (i > 0) {
-//            po->setActive(false);
-//            po->setVisible(false);
-//        }
-//        frozenGlasses.push(po);
-        if (parent != NULL) {
-            parent->setChildren(po);
+        if (i == 0) {
+            firstGlass = po;
+        } else {
+            po->setActive(false);
+            po->setVisible(false);
+            frozenGlasses.push(po);
         }
-        parent = po;
     }
 
     gate = new PhysicsObject(new Gate(), 0.f);
@@ -113,6 +110,17 @@ void PhysicsService::doActionAfter() {
 
 void PhysicsService::checkFrozenGlasses() {
     if (!frozenGlasses.empty()) {
-
+        GlassPhysicsObject *glass = frozenGlasses.top();
+        GlassPhysicsObject *tail = firstGlass->getTail();
+        float dist = glassPath.getDistanceBetweenPoints(
+                tail->getShape()->getCenter(),
+                glass->getShape()->getCenter()
+        );
+        if (dist >= glassPath.getDistanceBetweenGlasses()) {
+            tail->setChildren(glass);
+            glass->setVisible(true);
+            glass->setActive(true);
+            frozenGlasses.pop();
+        }
     }
 }

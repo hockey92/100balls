@@ -32,6 +32,7 @@ private:
     std::vector<CirclePhysicsObject *> circles;
     std::vector<GlassPhysicsObject *> glasses;
     PhysicsObject *container;
+    GlassPhysicsObject* firstGlass;
 
     GlassPath glassPath;
 
