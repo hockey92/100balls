@@ -33,8 +33,12 @@ private:
     std::vector<GlassPhysicsObject *> glasses;
     PhysicsObject *container;
 
+    GlassPath glassPath;
+
     void addCircles(float initX, float initY, float direction, float r,
                     float distanceBetweenCircles, bool active, int numOfCircles);
+
+    void checkFrozenGlasses();
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSSERVER_H

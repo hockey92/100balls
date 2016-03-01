@@ -27,10 +27,15 @@ PhysicsService::PhysicsService() {
 
     GlassPhysicsObject *parent = NULL;
     for (int i = 0; i < 7; i++) {
-        GlassPhysicsObject *po = new GlassPhysicsObject();
+        GlassPhysicsObject *po = new GlassPhysicsObject(&glassPath);
         po->getShape()->move(Vec2(-2.1f, 0.f));
         physicsObjects.push_back(po);
         glasses.push_back(po);
+//        if (i > 0) {
+//            po->setActive(false);
+//            po->setVisible(false);
+//        }
+//        frozenGlasses.push(po);
         if (parent != NULL) {
             parent->setChildren(po);
         }
@@ -76,6 +81,9 @@ void PhysicsService::doActionBefore() {
 }
 
 void PhysicsService::doActionAfter() {
+
+    checkFrozenGlasses();
+
     int MAX_NUM_OF_ACTIVE_CIRCLES = 40;
     int realNumOfActiveCircles = 0;
     for (int i = 0; i < circles.size(); i++) {
@@ -100,5 +108,11 @@ void PhysicsService::doActionAfter() {
             frozenCircles.top()->setActive(true);
             frozenCircles.pop();
         }
+    }
+}
+
+void PhysicsService::checkFrozenGlasses() {
+    if (!frozenGlasses.empty()) {
+
     }
 }
