@@ -15,6 +15,8 @@ public:
 
     Vec2 get(int i) const;
 
+    Vec2 getPoint(int i) const;
+
     virtual int type() const { return 2; }
 
     virtual void innerRotate(float angle);

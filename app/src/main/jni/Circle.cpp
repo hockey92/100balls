@@ -2,7 +2,7 @@
 #include "GameCoords.h"
 
 Circle::Circle(float r) : BaseShape() {
-    this->r = GameCoords::getInstance()->getCoords(BALL)->getData()[0];
+    this->r = r;
     setInnerAABB();
 }
 

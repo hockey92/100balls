@@ -10,7 +10,7 @@ GameCoordsData *GameCoords::getCoords(int type) {
 GameCoords::GameCoords(float w, float h) {
     createGlassCoords(w, h);
     createCircleCoords(w, h);
-    createPathCoords(w, h);
+    createPathCoordsAndScreenBorders(w, h);
     createContainerCoords(w, h);
 }
 
@@ -45,10 +45,10 @@ void GameCoords::createContainerCoords(float w, float h) {
     container[2] = -0.2f, container[3] = 1.0f;
     container[4] = -1.0f + 0.405f, container[5] = 1.0f;
     container[6] = -1.0f + 0.405f, container[7] = 0.2f;
-    container[8] = -0.07f, container[9] = -0.06f;
-    container[10] = -0.07f, container[11] = -0.2f;
-    container[12] = 0.07f, container[13] = -0.2f;
-    container[14] = 0.07f, container[15] = -0.06f;
+    container[8] = -0.09f, container[9] = -0.04f;
+    container[10] = -0.09f, container[11] = -0.2f;
+    container[12] = 0.09f, container[13] = -0.2f;
+    container[14] = 0.09f, container[15] = -0.04f;
     container[16] = 1.0f - 0.405f, container[17] = 0.2f;
     container[18] = 1.0f - 0.405f, container[19] = 1.0f;
     container[20] = 0.2f, container[21] = 1.0f;
@@ -67,6 +67,9 @@ void GameCoords::init(float w, float h) {
     }
 }
 
+GameCoordsData::GameCoordsData(float *flatCoords, int type) : data(flatCoords), size(0),
+                                                              type(type) { }
+
 float *GameCoordsData::createCoordsForShader(float zCoord) {
     float *result = NULL;
     switch (type) {
@@ -80,7 +83,7 @@ float *GameCoordsData::createCoordsForShader(float zCoord) {
                 result[i * 4 + 3] = 1.0f;
             }
             break;
-        case BALL:
+        case CIRCLE:
             result = new float[4 * 6];
             result[0] = -data[0], result[1] = -data[0], result[2] = zCoord, result[3] = 1.0f;
             result[4] = 0.0f, result[5] = 0.0f;
@@ -114,10 +117,10 @@ int GameCoordsData::getSize() { return size; }
 int GameCoordsData::getType() { return type; }
 
 void GameCoords::createCircleCoords(float w, float h) {
-    gameCoordsData[BALL] = new GameCoordsData(0.03f, BALL);
+    gameCoordsData[CIRCLE] = new GameCoordsData(0.036f, CIRCLE);
 }
 
-void GameCoords::createPathCoords(float w, float h) {
+void GameCoords::createPathCoordsAndScreenBorders(float w, float h) {
     float *path = new float[5];
 
     float rel = h / w;
@@ -135,7 +138,8 @@ void GameCoords::createPathCoords(float w, float h) {
     path[DIST_FROM_PATH] = 0.2f;
 
     gameCoordsData[PATH] = new GameCoordsData(path, PATH);
-}
 
-GameCoordsData::GameCoordsData(float *flatCoords, int type) : data(flatCoords), size(0),
-                                                              type(type) { }
+    float *screenBorders = new float[2];
+    screenBorders[WIDTH] = 1.0f, screenBorders[HEIGHT] = rel;
+    gameCoordsData[SCREEN_BORDERS] = new GameCoordsData(screenBorders, SCREEN_BORDERS);
+}

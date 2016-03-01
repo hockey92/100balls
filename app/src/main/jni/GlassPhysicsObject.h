@@ -3,37 +3,49 @@
 
 #include "PhysicsObject.h"
 #include "Segment.h"
+#include "Line.h"
+#include "CirclePhysicsObject.h"
+#include "GlassPath.h"
+#include <list>
 
 class GlassPhysicsObject : public PhysicsObject {
 public:
-    GlassPhysicsObject();
+    GlassPhysicsObject(GlassPath *glassPath);
+
+    ~GlassPhysicsObject();
 
     void update();
 
     void setChildren(GlassPhysicsObject *children);
 
+    bool containsCircles();
+
+    void clear();
+
+    void addCircle(CirclePhysicsObject *circlePhysicsObject);
+
+    bool containsPoint(const Vec2 &point) const;
+
+    GlassPhysicsObject *getTail();
+
+    GlassPhysicsObject *getHead();
+
 private:
-    Segment *path[4];
     GlassPhysicsObject *parent;
-    GlassPhysicsObject *children;
-    float right;
-    float left;
-    float down;
-    float up;
-    float pathLen;
-    float distFromPath;
+    GlassPhysicsObject *child;
+
     float positionOnPath;
     float clearVel;
-    float quartOfCircleLen;
     bool isRotate;
+    Line *lines[4];
+    int numOfCircles;
+    std::list<CirclePhysicsObject *> circles;
+
+    GlassPath *glassPath;
 
     void setParent(GlassPhysicsObject *parent);
 
     void innerUpdate();
-
-    float getPositionOnPath(Vec2 normal, Vec2 point);
-
-    bool isZero(float value);
 };
 
 #endif //NATIVE_ACTIVITY_GLASSPHYSICSOBJECT_H

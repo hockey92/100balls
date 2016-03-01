@@ -2,11 +2,15 @@
 #define NATIVE_ACTIVITY_CONTEXT_H
 
 enum {
-    GLASS, CONTAINER, BALL, PATH
+    GLASS, CONTAINER, CIRCLE, PATH, SCREEN_BORDERS
 };
 
 enum {
     LEFT, DOWN, RIGHT, UP, DIST_FROM_PATH
+};
+
+enum {
+    WIDTH, HEIGHT
 };
 
 class GameCoordsData {
@@ -56,7 +60,7 @@ private:
 
     void createCircleCoords(float w, float h);
 
-    void createPathCoords(float w, float h);
+    void createPathCoordsAndScreenBorders(float w, float h);
 };
 
 #endif //NATIVE_ACTIVITY_CONTEXT_H
