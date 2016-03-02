@@ -8,7 +8,9 @@ GlassPhysicsObject::GlassPhysicsObject(GlassPath *glassPath) : PhysicsObject(new
                                                                parent(NULL),
                                                                isRotate(false),
                                                                glassPath(glassPath),
-                                                               numOfCircles(0) {
+                                                               numOfCircles(0),
+                                                               wasted(false),
+                                                               numOfGlassesToParent(1) {
     for (int i = 0; i < 3; i++) {
         lines[i] = new Line(
                 ((Segment *) getShape()->getChildren(i))->getPoint(0),
@@ -19,6 +21,9 @@ GlassPhysicsObject::GlassPhysicsObject(GlassPath *glassPath) : PhysicsObject(new
             ((Segment *) getShape()->getChildren(2))->getPoint(1),
             ((Segment *) getShape()->getChildren(0))->getPoint(0)
     );
+    getShape()->move(glassPath->getStartPoint());
+    updatePositionOnPath();
+    initVelValue = -0.5f;
 }
 
 GlassPhysicsObject::~GlassPhysicsObject() {
@@ -28,14 +33,14 @@ GlassPhysicsObject::~GlassPhysicsObject() {
 }
 
 void GlassPhysicsObject::update() {
-    if (!parent) {
+    if (!parent && !wasted) {
         innerUpdate();
     }
 }
 
-void GlassPhysicsObject::setChildren(GlassPhysicsObject *children) {
-    this->child = children;
-    children->setParent(this);
+void GlassPhysicsObject::setChild(GlassPhysicsObject *child) {
+    this->child = child;
+    child->setParent(this);
 }
 
 void GlassPhysicsObject::setParent(GlassPhysicsObject *parent) {
@@ -43,13 +48,6 @@ void GlassPhysicsObject::setParent(GlassPhysicsObject *parent) {
 }
 
 void GlassPhysicsObject::innerUpdate() {
-    float initVelValue = -0.5f;
-
-    float len;
-    Vec2 normal;
-
-    positionOnPath = glassPath->getPositionOnPath(getShape()->getCenter(), len, normal);
-
     if (!parent) {
         clearVel = initVelValue;
     } else {
@@ -58,7 +56,8 @@ void GlassPhysicsObject::innerUpdate() {
                                                                        positionOnPath);
         float parentClearVel = parent->clearVel;
         clearVel = parentClearVel -
-                   0.01f * (distanceFromParent - glassPath->getDistanceBetweenGlasses()) / DT;
+                   0.01f * (distanceFromParent -
+                            glassPath->getDistanceBetweenGlasses() * numOfGlassesToParent) / DT;
     }
 
     setVel((Vec2::cross(normal, 1) * clearVel) +
@@ -100,7 +99,7 @@ bool GlassPhysicsObject::containsCircles() {
     return !circles.empty();
 }
 
-void GlassPhysicsObject::clear() {
+void GlassPhysicsObject::clearCircles() {
     circles.clear();
 }
 
@@ -120,4 +119,45 @@ GlassPhysicsObject *GlassPhysicsObject::getHead() {
         return parent->getHead();
     }
     return this;
+}
+
+void GlassPhysicsObject::updatePos() {
+    PhysicsObject::updatePos();
+    if (getShape() != NULL) {
+        if (getShape()->getCenter().x() < -2.0f) {
+            setDeleted(true);
+            return;
+        }
+        updatePositionOnPath();
+    }
+}
+
+void GlassPhysicsObject::updatePositionOnPath() {
+    positionOnPath = glassPath->getPositionOnPath(getShape()->getCenter(), len, normal);
+}
+
+void GlassPhysicsObject::doActionAfter() {
+    if (wasted) {
+        return;
+    }
+
+    if (glassPath->isLeft(normal) && !containsCircles()) {
+        waste();
+    } else if (glassPath->isRight(normal) && containsCircles()) {
+        clearCircles();
+    }
+}
+
+void GlassPhysicsObject::waste() {
+    wasted = true;
+    if (parent != NULL) {
+        parent->child = child;
+    }
+    if (child != NULL) {
+        child->parent = parent;
+        child->numOfGlassesToParent += numOfGlassesToParent;
+    }
+    parent = NULL;
+    child = NULL;
+    setVel(Vec2(initVelValue, 0.0f));
 }

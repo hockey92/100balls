@@ -54,9 +54,9 @@ void BasePhysicsService::nextFrame() {
         }
     }
 
-    for (std::list<Constraint *>::iterator iter = constraints.begin();
-         iter != constraints.end(); ++iter) {
-        delete *iter;
+    for (std::list<Constraint *>::iterator iterator = constraints.begin();
+         iterator != constraints.end(); ++iterator) {
+        delete *iterator;
     }
 
     for (int i = 0; i < physicsObjects.size(); i++) {
@@ -68,4 +68,8 @@ void BasePhysicsService::nextFrame() {
     }
 
     doActionAfter();
+}
+
+std::vector<PhysicsObject *> *BasePhysicsService::getObjects() {
+    return &physicsObjects;
 }

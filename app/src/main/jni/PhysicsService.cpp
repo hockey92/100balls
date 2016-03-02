@@ -27,7 +27,6 @@ PhysicsService::PhysicsService() {
 
     for (int i = 0; i < 7; i++) {
         GlassPhysicsObject *po = new GlassPhysicsObject(&glassPath);
-        po->getShape()->move(glassPath.getStartPoint());
         physicsObjects.push_back(po);
         glasses.push_back(po);
         if (i == 0) {
@@ -79,6 +78,11 @@ void PhysicsService::doActionBefore() {
 
 void PhysicsService::doActionAfter() {
 
+    for (int i = 0; i < glasses.size(); i++) {
+
+        glasses[i]->doActionAfter();
+    }
+
     checkFrozenGlasses();
 
     int MAX_NUM_OF_ACTIVE_CIRCLES = 40;
@@ -117,7 +121,7 @@ void PhysicsService::checkFrozenGlasses() {
                 glass->getShape()->getCenter()
         );
         if (dist >= glassPath.getDistanceBetweenGlasses()) {
-            tail->setChildren(glass);
+            tail->setChild(glass);
             glass->setVisible(true);
             glass->setActive(true);
             frozenGlasses.pop();

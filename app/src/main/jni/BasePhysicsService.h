@@ -12,9 +12,7 @@ public:
 
     void nextFrame();
 
-    std::vector<PhysicsObject *> *getObjects() {
-        return &physicsObjects;
-    }
+    std::vector<PhysicsObject *> * getObjects();
 
 protected:
     std::vector<PhysicsObject *> physicsObjects;
