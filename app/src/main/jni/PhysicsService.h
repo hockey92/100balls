@@ -13,8 +13,6 @@ class PhysicsService : public BasePhysicsService {
 public:
     PhysicsService();
 
-    void draw(float *projection);
-
     void open();
 
     void close();

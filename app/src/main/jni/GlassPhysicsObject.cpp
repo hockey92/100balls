@@ -150,10 +150,10 @@ void GlassPhysicsObject::doActionAfter() {
 
 void GlassPhysicsObject::waste() {
     wasted = true;
-    if (parent != NULL) {
+    if (parent) {
         parent->child = child;
     }
-    if (child != NULL) {
+    if (child) {
         child->parent = parent;
         child->numOfGlassesToParent += numOfGlassesToParent;
     }

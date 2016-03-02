@@ -58,12 +58,6 @@ void PhysicsService::addCircles(float initX, float initY, float direction, float
     }
 }
 
-void PhysicsService::draw(float *projection) {
-//    for (int i = 0; i < physicsObjects.size(); i++) {
-//        physicsObjects[i]->draw(projection);
-//    }
-}
-
 void PhysicsService::open() {
     gate->setActive(false);
 }
@@ -79,8 +73,11 @@ void PhysicsService::doActionBefore() {
 void PhysicsService::doActionAfter() {
 
     for (int i = 0; i < glasses.size(); i++) {
-
-        glasses[i]->doActionAfter();
+        GlassPhysicsObject* glass = glasses[i];
+        if (!glass->isActive()) {
+            continue;
+        }
+        glass->doActionAfter();
     }
 
     checkFrozenGlasses();
