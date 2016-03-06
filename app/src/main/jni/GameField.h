@@ -6,10 +6,12 @@
 #include "Texture.h"
 #include "PhysicsObject.h"
 #include "PhysicsService.h"
+#include "Font.h"
 
 class GameField {
 public:
-    GameField(PhysicsService *physicsService) : physicsService(NULL) { }
+    GameField(PhysicsService *physicsService);
+    ~GameField();
 
     bool init();
 
@@ -25,6 +27,7 @@ private:
     VertexBuf *glassVertices;
     VertexBuf *containerVertices;
     Texture *texture;
+    Font* font;
 };
 
 #endif //NATIVE_ACTIVITY_GAMEFIELD_H

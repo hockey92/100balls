@@ -6,7 +6,8 @@ struct android_app *FileBuf::app = NULL;
 
 FileBuf::FileBuf() {
     ASSERT(FileBuf::app != NULL);
-    file = new File("circle.tga", FileBuf::app);
+    circle = new File("circle.tga", FileBuf::app);
+    fontImage = new File("font.tga", FileBuf::app);
 }
 
 FileBuf *FileBuf::getInstance() {
@@ -20,6 +21,10 @@ void FileBuf::init(struct android_app *app) {
     FileBuf::app = app;
 }
 
-File *FileBuf::getFile() {
-    return file;
+File *FileBuf::getCircle() {
+    return circle;
+}
+
+File *FileBuf::getFontImage() {
+    return fontImage;
 }

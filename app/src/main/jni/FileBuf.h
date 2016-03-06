@@ -11,14 +11,17 @@ public:
 
     static void init(struct android_app *app);
 
-    File *getFile();
+    File *getCircle();
+
+    File *getFontImage();
 
 private:
     FileBuf();
 
     static struct android_app *app;
     static FileBuf *instance;
-    File *file;
+    File *circle;
+    File *fontImage;
 };
 
 #endif //NATIVE_ACTIVITY_FILEPOOL_H

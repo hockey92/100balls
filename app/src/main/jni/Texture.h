@@ -3,13 +3,15 @@
 
 #include <GLES2/gl2.h>
 #include "File.h"
+#include "TGAImage.h"
 
 class Texture {
 private:
     GLuint texture;
 
 public:
-    Texture(File *file);
+    Texture(const TGAImage &image);
+    ~Texture();
 
     void bind(int unit);
 

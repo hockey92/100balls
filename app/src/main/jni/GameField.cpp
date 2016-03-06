@@ -24,7 +24,12 @@ bool GameField::init() {
                                       GameCoords::getInstance()->getCoords(CONTAINER)->getSize() *
                                       4 * sizeof(float));
     glassVertices = new VertexBuf(glass, 16 * sizeof(float));
-    texture = new Texture(FileBuf::getInstance()->getFile());
+
+    TGAImage *image = new TGAImage(FileBuf::getInstance()->getCircle());
+
+    texture = new Texture(*image);
+
+    font->init();
 
     delete[] glass;
     delete[] vertices;
@@ -56,6 +61,8 @@ void GameField::doFrame(float *projMat) {
     GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11};
     glDrawElements(GL_LINES, 22, GL_UNSIGNED_SHORT, indices);
 
+    simpleShader->endRender();
+
     textureShader->beginRender(circleVertices, 4, 6);
     textureShader->setTexture(texture);
 
@@ -71,6 +78,7 @@ void GameField::doFrame(float *projMat) {
             textureShader->render();
         }
     }
+    textureShader->endRender();
 
     simpleShader->beginRender(glassVertices, 4, 4);
     for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
@@ -90,8 +98,21 @@ void GameField::doFrame(float *projMat) {
             glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices);
         }
     }
+    simpleShader->endRender();
+
+    font->renderInteger(physicsService->score, textureShader, projMat, -0.6f);
 }
 
 PhysicsService *GameField::getPhysicsService() {
     return physicsService;
+}
+
+GameField::GameField(PhysicsService *physicsService) : physicsService(NULL) {
+    font = new Font(new TGAImage(FileBuf::getInstance()->getFontImage()));
+}
+
+GameField::~GameField() {
+    if (font) {
+        delete font;
+    }
 }

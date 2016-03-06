@@ -31,6 +31,9 @@ public:
 
     float *createCoordsForShader(float zCoord);
 
+    static float *createCoordsForShader(float down, float up, float left, float right, float texDown,
+                                       float texUp, float texLeft, float texRight);
+
 private:
     float *data;
     int size;

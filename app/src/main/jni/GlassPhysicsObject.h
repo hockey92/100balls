@@ -34,13 +34,15 @@ public:
 
     void doActionAfter();
 
+    Vec2 normal;
+
 private:
     GlassPhysicsObject *parent;
     GlassPhysicsObject *child;
 
     float positionOnPath;
     float len;
-    Vec2 normal;
+
     float clearVel;
     bool isRotate;
     Line *lines[4];

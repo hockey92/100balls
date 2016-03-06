@@ -5,6 +5,9 @@
 #include "GameCoords.h"
 
 PhysicsService::PhysicsService() {
+
+    score = 0;
+
     float distanceBetweenCircles = 0.005f;
     float r = GameCoords::getInstance()->getCoords(CIRCLE)->getData()[0];
 
@@ -95,6 +98,7 @@ void PhysicsService::doActionAfter() {
                     insideGlass = true;
                     if (!circle->isInsideGlass()) {
                         glass->addCircle(circle);
+                        score += glassPath.isDown(glass->normal);
                     }
                 }
             }

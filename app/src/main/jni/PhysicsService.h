@@ -17,6 +17,8 @@ public:
 
     void close();
 
+    int score;
+
 protected:
     virtual void doActionBefore();
 
