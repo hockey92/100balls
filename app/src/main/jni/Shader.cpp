@@ -197,10 +197,10 @@ void Shader::render() {
 }
 
 void Shader::endRender() {
-//    if (mPreparedVertexBuf) {
-//        mPreparedVertexBuf->UnbindBuffer();
-//        mPreparedVertexBuf = NULL;
-//    }
+    if (preparedVertexBuf) {
+        preparedVertexBuf->unbindBuffer();
+        preparedVertexBuf = NULL;
+    }
 }
 
 void Shader::setMVP(float *mvp) {

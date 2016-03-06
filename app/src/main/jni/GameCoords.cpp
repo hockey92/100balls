@@ -143,3 +143,18 @@ void GameCoords::createPathCoordsAndScreenBorders(float w, float h) {
     screenBorders[WIDTH] = 1.0f, screenBorders[HEIGHT] = rel;
     gameCoordsData[SCREEN_BORDERS] = new GameCoordsData(screenBorders, SCREEN_BORDERS);
 }
+
+float *GameCoordsData::createCoordsForShader(float down, float up, float left, float right, float texDown,
+                                   float texUp, float texLeft, float texRight) {
+
+    float* result = new float[4 * 6];
+    result[0] = left, result[1] = down, result[2] = 0, result[3] = 1.0f;
+    result[4] = texLeft, result[5] = texDown;
+    result[6] = left, result[7] = up, result[8] = 0, result[9] = 1.0f;
+    result[10] = texLeft, result[11] = texUp;
+    result[12] = right, result[13] = up, result[14] = 0, result[15] = 1.0f;
+    result[16] = texRight, result[17] = texUp;
+    result[18] = right, result[19] = down, result[20] = 0, result[21] = 1.0f;
+    result[22] = texRight, result[23] = texDown;
+    return result;
+}

@@ -2,6 +2,7 @@
 #include "common.hpp"
 #include "FileBuf.h"
 #include "GameCoords.h"
+#include "Font.h"
 
 #define VERBOSE_LOGGING 1
 

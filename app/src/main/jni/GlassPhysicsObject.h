@@ -16,36 +16,51 @@ public:
 
     void update();
 
-    void setChildren(GlassPhysicsObject *children);
+    void setChild(GlassPhysicsObject *child);
 
     bool containsCircles();
 
-    void clear();
+    void clearCircles();
 
     void addCircle(CirclePhysicsObject *circlePhysicsObject);
 
     bool containsPoint(const Vec2 &point) const;
 
+    virtual void updatePos();
+
     GlassPhysicsObject *getTail();
 
     GlassPhysicsObject *getHead();
+
+    void doActionAfter();
+
+    Vec2 normal;
 
 private:
     GlassPhysicsObject *parent;
     GlassPhysicsObject *child;
 
     float positionOnPath;
+    float len;
+
     float clearVel;
     bool isRotate;
     Line *lines[4];
     int numOfCircles;
     std::list<CirclePhysicsObject *> circles;
+    float initVelValue;
+    bool wasted;
+    int numOfGlassesToParent;
 
     GlassPath *glassPath;
 
     void setParent(GlassPhysicsObject *parent);
 
     void innerUpdate();
+
+    void updatePositionOnPath();
+
+    void waste();
 };
 
 #endif //NATIVE_ACTIVITY_GLASSPHYSICSOBJECT_H
