@@ -1,7 +1,9 @@
+#include <vecmath.h>
 #include "GlassPhysicsObject.h"
 #include "GlassShape.h"
 #include "Constants.h"
 #include "common.hpp"
+#include "ScoreService.h"
 
 GlassPhysicsObject::GlassPhysicsObject(GlassPath *glassPath) : PhysicsObject(new GlassShape(), 0.f),
                                                                child(NULL),
@@ -10,7 +12,8 @@ GlassPhysicsObject::GlassPhysicsObject(GlassPath *glassPath) : PhysicsObject(new
                                                                glassPath(glassPath),
                                                                numOfCircles(0),
                                                                wasted(false),
-                                                               numOfGlassesToParent(1) {
+                                                               numOfGlassesToParent(1),
+                                                               score(0) {
     for (int i = 0; i < 3; i++) {
         lines[i] = new Line(
                 ((Segment *) getShape()->getChildren(i))->getPoint(0),
@@ -49,7 +52,7 @@ void GlassPhysicsObject::setParent(GlassPhysicsObject *parent) {
 
 void GlassPhysicsObject::innerUpdate() {
     if (!parent) {
-        clearVel = initVelValue;
+        clearVel = ScoreService::getInstance()->getGlassVel();
     } else {
         float parentPositionOnPath = parent->positionOnPath;
         float distanceFromParent = glassPath->getDistanceBetweenPoints(parentPositionOnPath,
@@ -105,6 +108,19 @@ void GlassPhysicsObject::clearCircles() {
 
 void GlassPhysicsObject::addCircle(CirclePhysicsObject *circlePhysicsObject) {
     circles.push_back(circlePhysicsObject);
+    if (glassPath->isDown(normal)) {
+        if (0 <= score && score < 50) {
+            score += 1;
+            ScoreService::getInstance()->add(1);
+        } else if (50 <= score && score < 100) {
+            score += 2;
+            ScoreService::getInstance()->add(2);
+        } else if (100 <= score) {
+            score += 5;
+            ScoreService::getInstance()->add(5);
+        }
+        score++;
+    }
 }
 
 GlassPhysicsObject *GlassPhysicsObject::getTail() {
@@ -160,4 +176,27 @@ void GlassPhysicsObject::waste() {
     parent = NULL;
     child = NULL;
     setVel(Vec2(initVelValue, 0.0f));
+}
+
+void GlassPhysicsObject::draw(float *projMat, Shader *simpleShader) {
+    BaseShape *shape = getShape();
+    Vec2 center = shape->getCenter();
+    simpleShader->setMVP((ndk_helper::Mat4(projMat) *
+                          ndk_helper::Mat4::Translation(center.x(), center.y(),
+                                                        0.0f) *
+                          ndk_helper::Mat4::RotationZ(-shape->getAngel())).Ptr());
+    if (0 <= score && score < 50) {
+        simpleShader->setColor(1.0f, 1.0f, 1.0f, 0.5f);
+    } else if (50 <= score && score < 100) {
+        simpleShader->setColor(1.0f, 0.0f, 0.0f, 0.5f);
+    } else if (100 <= score && score < 150) {
+        simpleShader->setColor(0.0f, 1.0f, 0.0f, 0.5f);
+    } else if (150 <= score) {
+        simpleShader->setColor(1.0f, 0.0f, 1.0f, 0.5f);
+    }
+    GLushort indices1[] = {0, 1, 2, 0, 2, 3};
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices1);
+    simpleShader->setColor(0.0f, 0.0f, 0.0f, 1.0f);
+    GLushort indices2[] = {0, 1, 1, 2, 2, 3};
+    glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices2);
 }

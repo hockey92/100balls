@@ -6,8 +6,6 @@
 
 PhysicsService::PhysicsService() {
 
-    score = 0;
-
     float distanceBetweenCircles = 0.005f;
     float r = GameCoords::getInstance()->getCoords(CIRCLE)->getData()[0];
 
@@ -16,13 +14,13 @@ PhysicsService::PhysicsService() {
                GameCoords::getInstance()->getCoords(CONTAINER)->getData()[5] - r -
                distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, false, 30);
 
-    addCircles(GameCoords::getInstance()->getCoords(CONTAINER)->getData()[18] - r -
+    addCircles(GameCoords::getInstance()->getCoords(CONTAINER)->getData()[22] - r -
                distanceBetweenCircles,
-               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[19] - r -
+               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
                distanceBetweenCircles, -1.0f, r, distanceBetweenCircles, false, 30);
 
     addCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
-               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[19] - r -
+               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
                distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, true, 40);
 
     container = new PhysicsObject(new Container(), 0.f);
@@ -76,7 +74,7 @@ void PhysicsService::doActionBefore() {
 void PhysicsService::doActionAfter() {
 
     for (int i = 0; i < glasses.size(); i++) {
-        GlassPhysicsObject* glass = glasses[i];
+        GlassPhysicsObject *glass = glasses[i];
         if (!glass->isActive()) {
             continue;
         }
@@ -98,7 +96,6 @@ void PhysicsService::doActionAfter() {
                     insideGlass = true;
                     if (!circle->isInsideGlass()) {
                         glass->addCircle(circle);
-                        score += glassPath.isDown(glass->normal);
                     }
                 }
             }
@@ -128,4 +125,20 @@ void PhysicsService::checkFrozenGlasses() {
             frozenGlasses.pop();
         }
     }
+}
+
+void PhysicsService::draw(float *projMat, Shader *simpleShader, VertexBuf *vertexBuf) {
+    simpleShader->beginRender(vertexBuf, 4, 4);
+    simpleShader->setMVP(projMat);
+    simpleShader->setColor(0, 0, 0, 1);
+
+    if (gate->isActive()) {
+        GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13};
+        glDrawElements(GL_LINES, 22, GL_UNSIGNED_SHORT, indices);
+    } else {
+        GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 6, 7, 9, 9, 10, 10, 11, 11, 12, 12, 13};
+        glDrawElements(GL_LINES, 20, GL_UNSIGNED_SHORT, indices);
+    }
+
+    simpleShader->endRender();
 }

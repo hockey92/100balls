@@ -2,7 +2,8 @@
 #include "common.hpp"
 #include "FileBuf.h"
 #include "GameCoords.h"
-#include "Font.h"
+#include "TouchEventData.h"
+#include "ScreenManager.h"
 
 #define VERBOSE_LOGGING 1
 
@@ -23,7 +24,7 @@ Application::Application(struct android_app *app) {
     mEglConfig = 0;
     mHasFocus = false, mIsVisible = false, mHasWindow = false;
     physicsService = NULL;//new PhysicsService();
-    gameField = new GameField(physicsService);
+    screenManager = new ScreenManager();//new GameField(physicsService);
 }
 
 Application::~Application() {
@@ -59,11 +60,10 @@ bool Application::initSurface() {
     EGLint numConfigs, format;
 
     const EGLint attribs[] = {
-            EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-            EGL_BLUE_SIZE, 8,
-            EGL_GREEN_SIZE, 8,
-            EGL_RED_SIZE, 8,
-            EGL_NONE
+            EGL_RENDERABLE_TYPE,
+            EGL_OPENGL_ES2_BIT,
+            EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_BLUE_SIZE, 8, EGL_GREEN_SIZE, 8,
+            EGL_RED_SIZE, 8, EGL_DEPTH_SIZE, 24, EGL_NONE
     };
 
     // since this is a simple sample, we have a trivial selection process. We pick
@@ -147,7 +147,7 @@ static int _handle_input_proxy(struct android_app *app, AInputEvent *event) {
 void Application::handleCommand(int32_t cmd) {
 //    SceneManager *mgr = SceneManager::GetInstance();
 
-            VLOGD("Application: handling command %d.", cmd);
+    VLOGD("Application: handling command %d.", cmd);
     switch (cmd) {
         case APP_CMD_SAVE_STATE:
             // The system has asked us to save our current state.
@@ -161,6 +161,8 @@ void Application::handleCommand(int32_t cmd) {
 //                    VLOGD("Application: APP_CMD_INIT_WINDOW");
             if (app->window != NULL) {
                 mHasWindow = true;
+                screenW = ANativeWindow_getWidth(app->window);
+                screenH = ANativeWindow_getHeight(app->window);
             }
             break;
         case APP_CMD_TERM_WINDOW:
@@ -222,18 +224,41 @@ void Application::handleCommand(int32_t cmd) {
 }
 
 bool Application::handleInput(AInputEvent *event) {
+    if (!mHasWindow || GameCoords::getInstance() == NULL) {
+        return 0;
+    }
     int eventType = AInputEvent_getType(event);
     if (eventType == AINPUT_EVENT_TYPE_MOTION) {
-        int action = AKeyEvent_getAction(event) & AMOTION_EVENT_ACTION_MASK;
-        PhysicsService *physicsService = gameField->getPhysicsService();
+        int intAction = AKeyEvent_getAction(event);
+        int action = intAction & AMOTION_EVENT_ACTION_MASK;
+        int pointId = intAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK;
+        pointId >>= 8;
+
+        LOGE("POINT_ID %d", pointId);
+
+        float xMax = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[WIDTH];
+        float yMax = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HEIGHT];
+
+        float x = -xMax + xMax * 2.0f * (AMotionEvent_getX(event, pointId) / screenW);
+        float y = yMax - yMax * 2.0f * (AMotionEvent_getY(event, pointId) / screenH);
+
+        TouchEventData touchEventData(action, Vec2(x, y), pointId);
+
+//        PhysicsService *physicsService = gameField->getPhysicsService();
         if (action == AMOTION_EVENT_ACTION_DOWN) {
-            if (physicsService) {
-                physicsService->open();
+            if (screenManager) {
+                screenManager->doOperation(&touchEventData);
             }
+//            if (physicsService) {
+//                physicsService->open();
+//            }
         } else if (action == AMOTION_EVENT_ACTION_UP) {
-            if (physicsService) {
-                physicsService->close();
+            if (screenManager) {
+                screenManager->doOperation(&touchEventData);
             }
+//            if (physicsService) {
+//                physicsService->close();
+//            }
         }
 
         return 1;
@@ -279,7 +304,7 @@ void Application::doFrame() {
     // prepare to render (create context, surfaces, etc, if needed)
     if (!prepareToRender()) {
         // not ready
-                VLOGD("Application: preparation to render failed.");
+        VLOGD("Application: preparation to render failed.");
         return;
     }
 
@@ -321,10 +346,10 @@ void Application::doFrame() {
 
     pM[0] = 1.0f;
     pM[5] = rel;
-    pM[10] = 1.0f;
+    pM[10] = -1.0f;
     pM[15] = 1.0f;
 
-    gameField->doFrame(pM);
+    screenManager->doFrame(pM);
 
     if (EGL_FALSE == eglSwapBuffers(mEglDisplay, mEglSurface)) {
         LOGW("Application: eglSwapBuffers failed, EGL error %d", eglGetError());
@@ -471,7 +496,7 @@ void Application::killDisplay() {
 
 bool Application::initGLObjects() {
     if (!mHasGLObjects) {
-        if (!gameField->init()) {
+        if (!screenManager->init()) {
             return false;
         }
         _log_opengl_error(glGetError());
@@ -485,7 +510,7 @@ void Application::killGLObjects() {
 }
 
 void Application::configureOpenGL() {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }

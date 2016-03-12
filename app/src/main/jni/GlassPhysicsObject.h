@@ -6,6 +6,7 @@
 #include "Line.h"
 #include "CirclePhysicsObject.h"
 #include "GlassPath.h"
+#include "Shader.h"
 #include <list>
 
 class GlassPhysicsObject : public PhysicsObject {
@@ -34,8 +35,6 @@ public:
 
     void doActionAfter();
 
-    Vec2 normal;
-
 private:
     GlassPhysicsObject *parent;
     GlassPhysicsObject *child;
@@ -43,6 +42,7 @@ private:
     float positionOnPath;
     float len;
 
+    Vec2 normal;
     float clearVel;
     bool isRotate;
     Line *lines[4];
@@ -51,6 +51,7 @@ private:
     float initVelValue;
     bool wasted;
     int numOfGlassesToParent;
+    int score;
 
     GlassPath *glassPath;
 
@@ -61,6 +62,8 @@ private:
     void updatePositionOnPath();
 
     void waste();
+
+    void draw(float *projMat, Shader *simpleShader);
 };
 
 #endif //NATIVE_ACTIVITY_GLASSPHYSICSOBJECT_H

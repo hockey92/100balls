@@ -3,6 +3,7 @@
 
 #include "Vec2.h"
 #include "BaseShape.h"
+#include "Shader.h"
 
 class PhysicsObject {
 
@@ -38,7 +39,7 @@ public:
 
     BaseShape *getShape() const { return shape; }
 
-    void draw(float *projection);
+    virtual void draw(float *projection, Shader* shader);
 
     bool isActive();
 

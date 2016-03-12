@@ -7,17 +7,20 @@
 #include "PhysicsObject.h"
 #include "PhysicsService.h"
 #include "Font.h"
+#include "ScreenElement.h"
+#include "Operationable.h"
+#include "Button.h"
 
-class GameField {
+class GameField : public ScreenElement {
 public:
-    GameField(PhysicsService *physicsService);
+    GameField();
     ~GameField();
 
     bool init();
 
     void doFrame(float *projMat);
 
-    PhysicsService *getPhysicsService();
+    bool doOperation(void *data);
 
 private:
     PhysicsService *physicsService;

@@ -17,7 +17,7 @@ public:
 
     void close();
 
-    int score;
+    void draw(float *projMat, Shader *simpleShader, VertexBuf *vertexBuf);
 
 protected:
     virtual void doActionBefore();
@@ -32,7 +32,7 @@ private:
     std::vector<CirclePhysicsObject *> circles;
     std::vector<GlassPhysicsObject *> glasses;
     PhysicsObject *container;
-    GlassPhysicsObject* firstGlass;
+    GlassPhysicsObject *firstGlass;
 
     GlassPath glassPath;
 

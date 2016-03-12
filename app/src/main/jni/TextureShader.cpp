@@ -28,9 +28,12 @@ const char *TextureShader::getVertexShaderSource() {
             "attribute vec2 a_texCoord; \n"
             "varying vec2 v_texCoord; \n"
             "uniform mat4 projection;   \n"
+            "uniform vec4 a_Color;   \n"
+            "varying vec4 v_Color; \n"
             "void main(){ \n"
             "   gl_Position = projection * a_Position; \n"
             "   v_texCoord = a_texCoord; \n"
+            "   v_Color = a_Color; \n"
             "} \n";
 }
 

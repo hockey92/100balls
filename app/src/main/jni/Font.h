@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "TextureShader.h"
+#include <string>
 
 class Font {
 public:
@@ -15,12 +16,18 @@ public:
 
     void init();
 
-    void renderInteger(unsigned int num, TextureShader *shader, float *mvp, float y);
+    void renderInteger(unsigned int num, TextureShader *shader, float *mvp, float x, float y);
+
+    void renderInteger(unsigned int num, TextureShader *shader, float *mvp, const Vec2 &pos);
+
+    void renderText(const std::string& text, TextureShader *shader, float *mvp, float x, float y);
+
+    void renderText(const std::string& text, TextureShader *shader, float *mvp, const Vec2 &pos);
 
 private:
     TGAImage *image;
     VertexBuf *fontBuf[300];
-    Texture* texture;
+    Texture *texture;
 
     void bfs();
 

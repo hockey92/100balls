@@ -14,10 +14,10 @@ Font::Font(TGAImage *image) : image(image) {
 void Font::bfs() {
 
     int initX = 0;
-    int initY = 20;
+    int initY = 80;
     int right, left, up, down;
 
-    for (int k = 0; k < 10; k++) {
+    for (int k = 0; k < 26; k++) {
         std::set<std::pair<int, int> > used;
         std::queue<std::pair<int, int> > que;
 
@@ -66,11 +66,11 @@ void Font::bfs() {
         float texLeft = ((float) (left - 2)) / ((float) image->getW());
         float texRight = ((float) (right + 2)) / ((float) image->getW());
 
-        float coeff = 600.0f;
+        float coeff = 300.0f;
         float h = (float) (up - down) / coeff;
         float w = (float) (right - left) / coeff;
 
-        fontBuf[k] = new VertexBuf(
+        fontBuf['A' + k] = new VertexBuf(
                 GameCoordsData::createCoordsForShader(-h, h, -w, w, texDown, texUp, texLeft,
                                                       texRight), 24 * sizeof(float));
 
@@ -103,16 +103,16 @@ void Font::init() {
     bfs();
 }
 
-void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, float y) {
-    float distBetweenSymbols = 0.075f;
+void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, float x, float y) {
+    float distBetweenSymbols = 0.15f;
     ndk_helper::Mat4 mvpMat4 = ndk_helper::Mat4(mvp);
     Tokenizer tokenizer(num);
     int tokensCount = tokenizer.getTokensCount();
     float dx = distBetweenSymbols * (float) ((tokensCount - 1) / 2) +
                (tokensCount % 2 == 0 ? distBetweenSymbols / 2.0f : 0.0f);
-    mvpMat4 *= ndk_helper::Mat4::Translation(dx, y, 0.0f);
+    mvpMat4 *= ndk_helper::Mat4::Translation(x + dx, y, 0.0f);
     while (tokenizer.hasNext()) {
-        shader->beginRender(fontBuf[tokenizer.nextToken()], 4, 6);
+        shader->beginRender(fontBuf[tokenizer.nextToken() + '0'], 4, 6);
         shader->setTexture(texture);
         shader->setMVP(mvpMat4.Ptr());
         shader->render();
@@ -120,4 +120,30 @@ void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, fl
 
         mvpMat4 *= ndk_helper::Mat4::Translation(-distBetweenSymbols, 0.0f, 0.0f);
     }
+}
+
+void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, const Vec2& pos) {
+    renderInteger(num, shader, mvp, pos.x(), pos.y());
+}
+
+void Font::renderText(const std::string& text, TextureShader *shader, float *mvp, float x, float y) {
+    float distBetweenSymbols = 0.15f;
+    ndk_helper::Mat4 mvpMat4 = ndk_helper::Mat4(mvp);
+    int tokensCount = text.size();
+    float dx = distBetweenSymbols * (float) ((tokensCount - 1) / 2) +
+               (tokensCount % 2 == 0 ? distBetweenSymbols / 2.0f : 0.0f);
+    mvpMat4 *= ndk_helper::Mat4::Translation(x + dx, y, 0.0f);
+    for (int i = 0; i < tokensCount; i++) {
+        shader->beginRender(fontBuf[text[(tokensCount - 1) - i]], 4, 6);
+        shader->setTexture(texture);
+        shader->setMVP(mvpMat4.Ptr());
+        shader->render();
+        shader->endRender();
+
+        mvpMat4 *= ndk_helper::Mat4::Translation(-distBetweenSymbols, 0.0f, 0.0f);
+    }
+}
+
+void Font::renderText(const std::string& text, TextureShader *shader, float *mvp, const Vec2 &pos) {
+    renderText(text, shader, mvp, pos.x(), pos.y());
 }

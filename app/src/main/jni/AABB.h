@@ -13,6 +13,8 @@ public:
 
     AABB(const AABB *aabb, const Vec2 &moveVec);
 
+    AABB(const AABB &aabb, const Vec2 &moveVec);
+
     void set(const AABB *aabb, const Vec2 &moveVec);
 
     void set(float left, float down, float right, float up);
@@ -20,6 +22,12 @@ public:
     static bool isIntersect(const AABB *a, const AABB *b);
 
     void move(const Vec2 &d);
+
+    bool isPointBelong(const Vec2 &point);
+
+    void getCoords(float& left, float& right, float& up, float& down) const;
+
+    Vec2 getCenter() const;
 
 private:
     float left;

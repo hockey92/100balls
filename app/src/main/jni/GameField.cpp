@@ -2,6 +2,8 @@
 #include "GameField.h"
 #include "FileBuf.h"
 #include "GameCoords.h"
+#include "ScoreService.h"
+#include "TouchEventData.h"
 
 bool GameField::init() {
 
@@ -35,7 +37,7 @@ bool GameField::init() {
     delete[] vertices;
     delete[] container;
 
-    return true;
+    return ScreenElement::init();
 }
 
 void GameField::doFrame(float *projMat) {
@@ -45,10 +47,11 @@ void GameField::doFrame(float *projMat) {
     }
 
     glClearColor(0.5, 0.5, 0.5, 1.0);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    glEnable(GL_DEPTH_TEST);
+//    glDepthFunc(GL_LEQUAL);
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     if (physicsService == NULL) {
         return;
@@ -56,16 +59,17 @@ void GameField::doFrame(float *projMat) {
 
     physicsService->nextFrame();
 
-    simpleShader->beginRender(containerVertices, 4, 4);
-    textureShader->setMVP(ndk_helper::Mat4(projMat).Ptr());
-    GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11};
-    glDrawElements(GL_LINES, 22, GL_UNSIGNED_SHORT, indices);
+    physicsService->draw(projMat, simpleShader, containerVertices);
 
+    simpleShader->beginRender(glassVertices, 4, 4);
+    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
+         iter != physicsService->getObjects()->end(); iter++) {
+        (*iter)->draw(projMat, simpleShader);
+    }
     simpleShader->endRender();
 
     textureShader->beginRender(circleVertices, 4, 6);
     textureShader->setTexture(texture);
-
     for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
          iter != physicsService->getObjects()->end(); iter++) {
         if ((*iter)->isDeleted()) continue;
@@ -80,34 +84,12 @@ void GameField::doFrame(float *projMat) {
     }
     textureShader->endRender();
 
-    simpleShader->beginRender(glassVertices, 4, 4);
-    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
-         iter != physicsService->getObjects()->end(); iter++) {
-        if ((*iter)->isDeleted() || !(*iter)->isVisible()) continue;
-        BaseShape *shape = (*iter)->getShape();
-        if (shape->type() == 10) {
-            Vec2 center = shape->getCenter();
-            simpleShader->setMVP((ndk_helper::Mat4(projMat) *
-                                  ndk_helper::Mat4::Translation(center.x(), center.y(),
-                                                                0.0f) *
-                                  ndk_helper::Mat4::RotationZ(-shape->getAngel())).Ptr());
-//            GLushort indices[] = {0, 1, 2, 0, 2, 3};
-//            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+//    font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
 
-            GLushort indices[] = {0, 1, 1, 2, 2, 3};
-            glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices);
-        }
-    }
-    simpleShader->endRender();
-
-    font->renderInteger(physicsService->score, textureShader, projMat, -0.6f);
+    ScreenElement::doFrame(projMat);
 }
 
-PhysicsService *GameField::getPhysicsService() {
-    return physicsService;
-}
-
-GameField::GameField(PhysicsService *physicsService) : physicsService(NULL) {
+GameField::GameField() : physicsService(NULL) {
     font = new Font(new TGAImage(FileBuf::getInstance()->getFontImage()));
 }
 
@@ -115,4 +97,27 @@ GameField::~GameField() {
     if (font) {
         delete font;
     }
+}
+
+bool GameField::doOperation(void *data) {
+    if (ScreenElement::doOperation(data)) {
+        return true;
+    }
+
+    if (physicsService == NULL) {
+        return false;
+    }
+
+    TouchEventData *eventData = (TouchEventData *) data;
+    switch (eventData->type) {
+        case EVENT_DOWN:
+            physicsService->open();
+            break;
+        case EVENT_UP:
+            physicsService->close();
+            break;
+        default:
+            break;
+    }
+    return true;
 }

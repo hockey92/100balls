@@ -8,6 +8,7 @@ protected:
     int vertShader, fragShader, program;
     int MVPMatrix;
     int positionAttrib;
+    int colorAttrib;
     VertexBuf *preparedVertexBuf;
 
 public:
@@ -24,6 +25,8 @@ public:
     virtual void beginRender(VertexBuf *vbuf, int size, int stride);
 
     void setMVP(float* mvp);
+
+    void setColor(float r, float g, float b, float a);
 
     // Renders one copy of the prepared geometry, given a model-view-projection matrix.
 //    inline void Render(glm::mat4 *mvpMat) {
