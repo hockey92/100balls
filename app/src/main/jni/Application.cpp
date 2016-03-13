@@ -147,7 +147,7 @@ static int _handle_input_proxy(struct android_app *app, AInputEvent *event) {
 void Application::handleCommand(int32_t cmd) {
 //    SceneManager *mgr = SceneManager::GetInstance();
 
-    VLOGD("Application: handling command %d.", cmd);
+            VLOGD("Application: handling command %d.", cmd);
     switch (cmd) {
         case APP_CMD_SAVE_STATE:
             // The system has asked us to save our current state.
@@ -224,6 +224,13 @@ void Application::handleCommand(int32_t cmd) {
 }
 
 bool Application::handleInput(AInputEvent *event) {
+
+    if (AKeyEvent_getKeyCode(event) == AKEYCODE_BACK) {
+        ((ScreenManager *) screenManager)->setCurrentScreen(0);
+        return 1;
+    };
+
+
     if (!mHasWindow || GameCoords::getInstance() == NULL) {
         return 0;
     }
@@ -304,7 +311,7 @@ void Application::doFrame() {
     // prepare to render (create context, surfaces, etc, if needed)
     if (!prepareToRender()) {
         // not ready
-        VLOGD("Application: preparation to render failed.");
+                VLOGD("Application: preparation to render failed.");
         return;
     }
 

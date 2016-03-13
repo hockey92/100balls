@@ -196,7 +196,16 @@ void GlassPhysicsObject::draw(float *projMat, Shader *simpleShader) {
     }
     GLushort indices1[] = {0, 1, 2, 0, 2, 3};
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices1);
-    simpleShader->setColor(0.0f, 0.0f, 0.0f, 1.0f);
+//    simpleShader->setColor(0.0f, 0.0f, 0.0f, 1.0f);
+    if (0 <= score && score < 50) {
+        simpleShader->setColor(1.0f, 1.0f, 1.0f, 1.0f);
+    } else if (50 <= score && score < 100) {
+        simpleShader->setColor(1.0f, 0.0f, 0.0f, 1.0f);
+    } else if (100 <= score && score < 150) {
+        simpleShader->setColor(0.0f, 1.0f, 0.0f, 1.0f);
+    } else if (150 <= score) {
+        simpleShader->setColor(1.0f, 0.0f, 1.0f, 1.0f);
+    }
     GLushort indices2[] = {0, 1, 1, 2, 2, 3};
     glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices2);
 }

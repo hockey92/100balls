@@ -46,8 +46,8 @@ void GameField::doFrame(float *projMat) {
         physicsService = new PhysicsService();
     }
 
-    glClearColor(0.5, 0.5, 0.5, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    glClearColor(0.0, 0.0, 0.0, 1.0);
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    glEnable(GL_DEPTH_TEST);
 //    glDepthFunc(GL_LEQUAL);
 //    glEnable(GL_BLEND);
@@ -60,13 +60,6 @@ void GameField::doFrame(float *projMat) {
     physicsService->nextFrame();
 
     physicsService->draw(projMat, simpleShader, containerVertices);
-
-    simpleShader->beginRender(glassVertices, 4, 4);
-    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
-         iter != physicsService->getObjects()->end(); iter++) {
-        (*iter)->draw(projMat, simpleShader);
-    }
-    simpleShader->endRender();
 
     textureShader->beginRender(circleVertices, 4, 6);
     textureShader->setTexture(texture);
@@ -83,6 +76,13 @@ void GameField::doFrame(float *projMat) {
         }
     }
     textureShader->endRender();
+
+    simpleShader->beginRender(glassVertices, 4, 4);
+    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
+         iter != physicsService->getObjects()->end(); iter++) {
+        (*iter)->draw(projMat, simpleShader);
+    }
+    simpleShader->endRender();
 
 //    font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
 

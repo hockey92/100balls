@@ -14,12 +14,11 @@ public:
 
     bool doOperation(void *data);
 
+    void setCurrentScreen(int currentScreen);
+
 private:
     std::vector<ScreenElement *> screens;
     int currentScreen;
-
-    friend class StartButtonCommand;
-    friend class PauseButtonCommand;
 };
 
 #endif //NATIVE_ACTIVITY_SCREENMANAGER_H

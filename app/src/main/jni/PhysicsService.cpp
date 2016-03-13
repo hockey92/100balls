@@ -130,7 +130,7 @@ void PhysicsService::checkFrozenGlasses() {
 void PhysicsService::draw(float *projMat, Shader *simpleShader, VertexBuf *vertexBuf) {
     simpleShader->beginRender(vertexBuf, 4, 4);
     simpleShader->setMVP(projMat);
-    simpleShader->setColor(0, 0, 0, 1);
+    simpleShader->setColor(1, 1, 1, 1);
 
     if (gate->isActive()) {
         GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13};

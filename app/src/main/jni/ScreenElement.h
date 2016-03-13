@@ -12,7 +12,7 @@ public:
 
     void addScreenElement(ScreenElement *screenElement);
 
-    bool doOperation(void *data);
+    virtual bool doOperation(void *data);
 
 protected:
     std::vector<ScreenElement *> screenElements;

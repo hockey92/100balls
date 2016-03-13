@@ -127,14 +127,19 @@ void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, co
 }
 
 void Font::renderText(const std::string& text, TextureShader *shader, float *mvp, float x, float y) {
-    float distBetweenSymbols = 0.15f;
+    float distBetweenSymbols = 0.35f;
     ndk_helper::Mat4 mvpMat4 = ndk_helper::Mat4(mvp);
     int tokensCount = text.size();
     float dx = distBetweenSymbols * (float) ((tokensCount - 1) / 2) +
                (tokensCount % 2 == 0 ? distBetweenSymbols / 2.0f : 0.0f);
     mvpMat4 *= ndk_helper::Mat4::Translation(x + dx, y, 0.0f);
     for (int i = 0; i < tokensCount; i++) {
-        shader->beginRender(fontBuf[text[(tokensCount - 1) - i]], 4, 6);
+        char ch = text[(tokensCount - 1) - i];
+        if (ch == ' ') {
+            mvpMat4 *= ndk_helper::Mat4::Translation(-distBetweenSymbols, 0.0f, 0.0f);
+            continue;
+        }
+        shader->beginRender(fontBuf[ch], 4, 6);
         shader->setTexture(texture);
         shader->setMVP(mvpMat4.Ptr());
         shader->render();
