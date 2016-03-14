@@ -28,7 +28,7 @@ ScreenManager::ScreenManager() {
     Menu *menu = new Menu();
     GameField *gameField = new GameField();
 
-    AABB buttonAABB = AABB(-0.96f, -0.15f, 0.96f, 0.15f);
+    AABB buttonAABB = AABB(-0.90f, -0.15f, 0.90f, 0.15f);
     Button *startButton = new Button(buttonAABB, Vec2(0, -0.5f));
 //    startButton->setText("NEW GAME");
 
@@ -50,6 +50,11 @@ ScreenManager::ScreenManager() {
 }
 
 bool ScreenManager::init() {
+    simpleShader = new Shader();
+    simpleShader->compile();
+
+    textureShader = new TextureShader();
+    textureShader->compile();
 
     for (int i = 0; i < screens.size(); i++) {
         if (!screens[i]->init()) {
@@ -62,12 +67,11 @@ bool ScreenManager::init() {
 void ScreenManager::doFrame(float *projMat) {
 //    screens[currentScreen]->doFrame(projMat);
 
-    glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    screens[1]->doFrame(projMat);
+    screens[1]->doFrame(projMat, simpleShader, textureShader);
 
-    screens[0]->doFrame(projMat);
+    screens[0]->doFrame(projMat, simpleShader, textureShader);
 }
 
 bool ScreenManager::doOperation(void *data) {
@@ -77,9 +81,9 @@ bool ScreenManager::doOperation(void *data) {
 void ScreenManager::setCurrentScreen(int currentScreen) {
     Menu *menu = (Menu *) screens[0];
     if (currentScreen == 1) {
-        menu->setSlideDirection(1.0f);
-    } else if (currentScreen == 0) {
         menu->setSlideDirection(-1.0f);
+    } else if (currentScreen == 0) {
+        menu->setSlideDirection(1.0f);
     }
 
     this->currentScreen = currentScreen;

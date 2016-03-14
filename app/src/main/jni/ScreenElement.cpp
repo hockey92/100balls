@@ -23,8 +23,12 @@ bool ScreenElement::init() {
     return true;
 }
 
-void ScreenElement::doFrame(float *projMat) {
+void ScreenElement::doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
     for (int i = 0; i < screenElements.size(); i++) {
-        screenElements[i]->doFrame(projMat);
+        screenElements[i]->doFrame(projMat, simpleShader, textureShader);
     }
+}
+
+void ScreenElement::doFrame(float *projMat) {
+
 }

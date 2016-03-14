@@ -11,12 +11,6 @@ bool GameField::init() {
         return false;
     }
 
-    textureShader = new TextureShader();
-    textureShader->compile();
-
-    simpleShader = new Shader();
-    simpleShader->compile();
-
     float *container = GameCoords::getInstance()->getCoords(CONTAINER)->createCoordsForShader(0.0f);
     float *glass = GameCoords::getInstance()->getCoords(GLASS)->createCoordsForShader(0.1f);
     float *vertices = GameCoords::getInstance()->getCoords(CIRCLE)->createCoordsForShader(0.0f);
@@ -40,18 +34,11 @@ bool GameField::init() {
     return ScreenElement::init();
 }
 
-void GameField::doFrame(float *projMat) {
+void GameField::doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
 
     if (physicsService == NULL && GameCoords::getInstance() != NULL) {
         physicsService = new PhysicsService();
     }
-
-//    glClearColor(0.0, 0.0, 0.0, 1.0);
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    glEnable(GL_DEPTH_TEST);
-//    glDepthFunc(GL_LEQUAL);
-//    glEnable(GL_BLEND);
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     if (physicsService == NULL) {
         return;
@@ -86,7 +73,7 @@ void GameField::doFrame(float *projMat) {
 
 //    font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
 
-    ScreenElement::doFrame(projMat);
+    ScreenElement::doFrame(projMat, simpleShader, textureShader);
 }
 
 GameField::GameField() : physicsService(NULL) {

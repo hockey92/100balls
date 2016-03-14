@@ -18,14 +18,12 @@ public:
 
     bool init();
 
-    void doFrame(float *projMat);
+    void doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader);
 
     bool doOperation(void *data);
 
 private:
     PhysicsService *physicsService;
-    TextureShader *textureShader;
-    Shader *simpleShader;
     VertexBuf *circleVertices;
     VertexBuf *glassVertices;
     VertexBuf *containerVertices;

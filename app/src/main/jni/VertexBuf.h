@@ -7,7 +7,7 @@
 class VertexBuf {
 public:
     VertexBuf(GLfloat *vertices, int size);
-    VertexBuf(const AABB& aabb);
+    VertexBuf(const AABB &aabb, float z);
     ~VertexBuf();
 
     void bindBuffer();

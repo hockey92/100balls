@@ -13,20 +13,14 @@ Button::Button(const AABB &aabb, const Vec2 &center) : pushed(false), center(cen
 
 bool Button::init() {
 
-    simpleShader = new Shader();
-    simpleShader->compile();
-
-    textureShader = new TextureShader();
-    textureShader->compile();
-
-    buttonVertex = new VertexBuf(*aabb);
+    buttonVertex = new VertexBuf(*aabb, 0.5f);
 
     font->init();
 
     return true;
 }
 
-void Button::doFrame(float *projMat) {
+void Button::doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
 
     simpleShader->beginRender(buttonVertex, 4, 4);
 
@@ -35,7 +29,6 @@ void Button::doFrame(float *projMat) {
     simpleShader->setMVP(projMat);
     simpleShader->setColor(1.0f, 0.0f, 0.0f, 0.5f);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-    simpleShader->endRender();
 
     simpleShader->setMVP((pushed
                           ? ndk_helper::Mat4(projMat)
@@ -43,9 +36,10 @@ void Button::doFrame(float *projMat) {
                             ndk_helper::Mat4::Translation(-0.02f, 0.02f, 0.0f)).Ptr());
     simpleShader->setColor(1.0f, 0.0f, 0.0f, 1.0f);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+    simpleShader->endRender();
 
     font->renderText(text, textureShader, projMat,
-                     pushed ? aabb->getCenter() : aabb->getCenter() + Vec2(-0.02f, 0.02f));
+                     pushed ? aabb->getCenter() : aabb->getCenter() + Vec2(-0.0f, 0.01f));
 }
 
 bool Button::doOperation(void *data) {

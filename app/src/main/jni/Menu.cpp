@@ -1,37 +1,31 @@
 #include <vecmath.h>
 #include "Menu.h"
+#include "GameCoords.h"
 
-Menu::Menu() : slideX(0.0f) {
-//    buttons.push_back(new Button(AABB(-0.96f, -0.96f, -0.02f, -0.02f), Vec2(0, -0.5f)));
-//    buttons.back()->setText("ZERO");
-//    buttons.push_back(new Button(AABB(0.02f, -0.96f, 0.96f, -0.02f), Vec2(0, -0.5f)));
-//    buttons.back()->setText("ONE");
-//    buttons.push_back(new Button(AABB(-0.96f, 0.02f, -0.02f, 0.96f), Vec2(0, -0.5f)));
-//    buttons.back()->setText("TWO");
-//    buttons.push_back(new Button(AABB(0.02f, 0.02f, 0.96f, 0.96f), Vec2(0, -0.5f)));
-//    buttons.back()->setText("THREE");
-}
+Menu::Menu() : slideX(0.0f) { }
 
-void Menu::doFrame(float *projMat) {
-//    glClearColor(0.0, 0.0, 0.0, 1.0);
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    glEnable(GL_DEPTH_TEST);
-//    glDepthFunc(GL_LEQUAL);
-//    glEnable(GL_BLEND);
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+void Menu::doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
 
-    slideX += slideDirection * 0.05f;
+    slideX += slideDirection * 0.2f;
 
-    if (slideX > 2.0f && slideDirection == 1.0f) {
+    if (slideX < -2.0f && slideDirection == -1.0f) {
         slideDirection = 0.0f;
-    } else if (slideX < 0.0f && slideDirection == -1.0f) {
+    } else if (slideX > 0.0f && slideDirection == 1.0f) {
         slideX = 0.0f;
         slideDirection = 0.0f;
     }
 
-    projMat = (ndk_helper::Mat4(projMat) *
-               ndk_helper::Mat4::Translation(slideX, 0.0f, 0.0f)).Ptr();
-    ScreenElement::doFrame(projMat);
+    ndk_helper::Mat4 newProjMat =
+            ndk_helper::Mat4(projMat) * ndk_helper::Mat4::Translation(slideX, 0.0f, 0.0f);
+
+    simpleShader->beginRender(blackScreen, 4, 4);
+    simpleShader->setColor(0.0f, 0.0f, 0.0f, 0.95f);
+    simpleShader->setMVP(newProjMat.Ptr());
+    GLushort indices[] = {0, 1, 2, 0, 2, 3};
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+    simpleShader->endRender();
+
+    ScreenElement::doFrame(newProjMat.Ptr(), simpleShader, textureShader);
 }
 
 bool Menu::doOperation(void *data) {
@@ -52,4 +46,14 @@ float Menu::getSliceDirection() const {
 
 void Menu::setSlideDirection(float sliceDirection) {
     this->slideDirection = sliceDirection;
+}
+
+bool Menu::init() {
+    if (!ScreenElement::init()) {
+        return false;
+    }
+    float w = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[WIDTH];
+    float h = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
+    blackScreen = new VertexBuf(AABB(-w, -h, w, h), 0);
+    return true;
 }

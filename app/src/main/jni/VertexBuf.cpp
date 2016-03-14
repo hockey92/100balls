@@ -16,17 +16,17 @@ VertexBuf::~VertexBuf() {
     glDeleteBuffers(1, &vbo);
 }
 
-VertexBuf::VertexBuf(const AABB &aabb) {
+VertexBuf::VertexBuf(const AABB &aabb, float z) {
     float left;
     float right;
     float up;
     float down;
     aabb.getCoords(left, right, up, down);
     float indices[] = {
-            right, up, 0.0f, 1.0f,
-            left, up, 0.0f, 1.0f,
-            left, down, 0.0f, 1.0f,
-            right, down, 0.0f, 1.0f
+            right, up, z, 1.0f,
+            left, up, z, 1.0f,
+            left, down, z, 1.0f,
+            right, down, z, 1.0f
     };
     init(indices, 16 * sizeof(float));
 }

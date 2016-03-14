@@ -8,7 +8,7 @@ CirclePhysicsObject::CirclePhysicsObject(float r, float invM) : PhysicsObject(ne
 void CirclePhysicsObject::updatePos() {
     PhysicsObject::updatePos();
     if (getShape() != NULL) {
-        float lowerBound = -GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HEIGHT];
+        float lowerBound = -GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
         if (getShape()->getCenter().y() < lowerBound) {
             setDeleted(true);
         }

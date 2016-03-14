@@ -144,7 +144,7 @@ void GameCoords::createPathCoordsAndScreenBorders(float w, float h) {
     gameCoordsData[PATH] = new GameCoordsData(path, PATH);
 
     float *screenBorders = new float[2];
-    screenBorders[WIDTH] = 1.0f, screenBorders[HEIGHT] = rel;
+    screenBorders[WIDTH] = 1.0f, screenBorders[HIGH] = rel;
     gameCoordsData[SCREEN_BORDERS] = new GameCoordsData(screenBorders, SCREEN_BORDERS);
 }
 

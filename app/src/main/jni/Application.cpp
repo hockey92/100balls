@@ -230,7 +230,6 @@ bool Application::handleInput(AInputEvent *event) {
         return 1;
     };
 
-
     if (!mHasWindow || GameCoords::getInstance() == NULL) {
         return 0;
     }
@@ -244,7 +243,7 @@ bool Application::handleInput(AInputEvent *event) {
         LOGE("POINT_ID %d", pointId);
 
         float xMax = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[WIDTH];
-        float yMax = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HEIGHT];
+        float yMax = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
 
         float x = -xMax + xMax * 2.0f * (AMotionEvent_getX(event, pointId) / screenW);
         float y = yMax - yMax * 2.0f * (AMotionEvent_getY(event, pointId) / screenH);

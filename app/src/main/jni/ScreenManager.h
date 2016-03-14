@@ -19,6 +19,8 @@ public:
 private:
     std::vector<ScreenElement *> screens;
     int currentScreen;
+    Shader *simpleShader;
+    TextureShader *textureShader;
 };
 
 #endif //NATIVE_ACTIVITY_SCREENMANAGER_H

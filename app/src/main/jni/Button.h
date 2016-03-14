@@ -18,25 +18,23 @@ public:
 
     bool init();
 
-    void doFrame(float *projMat);
+    void doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader);
 
     bool doOperation(void *data);
 
-    Button * setText(const std::string &text);
+    Button *setText(const std::string &text);
 
-    void setCommand(Command* command);
+    void setCommand(Command *command);
 
 private:
     VertexBuf *buttonVertex;
-    Shader *simpleShader;
-    TextureShader *textureShader;
     Font *font;
     bool pushed;
     int touchId;
     AABB *aabb;
     Vec2 center;
     std::string text;
-    Command* command;
+    Command *command;
 };
 
 #endif //NATIVE_ACTIVITY_MENU_H

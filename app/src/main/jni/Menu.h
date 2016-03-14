@@ -10,7 +10,7 @@ class Menu : public ScreenElement {
 public:
     Menu();
 
-    void doFrame(float *projMat);
+    void doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader);
 
     bool doOperation(void *data);
 
@@ -22,9 +22,12 @@ public:
 
     void setSlideDirection(float sliceDirection);
 
+    virtual bool init();
+
 private:
     float slideX;
     float slideDirection;
+    VertexBuf *blackScreen;
 };
 
 #endif //NATIVE_ACTIVITY_MENU_H
