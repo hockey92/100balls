@@ -172,7 +172,7 @@ void Shader::PushPositions(int vbo_offset, int stride) {
 //    glEnableVertexAttribArray(mPositionAttribLoc);
 }
 
-void Shader::beginRender(VertexBuf *vbuf, int size, int stride) {
+void Shader::beginRender(VertexBuff *vbuf, int size, int stride) {
     bindShader();
     vbuf->bindBuffer();
 

@@ -4,11 +4,11 @@
 #include <GLES2/gl2.h>
 #include "AABB.h"
 
-class VertexBuf {
+class VertexBuff {
 public:
-    VertexBuf(GLfloat *vertices, int size);
-    VertexBuf(const AABB &aabb, float z);
-    ~VertexBuf();
+    VertexBuff(GLfloat *vertices, int size);
+    VertexBuff(const AABB &aabb, float z);
+    ~VertexBuff();
 
     void bindBuffer();
     void unbindBuffer();

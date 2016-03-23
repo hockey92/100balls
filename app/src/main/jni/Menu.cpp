@@ -54,6 +54,6 @@ bool Menu::init() {
     }
     float w = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[WIDTH];
     float h = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
-    blackScreen = new VertexBuf(AABB(-w, -h, w, h), 0);
+    blackScreen = new VertexBuff(AABB(-w, -h, w, h), 0);
     return true;
 }

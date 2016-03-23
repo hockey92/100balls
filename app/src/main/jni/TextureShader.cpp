@@ -69,7 +69,7 @@ void TextureShader::setTexture(Texture *texture) {
     glUniform1i(samplerHandle, 0);
 }
 
-void TextureShader::beginRender(VertexBuf *vbuf, int size, int stride) {
+void TextureShader::beginRender(VertexBuff *vbuf, int size, int stride) {
     Shader::beginRender(vbuf, size, stride);
 
     glVertexAttribPointer(texCoordAttributeHandle, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float),

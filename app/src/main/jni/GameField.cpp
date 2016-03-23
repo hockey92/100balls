@@ -11,34 +11,40 @@ bool GameField::init() {
         return false;
     }
 
-    float *container = GameCoords::getInstance()->getCoords(CONTAINER)->createCoordsForShader(0.0f);
-    float *glass = GameCoords::getInstance()->getCoords(GLASS)->createCoordsForShader(0.1f);
-    float *vertices = GameCoords::getInstance()->getCoords(CIRCLE)->createCoordsForShader(0.0f);
+//    float *container = GameCoords::getInstance()->getCoords(CONTAINER)->createCoordsForShader(0.0f);
+//    float *glass = GameCoords::getInstance()->getCoords(GLASS)->createCoordsForShader(0.1f);
+//    float *vertices = GameCoords::getInstance()->getCoords(CIRCLE)->createCoordsForShader(0.0f);
+//
+//    circleVertices = new VertexBuff(vertices, 24 * sizeof(float));
+//    containerVertices = new VertexBuff(container,
+//                                      GameCoords::getInstance()->getCoords(CONTAINER)->getSize() *
+//                                      4 * sizeof(float));
+//    glassVertices = new VertexBuff(glass, 16 * sizeof(float));
+//
+//    TGAImage *image = new TGAImage(FileBuf::getInstance()->getCircle());
+//
+//    texture = new Texture(*image);
+//
+//    font->init();
+//
+//    delete[] glass;
+//    delete[] vertices;
+//    delete[] container;
 
-    circleVertices = new VertexBuf(vertices, 24 * sizeof(float));
-    containerVertices = new VertexBuf(container,
-                                      GameCoords::getInstance()->getCoords(CONTAINER)->getSize() *
-                                      4 * sizeof(float));
-    glassVertices = new VertexBuf(glass, 16 * sizeof(float));
+    if (physicsService == NULL && GameCoords::getInstance() != NULL) {
+        physicsService = new PhysicsService(0, 0);
+    }
 
-    TGAImage *image = new TGAImage(FileBuf::getInstance()->getCircle());
+    if (physicsService == NULL) {
+        return false;
+    }
 
-    texture = new Texture(*image);
-
-    font->init();
-
-    delete[] glass;
-    delete[] vertices;
-    delete[] container;
+    physicsService->init();
 
     return ScreenElement::init();
 }
 
 void GameField::doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
-
-    if (physicsService == NULL && GameCoords::getInstance() != NULL) {
-        physicsService = new PhysicsService();
-    }
 
     if (physicsService == NULL) {
         return;
@@ -46,31 +52,33 @@ void GameField::doFrame(float *projMat, Shader *simpleShader, TextureShader *tex
 
     physicsService->nextFrame();
 
-    physicsService->draw(projMat, simpleShader, containerVertices);
+    physicsService->draw(DrawableDate(simpleShader, textureShader, projMat));
 
-    textureShader->beginRender(circleVertices, 4, 6);
-    textureShader->setTexture(texture);
-    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
-         iter != physicsService->getObjects()->end(); iter++) {
-        if ((*iter)->isDeleted()) continue;
-        BaseShape *shape = (*iter)->getShape();
-        if (shape->type() == 1) {
-            Vec2 center = shape->getCenter();
-            textureShader->setMVP((ndk_helper::Mat4(projMat) *
-                                   ndk_helper::Mat4::Translation(center.x(), center.y(),
-                                                                 0.0f)).Ptr());
-            textureShader->render();
-        }
-    }
-    textureShader->endRender();
-
-    simpleShader->beginRender(glassVertices, 4, 4);
-    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
-         iter != physicsService->getObjects()->end(); iter++) {
-        (*iter)->draw(projMat, simpleShader);
-    }
-    simpleShader->endRender();
-
+//    physicsService->draw(projMat, simpleShader, containerVertices);
+//
+//    textureShader->beginRender(circleVertices, 4, 6);
+//    textureShader->setTexture(texture);
+//    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
+//         iter != physicsService->getObjects()->end(); iter++) {
+//        if ((*iter)->isDeleted()) continue;
+//        BaseShape *shape = (*iter)->getShape();
+//        if (shape->type() == 1) {
+//            Vec2 center = shape->getCenter();
+//            textureShader->setMVP((ndk_helper::Mat4(projMat) *
+//                                   ndk_helper::Mat4::Translation(center.x(), center.y(),
+//                                                                 0.0f)).Ptr());
+//            textureShader->render();
+//        }
+//    }
+//    textureShader->endRender();
+//
+//    simpleShader->beginRender(glassVertices, 4, 4);
+//    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
+//         iter != physicsService->getObjects()->end(); iter++) {
+//        (*iter)->draw(projMat, simpleShader);
+//    }
+//    simpleShader->endRender();
+//
 //    font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
 
     ScreenElement::doFrame(projMat, simpleShader, textureShader);

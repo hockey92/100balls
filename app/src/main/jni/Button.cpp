@@ -13,7 +13,7 @@ Button::Button(const AABB &aabb, const Vec2 &center) : pushed(false), center(cen
 
 bool Button::init() {
 
-    buttonVertex = new VertexBuf(*aabb, 0.5f);
+    buttonVertex = new VertexBuff(*aabb, 0.5f);
 
     font->init();
 

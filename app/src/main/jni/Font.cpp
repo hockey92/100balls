@@ -70,7 +70,7 @@ void Font::bfs() {
         float h = (float) (up - down) / coeff;
         float w = (float) (right - left) / coeff;
 
-        fontBuf['A' + k] = new VertexBuf(
+        fontBuf['A' + k] = new VertexBuff(
                 GameCoordsData::createCoordsForShader(-h, h, -w, w, texDown, texUp, texLeft,
                                                       texRight), 24 * sizeof(float));
 

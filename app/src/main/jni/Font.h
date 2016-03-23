@@ -2,7 +2,7 @@
 #define NATIVE_ACTIVITY_FONT_H
 
 #include "TGAImage.h"
-#include "VertexBuf.h"
+#include "VertexBuff.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "TextureShader.h"
@@ -26,7 +26,7 @@ public:
 
 private:
     TGAImage *image;
-    VertexBuf *fontBuf[300];
+    VertexBuff *fontBuf[300];
     Texture *texture;
 
     void bfs();

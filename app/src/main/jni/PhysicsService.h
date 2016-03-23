@@ -7,17 +7,24 @@
 #include "PhysicsObject.h"
 #include "BaseShape.h"
 #include "BasePhysicsService.h"
-#include "GlassPhysicsObject.h"
+#include "GlassGameObject.h"
+#include "DrawService.h"
 
-class PhysicsService : public BasePhysicsService {
+class PhysicsService : public BasePhysicsService, public Drawable {
 public:
-    PhysicsService();
+    PhysicsService(float w, float h);
 
     void open();
 
     void close();
 
-    void draw(float *projMat, Shader *simpleShader, VertexBuf *vertexBuf);
+    void draw(float *projMat, Shader *simpleShader, VertexBuff *vertexBuf);
+
+    void draw(const DrawableDate &drawableDate);
+
+    unsigned int type() {return 76543;};
+
+    bool init();
 
 protected:
     virtual void doActionBefore();
@@ -25,16 +32,21 @@ protected:
     virtual void doActionAfter();
 
 private:
+    float w;
+    float h;
+
     PhysicsObject *gate;
     std::stack<PhysicsObject *> frozenCircles;
-    std::stack<GlassPhysicsObject *> frozenGlasses;
+    std::stack<GlassGameObject *> frozenGlasses;
 
     std::vector<CirclePhysicsObject *> circles;
-    std::vector<GlassPhysicsObject *> glasses;
+    std::vector<GlassGameObject *> glasses;
     PhysicsObject *container;
-    GlassPhysicsObject *firstGlass;
+    GlassGameObject *firstGlass;
 
     GlassPath glassPath;
+
+    DrawService drawService;
 
     void addCircles(float initX, float initY, float direction, float r,
                     float distanceBetweenCircles, bool active, int numOfCircles);

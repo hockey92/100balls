@@ -1,7 +1,7 @@
 #ifndef NATIVE_ACTIVITY_BUTTON_H
 #define NATIVE_ACTIVITY_BUTTON_H
 
-#include "VertexBuf.h"
+#include "VertexBuff.h"
 #include "Shader.h"
 #include "Font.h"
 #include "Operationable.h"
@@ -27,7 +27,7 @@ public:
     void setCommand(Command *command);
 
 private:
-    VertexBuf *buttonVertex;
+    VertexBuff *buttonVertex;
     Font *font;
     bool pushed;
     int touchId;

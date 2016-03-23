@@ -2,7 +2,7 @@
 #define NATIVE_ACTIVITY_GAMEFIELD_H
 
 #include "TextureShader.h"
-#include "VertexBuf.h"
+#include "VertexBuff.h"
 #include "Texture.h"
 #include "PhysicsObject.h"
 #include "PhysicsService.h"
@@ -24,9 +24,9 @@ public:
 
 private:
     PhysicsService *physicsService;
-    VertexBuf *circleVertices;
-    VertexBuf *glassVertices;
-    VertexBuf *containerVertices;
+    VertexBuff *circleVertices;
+    VertexBuff *glassVertices;
+    VertexBuff *containerVertices;
     Texture *texture;
     Font* font;
 };

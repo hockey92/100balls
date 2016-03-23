@@ -25,7 +25,7 @@ public:
 
     virtual int getSimpleShapesCount() const;
 
-    virtual int type() const { return 0; }
+    virtual unsigned int type() const { return 0; }
 
     virtual BaseShape *getChildren(int i);
 

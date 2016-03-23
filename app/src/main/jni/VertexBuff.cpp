@@ -1,22 +1,22 @@
-#include "VertexBuf.h"
+#include "VertexBuff.h"
 
-VertexBuf::VertexBuf(GLfloat *vertices, int size) {
+VertexBuff::VertexBuff(GLfloat *vertices, int size) {
     init(vertices, size);
 }
 
-void VertexBuf::bindBuffer() {
+void VertexBuff::bindBuffer() {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 }
 
-void VertexBuf::unbindBuffer() {
+void VertexBuff::unbindBuffer() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-VertexBuf::~VertexBuf() {
+VertexBuff::~VertexBuff() {
     glDeleteBuffers(1, &vbo);
 }
 
-VertexBuf::VertexBuf(const AABB &aabb, float z) {
+VertexBuff::VertexBuff(const AABB &aabb, float z) {
     float left;
     float right;
     float up;
@@ -31,7 +31,7 @@ VertexBuf::VertexBuf(const AABB &aabb, float z) {
     init(indices, 16 * sizeof(float));
 }
 
-void VertexBuf::init(GLfloat *vertices, int size) {
+void VertexBuff::init(GLfloat *vertices, int size) {
     vbo = 0;
 
     glGenBuffers(1, &vbo);

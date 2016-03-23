@@ -7,17 +7,18 @@
 #include "CirclePhysicsObject.h"
 #include "GlassPath.h"
 #include "Shader.h"
+#include "Drawable.h"
 #include <list>
 
-class GlassPhysicsObject : public PhysicsObject {
+class GlassGameObject : public PhysicsObject, public Drawable {
 public:
-    GlassPhysicsObject(GlassPath *glassPath);
+    GlassGameObject(GlassPath *glassPath);
 
-    ~GlassPhysicsObject();
+    ~GlassGameObject();
 
     void update();
 
-    void setChild(GlassPhysicsObject *child);
+    void setChild(GlassGameObject *child);
 
     bool containsCircles();
 
@@ -29,15 +30,19 @@ public:
 
     virtual void updatePos();
 
-    GlassPhysicsObject *getTail();
+    GlassGameObject *getTail();
 
-    GlassPhysicsObject *getHead();
+    GlassGameObject *getHead();
 
     void doActionAfter();
 
+    void draw(const DrawableDate &drawableDate);
+
+    unsigned int type();
+
 private:
-    GlassPhysicsObject *parent;
-    GlassPhysicsObject *child;
+    GlassGameObject *parent;
+    GlassGameObject *child;
 
     float positionOnPath;
     float len;
@@ -55,15 +60,13 @@ private:
 
     GlassPath *glassPath;
 
-    void setParent(GlassPhysicsObject *parent);
+    void setParent(GlassGameObject *parent);
 
     void innerUpdate();
 
     void updatePositionOnPath();
 
     void waste();
-
-    void draw(float *projMat, Shader *simpleShader);
 };
 
 #endif //NATIVE_ACTIVITY_GLASSPHYSICSOBJECT_H

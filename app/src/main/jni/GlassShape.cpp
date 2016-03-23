@@ -16,3 +16,7 @@ GlassShape::GlassShape() : BaseShape() {
         );
     }
 }
+
+unsigned int GlassShape::type() const {
+    return 10;
+}

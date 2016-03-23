@@ -1,11 +1,11 @@
 #include <vecmath.h>
-#include "GlassPhysicsObject.h"
+#include "GlassGameObject.h"
 #include "GlassShape.h"
 #include "Constants.h"
 #include "common.hpp"
 #include "ScoreService.h"
 
-GlassPhysicsObject::GlassPhysicsObject(GlassPath *glassPath) : PhysicsObject(new GlassShape(), 0.f),
+GlassGameObject::GlassGameObject(GlassPath *glassPath) : PhysicsObject(new GlassShape(), 0.f),
                                                                child(NULL),
                                                                parent(NULL),
                                                                isRotate(false),
@@ -29,28 +29,28 @@ GlassPhysicsObject::GlassPhysicsObject(GlassPath *glassPath) : PhysicsObject(new
     initVelValue = -0.5f;
 }
 
-GlassPhysicsObject::~GlassPhysicsObject() {
+GlassGameObject::~GlassGameObject() {
     for (int i = 0; i < 4; i++) {
         delete lines[i];
     }
 }
 
-void GlassPhysicsObject::update() {
+void GlassGameObject::update() {
     if (!parent && !wasted) {
         innerUpdate();
     }
 }
 
-void GlassPhysicsObject::setChild(GlassPhysicsObject *child) {
+void GlassGameObject::setChild(GlassGameObject *child) {
     this->child = child;
     child->setParent(this);
 }
 
-void GlassPhysicsObject::setParent(GlassPhysicsObject *parent) {
+void GlassGameObject::setParent(GlassGameObject *parent) {
     this->parent = parent;
 }
 
-void GlassPhysicsObject::innerUpdate() {
+void GlassGameObject::innerUpdate() {
     if (!parent) {
         clearVel = ScoreService::getInstance()->getGlassVel();
     } else {
@@ -88,7 +88,7 @@ void GlassPhysicsObject::innerUpdate() {
     }
 }
 
-bool GlassPhysicsObject::containsPoint(const Vec2 &point) const {
+bool GlassGameObject::containsPoint(const Vec2 &point) const {
     Vec2 relPoint = point - getShape()->getCenter();
     for (int i = 0; i < 4; i++) {
         if (lines[i]->getValue(relPoint) < 0) {
@@ -98,15 +98,15 @@ bool GlassPhysicsObject::containsPoint(const Vec2 &point) const {
     return true;
 }
 
-bool GlassPhysicsObject::containsCircles() {
+bool GlassGameObject::containsCircles() {
     return !circles.empty();
 }
 
-void GlassPhysicsObject::clearCircles() {
+void GlassGameObject::clearCircles() {
     circles.clear();
 }
 
-void GlassPhysicsObject::addCircle(CirclePhysicsObject *circlePhysicsObject) {
+void GlassGameObject::addCircle(CirclePhysicsObject *circlePhysicsObject) {
     circles.push_back(circlePhysicsObject);
     if (glassPath->isDown(normal)) {
         if (0 <= score && score < 50) {
@@ -123,21 +123,21 @@ void GlassPhysicsObject::addCircle(CirclePhysicsObject *circlePhysicsObject) {
     }
 }
 
-GlassPhysicsObject *GlassPhysicsObject::getTail() {
+GlassGameObject *GlassGameObject::getTail() {
     if (child != NULL) {
         return child->getTail();
     }
     return this;
 }
 
-GlassPhysicsObject *GlassPhysicsObject::getHead() {
+GlassGameObject *GlassGameObject::getHead() {
     if (parent != NULL) {
         return parent->getHead();
     }
     return this;
 }
 
-void GlassPhysicsObject::updatePos() {
+void GlassGameObject::updatePos() {
     PhysicsObject::updatePos();
     if (getShape() != NULL) {
         if (getShape()->getCenter().x() < -2.0f) {
@@ -148,11 +148,11 @@ void GlassPhysicsObject::updatePos() {
     }
 }
 
-void GlassPhysicsObject::updatePositionOnPath() {
+void GlassGameObject::updatePositionOnPath() {
     positionOnPath = glassPath->getPositionOnPath(getShape()->getCenter(), len, normal);
 }
 
-void GlassPhysicsObject::doActionAfter() {
+void GlassGameObject::doActionAfter() {
     if (wasted) {
         return;
     }
@@ -164,7 +164,7 @@ void GlassPhysicsObject::doActionAfter() {
     }
 }
 
-void GlassPhysicsObject::waste() {
+void GlassGameObject::waste() {
     wasted = true;
     if (parent) {
         parent->child = child;
@@ -178,12 +178,15 @@ void GlassPhysicsObject::waste() {
     setVel(Vec2(initVelValue, 0.0f));
 }
 
-void GlassPhysicsObject::draw(float *projMat, Shader *simpleShader) {
+void GlassGameObject::draw(const DrawableDate &drawableDate) {
+
+    Shader* simpleShader = drawableDate.simpleShader;
+    float* projMat = drawableDate.projMat;
+
     BaseShape *shape = getShape();
     Vec2 center = shape->getCenter();
     simpleShader->setMVP((ndk_helper::Mat4(projMat) *
-                          ndk_helper::Mat4::Translation(center.x(), center.y(),
-                                                        0.0f) *
+                          ndk_helper::Mat4::Translation(center.x(), center.y(), 0.0f) *
                           ndk_helper::Mat4::RotationZ(-shape->getAngel())).Ptr());
     if (0 <= score && score < 50) {
         simpleShader->setColor(1.0f, 1.0f, 1.0f, 0.5f);
@@ -208,4 +211,8 @@ void GlassPhysicsObject::draw(float *projMat, Shader *simpleShader) {
     }
     GLushort indices2[] = {0, 1, 1, 2, 2, 3};
     glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices2);
+}
+
+unsigned int GlassGameObject::type() {
+    return getShape()->type();
 }

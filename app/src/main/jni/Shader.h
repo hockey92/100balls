@@ -1,7 +1,7 @@
 #ifndef NATIVE_ACTIVITY_SHADER_H
 #define NATIVE_ACTIVITY_SHADER_H
 
-#include "VertexBuf.h"
+#include "VertexBuff.h"
 
 class Shader {
 protected:
@@ -9,7 +9,7 @@ protected:
     int MVPMatrix;
     int positionAttrib;
     int colorAttrib;
-    VertexBuf *preparedVertexBuf;
+    VertexBuff *preparedVertexBuf;
 
 public:
     Shader();
@@ -22,7 +22,7 @@ public:
 
     void unbindShader();
 
-    virtual void beginRender(VertexBuf *vbuf, int size, int stride);
+    virtual void beginRender(VertexBuff *vbuf, int size, int stride);
 
     void setMVP(float* mvp);
 

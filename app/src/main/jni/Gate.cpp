@@ -1,5 +1,4 @@
 #include "Gate.h"
-#include "Circle.h"
 #include "GameCoords.h"
 
 Gate::Gate() {

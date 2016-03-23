@@ -27,7 +27,7 @@ public:
 private:
     float slideX;
     float slideDirection;
-    VertexBuf *blackScreen;
+    VertexBuff *blackScreen;
 };
 
 #endif //NATIVE_ACTIVITY_MENU_H
