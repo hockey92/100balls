@@ -9,16 +9,19 @@
 #include "Vec2.h"
 #include "ScreenElement.h"
 #include "Command.h"
+#include "ButtonData.h"
+#include "Drawable.h"
+#include "ButtonDrawable.h"
 
 class Button : public ScreenElement {
 public:
-    Button(const AABB &aabb, const Vec2 &center);
+    Button(const AABB &aabb, const Vec2 &center, ButtonDrawable* drawable);
 
     ~Button();
 
     bool init();
 
-    void doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader);
+    void draw(float *projMat, Shader *simpleShader, TextureShader *textureShader);
 
     bool doOperation(void *data);
 
@@ -27,14 +30,11 @@ public:
     void setCommand(Command *command);
 
 private:
-    VertexBuff *buttonVertex;
-    Font *font;
-    bool pushed;
+    ButtonDrawable* drawable;
+    Texture *texture;
     int touchId;
-    AABB *aabb;
-    Vec2 center;
-    std::string text;
     Command *command;
+    ButtonData buttonData;
 };
 
 #endif //NATIVE_ACTIVITY_MENU_H

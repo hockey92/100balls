@@ -10,7 +10,7 @@ public:
 
     bool init();
 
-    void doFrame(float *projMat);
+    void draw(float *projMat);
 
     bool doOperation(void *data);
 

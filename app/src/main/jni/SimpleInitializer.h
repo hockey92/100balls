@@ -3,11 +3,11 @@
 
 #include "Initializer.h"
 
-class GlassInitializer : public Initializer {
+class SimpleInitializer : public Initializer {
 public:
-    GlassInitializer();
+    SimpleInitializer(float *vertices, int size);
 
-    ~GlassInitializer();
+    ~SimpleInitializer();
 
     bool init();
 

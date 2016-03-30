@@ -74,36 +74,6 @@ void GameCoords::init(float w, float h) {
 GameCoordsData::GameCoordsData(float *flatCoords, int type) : data(flatCoords), size(0),
                                                               type(type) { }
 
-float *GameCoordsData::createCoordsForShader(float zCoord) {
-    float *result = NULL;
-    switch (type) {
-        case GLASS:
-        case CONTAINER:
-            result = new float[size * 4];
-            for (int i = 0; i < size; i++) {
-                result[i * 4] = data[i * 2];
-                result[i * 4 + 1] = data[i * 2 + 1];
-                result[i * 4 + 2] = zCoord;
-                result[i * 4 + 3] = 1.0f;
-            }
-            break;
-        case CIRCLE:
-            result = new float[4 * 6];
-            result[0] = -data[0], result[1] = -data[0], result[2] = zCoord, result[3] = 1.0f;
-            result[4] = 0.0f, result[5] = 0.0f;
-            result[6] = -data[0], result[7] = data[0], result[8] = zCoord, result[9] = 1.0f;
-            result[10] = 0.0f, result[11] = 1.0f;
-            result[12] = data[0], result[13] = data[0], result[14] = zCoord, result[15] = 1.0f;
-            result[16] = 1.0f, result[17] = 1.0f;
-            result[18] = data[0], result[19] = -data[0], result[20] = zCoord, result[21] = 1.0f;
-            result[22] = 1.0f, result[23] = 0.0f;
-            break;
-        default:
-            break;
-    }
-    return result;
-}
-
 GameCoordsData::GameCoordsData(float value, int type) : size(0), type(type) {
     data = new float[1];
     data[0] = value;
@@ -148,17 +118,3 @@ void GameCoords::createPathCoordsAndScreenBorders(float w, float h) {
     gameCoordsData[SCREEN_BORDERS] = new GameCoordsData(screenBorders, SCREEN_BORDERS);
 }
 
-float *GameCoordsData::createCoordsForShader(float down, float up, float left, float right, float texDown,
-                                   float texUp, float texLeft, float texRight) {
-
-    float* result = new float[4 * 6];
-    result[0] = left, result[1] = down, result[2] = 0, result[3] = 1.0f;
-    result[4] = texLeft, result[5] = texDown;
-    result[6] = left, result[7] = up, result[8] = 0, result[9] = 1.0f;
-    result[10] = texLeft, result[11] = texUp;
-    result[12] = right, result[13] = up, result[14] = 0, result[15] = 1.0f;
-    result[16] = texRight, result[17] = texUp;
-    result[18] = right, result[19] = down, result[20] = 0, result[21] = 1.0f;
-    result[22] = texRight, result[23] = texDown;
-    return result;
-}

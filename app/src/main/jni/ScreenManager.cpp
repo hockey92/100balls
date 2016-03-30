@@ -2,6 +2,9 @@
 #include "ScreenManager.h"
 #include "GameField.h"
 #include "Menu.h"
+#include "GameCoords.h"
+#include "SimpleButtonDrawable.h"
+#include "TextureButtonDrawable.h"
 
 class StartButtonCommand : public Command {
 public:
@@ -29,13 +32,21 @@ ScreenManager::ScreenManager() {
     GameField *gameField = new GameField();
 
     AABB buttonAABB = AABB(-0.90f, -0.15f, 0.90f, 0.15f);
-    Button *startButton = new Button(buttonAABB, Vec2(0, -0.5f));
-//    startButton->setText("NEW GAME");
+    Button *startButton = new Button(buttonAABB, Vec2(0, -0.5f),
+                                     (new SimpleButtonDrawable())->setColor(
+                                             Color(1.0f, 0.0f, 0.0f, 1.0f)));
+    startButton->setText("NEW GAME");
 
-    Button *exitButton = new Button(buttonAABB, Vec2(0, -0.9f));
-//    exitButton->setText("EXIT");
+    Button *exitButton = new Button(buttonAABB, Vec2(0, -0.9f), (new SimpleButtonDrawable())->setColor(
+            Color(0.0f, 0.5f, 0.0f, 1.0f)));
+    exitButton->setText("EXIT");
 
-    Button *pauseButton = new Button(AABB(-0.1f, -0.1f, 0.1f, 0.1f), Vec2(0, 0.8f));
+    float w = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[WIDTH];
+    float h = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
+
+    Button *pauseButton = new Button(AABB(-0.1f, -0.1f, 0.1f, 0.1f), Vec2(w - 0.15f, h - 0.15f),
+                                     (new TextureButtonDrawable())->setColor(
+                                             Color(1.0f, 1.0f, 1.0f, 1.0f)));
     pauseButton->setCommand(new PauseButtonCommand(this));
     gameField->addScreenElement(pauseButton);
 
@@ -64,14 +75,14 @@ bool ScreenManager::init() {
     return true;
 }
 
-void ScreenManager::doFrame(float *projMat) {
-//    screens[currentScreen]->doFrame(projMat);
+void ScreenManager::draw(float *projMat) {
+//    screens[currentScreen]->draw(projMat);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    screens[1]->doFrame(projMat, simpleShader, textureShader);
+    screens[1]->draw(projMat, simpleShader, textureShader);
 
-    screens[0]->doFrame(projMat, simpleShader, textureShader);
+    screens[0]->draw(projMat, simpleShader, textureShader);
 }
 
 bool ScreenManager::doOperation(void *data) {

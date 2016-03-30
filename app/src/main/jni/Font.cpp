@@ -1,23 +1,22 @@
 #include "Font.h"
-#include "GameCoords.h"
-#include "Tokenizer.h"
+#include "DrawUtils.h"
 #include <set>
 #include <queue>
 #include <vecmath.h>
 
 Font::Font(TGAImage *image) : image(image) {
     for (int i = 0; i < 300; i++) {
-        fontBuf[i] = NULL;
+        fontBuff[i] = std::pair<VertexBuff *, float>(NULL, 0);
     }
 }
 
-void Font::bfs() {
+void Font::bfs(char firstSymbol, size_t count, int yPosition) {
 
     int initX = 0;
-    int initY = 80;
+    int initY = yPosition;
     int right, left, up, down;
 
-    for (int k = 0; k < 26; k++) {
+    for (int k = 0; k < count; k++) {
         std::set<std::pair<int, int> > used;
         std::queue<std::pair<int, int> > que;
 
@@ -70,9 +69,11 @@ void Font::bfs() {
         float h = (float) (up - down) / coeff;
         float w = (float) (right - left) / coeff;
 
-        fontBuf['A' + k] = new VertexBuff(
-                GameCoordsData::createCoordsForShader(-h, h, -w, w, texDown, texUp, texLeft,
-                                                      texRight), 24 * sizeof(float));
+        maxLetterHigh = std::max(maxLetterHigh, h);
+
+        fontBuff[firstSymbol + k] = std::pair<VertexBuff *, float>(new VertexBuff(
+                DrawUtils::createCoordsForTextureShader(-h, h, -w, w, texDown, texUp, texLeft,
+                                                        texRight), 24 * sizeof(float)), h);
 
         initX = right + 2;
     }
@@ -84,7 +85,9 @@ Font::~Font() {
     }
 
     for (int i = 0; i < 300; i++) {
-        delete fontBuf[i];
+        if (fontBuff[i].first) {
+            delete fontBuff[i].first;
+        }
     }
 
     if (texture) {
@@ -100,34 +103,25 @@ void Font::init() {
 
     texture = new Texture(*image);
 
-    bfs();
+    maxLetterHigh = 0;
+    bfs('a', 26, 140);
+    bfs('A', 26, 90);
+    bfs('0', 10, 40);
 }
 
 void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, float x, float y) {
-    float distBetweenSymbols = 0.15f;
-    ndk_helper::Mat4 mvpMat4 = ndk_helper::Mat4(mvp);
-    Tokenizer tokenizer(num);
-    int tokensCount = tokenizer.getTokensCount();
-    float dx = distBetweenSymbols * (float) ((tokensCount - 1) / 2) +
-               (tokensCount % 2 == 0 ? distBetweenSymbols / 2.0f : 0.0f);
-    mvpMat4 *= ndk_helper::Mat4::Translation(x + dx, y, 0.0f);
-    while (tokenizer.hasNext()) {
-        shader->beginRender(fontBuf[tokenizer.nextToken() + '0'], 4, 6);
-        shader->setTexture(texture);
-        shader->setMVP(mvpMat4.Ptr());
-        shader->render();
-        shader->endRender();
-
-        mvpMat4 *= ndk_helper::Mat4::Translation(-distBetweenSymbols, 0.0f, 0.0f);
-    }
+    char intStr[20];
+    sprintf(intStr, "%u", num);
+    renderText(std::string(intStr), shader, mvp, x, y);
 }
 
-void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, const Vec2& pos) {
+void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, const Vec2 &pos) {
     renderInteger(num, shader, mvp, pos.x(), pos.y());
 }
 
-void Font::renderText(const std::string& text, TextureShader *shader, float *mvp, float x, float y) {
-    float distBetweenSymbols = 0.35f;
+void Font::renderText(const std::string &text, TextureShader *shader, float *mvp, float x,
+                      float y) {
+    float distBetweenSymbols = 0.15f;
     ndk_helper::Mat4 mvpMat4 = ndk_helper::Mat4(mvp);
     int tokensCount = text.size();
     float dx = distBetweenSymbols * (float) ((tokensCount - 1) / 2) +
@@ -136,11 +130,13 @@ void Font::renderText(const std::string& text, TextureShader *shader, float *mvp
     for (int i = 0; i < tokensCount; i++) {
         char ch = text[(tokensCount - 1) - i];
         if (ch == ' ') {
+//            float dY = (maxLetterHigh - fontBuff[ch].second) / 2.0f;
             mvpMat4 *= ndk_helper::Mat4::Translation(-distBetweenSymbols, 0.0f, 0.0f);
             continue;
         }
-        shader->beginRender(fontBuf[ch], 4, 6);
+        shader->beginRender(fontBuff[ch].first, 4, 6);
         shader->setTexture(texture);
+        shader->setColor(color);
         shader->setMVP(mvpMat4.Ptr());
         shader->render();
         shader->endRender();
@@ -149,6 +145,10 @@ void Font::renderText(const std::string& text, TextureShader *shader, float *mvp
     }
 }
 
-void Font::renderText(const std::string& text, TextureShader *shader, float *mvp, const Vec2 &pos) {
+void Font::renderText(const std::string &text, TextureShader *shader, float *mvp, const Vec2 &pos) {
     renderText(text, shader, mvp, pos.x(), pos.y());
+}
+
+void Font::setColor(const Color &color) {
+    this->color = color;
 }

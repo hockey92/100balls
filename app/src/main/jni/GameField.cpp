@@ -25,7 +25,7 @@ bool GameField::init() {
 //
 //    texture = new Texture(*image);
 //
-//    font->init();
+    font->init();
 //
 //    delete[] glass;
 //    delete[] vertices;
@@ -44,7 +44,7 @@ bool GameField::init() {
     return ScreenElement::init();
 }
 
-void GameField::doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
+void GameField::draw(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
 
     if (physicsService == NULL) {
         return;
@@ -52,7 +52,10 @@ void GameField::doFrame(float *projMat, Shader *simpleShader, TextureShader *tex
 
     physicsService->nextFrame();
 
-    physicsService->draw(DrawableDate(simpleShader, textureShader, projMat));
+    font->setColor(Color(0.7f, 0.7f, 0.7f, 0.0f));
+    font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
+
+    physicsService->draw(DrawableData(simpleShader, textureShader, projMat));
 
 //    physicsService->draw(projMat, simpleShader, containerVertices);
 //
@@ -79,9 +82,8 @@ void GameField::doFrame(float *projMat, Shader *simpleShader, TextureShader *tex
 //    }
 //    simpleShader->endRender();
 //
-//    font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
 
-    ScreenElement::doFrame(projMat, simpleShader, textureShader);
+    ScreenElement::draw(projMat, simpleShader, textureShader);
 }
 
 GameField::GameField() : physicsService(NULL) {

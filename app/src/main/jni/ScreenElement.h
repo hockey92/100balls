@@ -10,9 +10,9 @@ class ScreenElement : public Operationable {
 public:
     virtual bool init();
 
-    virtual void doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader);
+    virtual void draw(float *projMat, Shader *simpleShader, TextureShader *textureShader);
 
-    virtual void doFrame(float *projMat);
+    virtual void draw(float *projMat);
 
     void addScreenElement(ScreenElement *screenElement);
 

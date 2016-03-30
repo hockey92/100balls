@@ -9,7 +9,7 @@ void DrawServiceData::add(Drawable *drawable) {
 void DrawServiceData::draw(Shader *simpleShader, TextureShader *textureShader, float *projMat) {
     initializer->startRender(simpleShader, textureShader);
     for (int i = 0; i < objectsToDraw.size(); i++) {
-        objectsToDraw[i]->draw(DrawableDate(simpleShader, textureShader, projMat));
+        objectsToDraw[i]->draw(DrawableData(simpleShader, textureShader, projMat));
     }
 }
 

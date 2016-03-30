@@ -222,3 +222,7 @@ void Shader::setMVP(float *mvp) {
 void Shader::setColor(float r, float g, float b, float a) {
     glUniform4f(colorAttrib, r, g, b, a);
 }
+
+void Shader::setColor(const Color &color) {
+    glUniform4f(colorAttrib, color.r(), color.g(), color.b(), color.a());
+}

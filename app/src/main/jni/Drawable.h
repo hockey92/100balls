@@ -3,9 +3,10 @@
 
 #include "Shader.h"
 #include "TextureShader.h"
+#include "Initializer.h"
 
-struct DrawableDate {
-    DrawableDate(Shader *simpleShader, TextureShader *textureShader, float *projMat)
+struct DrawableData {
+    DrawableData(Shader *simpleShader, TextureShader *textureShader, float *projMat)
             : simpleShader(simpleShader),
               textureShader(textureShader),
               projMat(projMat) { }
@@ -17,9 +18,15 @@ struct DrawableDate {
 
 class Drawable {
 public:
-    virtual void draw(const DrawableDate &drawableDate) = 0;
+    virtual void draw(const DrawableData &drawableDate) = 0;
 
     virtual unsigned int type() = 0;
+
+    virtual bool init() { }
+
+    virtual Initializer *createInitializer() {
+        return NULL;
+    }
 };
 
 #endif //NATIVE_ACTIVITY_DRAWABLE_H

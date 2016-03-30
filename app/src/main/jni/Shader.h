@@ -2,6 +2,7 @@
 #define NATIVE_ACTIVITY_SHADER_H
 
 #include "VertexBuff.h"
+#include "Color.h"
 
 class Shader {
 protected:
@@ -24,9 +25,11 @@ public:
 
     virtual void beginRender(VertexBuff *vbuf, int size, int stride);
 
-    void setMVP(float* mvp);
+    void setMVP(float *mvp);
 
     void setColor(float r, float g, float b, float a);
+
+    void setColor(const Color &color);
 
     // Renders one copy of the prepared geometry, given a model-view-projection matrix.
 //    inline void Render(glm::mat4 *mvpMat) {

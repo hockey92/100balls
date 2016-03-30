@@ -20,8 +20,8 @@ GlassPath::GlassPath() {
 
     numOfGlasses = 7;
 
-    float h = up - down;
-    float w = right - left;
+    h = up - down;
+    w = right - left;
     pointsOnPath[0] = 0;
     pointsOnPath[1] = h;
     pointsOnPath[2] = h + quartOfCircleLen;
@@ -162,5 +162,5 @@ float GlassPath::getDistanceBetweenPoints(float point1, float point2) const {
 }
 
 Vec2 GlassPath::getStartPoint() const {
-    return Vec2(right + distFromPath + 0.5f, 0.0f);
+    return Vec2(right + distFromPath + 0.5f, -h / 4.0f);
 }

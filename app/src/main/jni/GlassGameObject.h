@@ -36,9 +36,11 @@ public:
 
     void doActionAfter();
 
-    void draw(const DrawableDate &drawableDate);
+    void draw(const DrawableData &drawableDate);
 
     unsigned int type();
+
+    Initializer *createInitializer();
 
 private:
     GlassGameObject *parent;

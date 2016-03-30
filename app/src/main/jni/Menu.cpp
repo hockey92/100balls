@@ -4,7 +4,7 @@
 
 Menu::Menu() : slideX(0.0f) { }
 
-void Menu::doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
+void Menu::draw(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
 
     slideX += slideDirection * 0.2f;
 
@@ -25,7 +25,7 @@ void Menu::doFrame(float *projMat, Shader *simpleShader, TextureShader *textureS
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
     simpleShader->endRender();
 
-    ScreenElement::doFrame(newProjMat.Ptr(), simpleShader, textureShader);
+    ScreenElement::draw(newProjMat.Ptr(), simpleShader, textureShader);
 }
 
 bool Menu::doOperation(void *data) {

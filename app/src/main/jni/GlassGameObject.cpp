@@ -4,16 +4,17 @@
 #include "Constants.h"
 #include "common.hpp"
 #include "ScoreService.h"
+#include "SimpleInitializer.h"
 
 GlassGameObject::GlassGameObject(GlassPath *glassPath) : PhysicsObject(new GlassShape(), 0.f),
-                                                               child(NULL),
-                                                               parent(NULL),
-                                                               isRotate(false),
-                                                               glassPath(glassPath),
-                                                               numOfCircles(0),
-                                                               wasted(false),
-                                                               numOfGlassesToParent(1),
-                                                               score(0) {
+                                                         child(NULL),
+                                                         parent(NULL),
+                                                         isRotate(false),
+                                                         glassPath(glassPath),
+                                                         numOfCircles(0),
+                                                         wasted(false),
+                                                         numOfGlassesToParent(1),
+                                                         score(0) {
     for (int i = 0; i < 3; i++) {
         lines[i] = new Line(
                 ((Segment *) getShape()->getChildren(i))->getPoint(0),
@@ -178,10 +179,10 @@ void GlassGameObject::waste() {
     setVel(Vec2(initVelValue, 0.0f));
 }
 
-void GlassGameObject::draw(const DrawableDate &drawableDate) {
+void GlassGameObject::draw(const DrawableData &drawableDate) {
 
-    Shader* simpleShader = drawableDate.simpleShader;
-    float* projMat = drawableDate.projMat;
+    Shader *simpleShader = drawableDate.simpleShader;
+    float *projMat = drawableDate.projMat;
 
     BaseShape *shape = getShape();
     Vec2 center = shape->getCenter();
@@ -215,4 +216,21 @@ void GlassGameObject::draw(const DrawableDate &drawableDate) {
 
 unsigned int GlassGameObject::type() {
     return getShape()->type();
+}
+
+Initializer *GlassGameObject::createInitializer() {
+    float vertices[8];
+    float d = 0.2f;
+
+    float left = -d * 0.8f;
+    float down = -d;
+    float right = d * 0.8f;
+    float up = d;
+
+    vertices[0] = left, vertices[1] = up;
+    vertices[2] = 0.65f * left, vertices[3] = down;
+    vertices[4] = 0.65f * right, vertices[5] = down;
+    vertices[6] = right, vertices[7] = up;
+
+    return new SimpleInitializer(vertices, 8);
 }

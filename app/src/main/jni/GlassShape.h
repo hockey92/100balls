@@ -9,6 +9,9 @@ public:
     GlassShape();
 
     virtual unsigned int type() const;
+
+private:
+    static float *vertices;
 };
 
 #endif //NATIVE_ACTIVITY_GLASSSHAPE_H

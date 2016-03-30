@@ -12,8 +12,6 @@ public:
 
     void nextFrame();
 
-    std::vector<PhysicsObject *> * getObjects();
-
 protected:
     std::vector<PhysicsObject *> physicsObjects;
 

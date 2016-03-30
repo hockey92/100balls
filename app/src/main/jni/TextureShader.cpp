@@ -41,8 +41,9 @@ const char *TextureShader::getFragmentShaderSource() {
     return "precision highp float; \n"
             "varying vec2 v_texCoord; \n"
             "uniform sampler2D s_texture; \n"
+            "varying vec4 v_Color;          \n"
             "void main(){ \n"
-            "   gl_FragColor = texture2D(s_texture, v_texCoord); \n"
+            "   gl_FragColor = vec4(v_Color.r, v_Color.g, v_Color.b, texture2D(s_texture, v_texCoord).a); \n"
             "} \n";
 }
 

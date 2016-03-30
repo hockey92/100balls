@@ -24,7 +24,7 @@ Application::Application(struct android_app *app) {
     mEglConfig = 0;
     mHasFocus = false, mIsVisible = false, mHasWindow = false;
     physicsService = NULL;//new PhysicsService();
-    screenManager = new ScreenManager();//new GameField(physicsService);
+    screenManager = NULL;//new ScreenManager();//new GameField(physicsService);
 }
 
 Application::~Application() {
@@ -355,7 +355,7 @@ void Application::doFrame() {
     pM[10] = -1.0f;
     pM[15] = 1.0f;
 
-    screenManager->doFrame(pM);
+    screenManager->draw(pM);
 
     if (EGL_FALSE == eglSwapBuffers(mEglDisplay, mEglSurface)) {
         LOGW("Application: eglSwapBuffers failed, EGL error %d", eglGetError());
@@ -418,6 +418,10 @@ bool Application::prepareToRender() {
         eglQuerySurface(mEglDisplay, mEglSurface, EGL_WIDTH, &width);
         eglQuerySurface(mEglDisplay, mEglSurface, EGL_HEIGHT, &height);
         GameCoords::init(width, height);
+
+        if (screenManager == NULL) {
+            screenManager = new ScreenManager();
+        }
 
         // now that we're sure we have a context and all, if we don't have the OpenGL
         // objects ready, create them.

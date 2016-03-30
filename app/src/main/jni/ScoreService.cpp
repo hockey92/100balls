@@ -1,9 +1,9 @@
 #include <stddef.h>
 #include "ScoreService.h"
 
-ScoreService* ScoreService::instance = NULL;
+ScoreService *ScoreService::instance = NULL;
 
-int ScoreService::getTotal() {
+unsigned int ScoreService::getTotal() {
     return total;
 }
 

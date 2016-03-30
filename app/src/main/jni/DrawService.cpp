@@ -1,5 +1,4 @@
 #include "DrawService.h"
-#include "InitializerFactory.h"
 
 void DrawService::add(Drawable *drawable) {
 
@@ -7,10 +6,11 @@ void DrawService::add(Drawable *drawable) {
 
     std::map<int, DrawServiceData *>::iterator pos = dataToDraw.find(type);
     if (pos == dataToDraw.end()) {
-        Initializer *initializer = InitializerFactory::createInitializer(type);
+        Initializer *initializer = drawable->createInitializer();
         if (initializer != NULL) {
-            pos = dataToDraw.insert(std::pair<int, DrawServiceData *>(type, new DrawServiceData(
-                    initializer))).first;
+            pos = dataToDraw.insert(
+                    std::pair<int, DrawServiceData *>(type, new DrawServiceData(initializer))
+            ).first;
         }
     }
     if (pos != dataToDraw.end()) {

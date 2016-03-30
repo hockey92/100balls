@@ -37,11 +37,7 @@ PhysicsService::PhysicsService(float w, float h) : w(w), h(h) {
             po->setVisible(false);
             frozenGlasses.push(po);
         }
-
-        if (po->getShape()->type() == 10) {
-            drawService.add(po);
-        }
-
+        drawService.add(po);
     }
 
     gate = new PhysicsObject(new Gate(), 0.f);
@@ -57,6 +53,7 @@ void PhysicsService::addCircles(float initX, float initY, float direction, float
         if (!active) {
             frozenCircles.push(po);
         }
+        drawService.add(po);
         po->setActive(active);
         po->getShape()->move(Vec2(x, y));
         physicsObjects.push_back(po);
@@ -149,7 +146,7 @@ void PhysicsService::draw(float *projMat, Shader *simpleShader, VertexBuff *vert
     simpleShader->endRender();
 }
 
-void PhysicsService::draw(const DrawableDate &drawableDate) {
+void PhysicsService::draw(const DrawableData &drawableDate) {
     drawService.draw(drawableDate.simpleShader, drawableDate.textureShader, drawableDate.projMat);
 }
 

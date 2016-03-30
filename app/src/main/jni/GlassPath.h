@@ -50,6 +50,8 @@ private:
     float distFromPath;
     float quartOfCircleLen;
     float distanceBetweenGlasses;
+    float w;
+    float h;
     int numOfGlasses;
 
     bool isZero(float value) const;

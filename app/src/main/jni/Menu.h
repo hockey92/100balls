@@ -10,7 +10,7 @@ class Menu : public ScreenElement {
 public:
     Menu();
 
-    void doFrame(float *projMat, Shader *simpleShader, TextureShader *textureShader);
+    void draw(float *projMat, Shader *simpleShader, TextureShader *textureShader);
 
     bool doOperation(void *data);
 

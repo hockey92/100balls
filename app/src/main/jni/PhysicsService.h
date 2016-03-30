@@ -20,7 +20,7 @@ public:
 
     void draw(float *projMat, Shader *simpleShader, VertexBuff *vertexBuf);
 
-    void draw(const DrawableDate &drawableDate);
+    void draw(const DrawableData &drawableDate);
 
     unsigned int type() {return 76543;};
 
