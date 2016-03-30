@@ -8,7 +8,7 @@ class Container : public BaseShape {
 public:
     Container();
 
-    virtual int type() const { return 9; }
+    virtual unsigned int type() const { return 9; }
 };
 
 #endif //NATIVE_ACTIVITY_CONTAINER_H

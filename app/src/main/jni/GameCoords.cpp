@@ -39,22 +39,26 @@ void GameCoords::createGlassCoords(float w, float h) {
 }
 
 void GameCoords::createContainerCoords(float w, float h) {
-    float *container = new float[24];
+    float *container = new float[28];
 
     container[0] = -0.2f, container[1] = 0.5f;
     container[2] = -0.2f, container[3] = 1.0f;
     container[4] = -1.0f + 0.405f, container[5] = 1.0f;
-    container[6] = -1.0f + 0.405f, container[7] = 0.2f;
-    container[8] = -0.09f, container[9] = -0.04f;
-    container[10] = -0.09f, container[11] = -0.2f;
-    container[12] = 0.09f, container[13] = -0.2f;
-    container[14] = 0.09f, container[15] = -0.04f;
-    container[16] = 1.0f - 0.405f, container[17] = 0.2f;
-    container[18] = 1.0f - 0.405f, container[19] = 1.0f;
-    container[20] = 0.2f, container[21] = 1.0f;
-    container[22] = 0.2f, container[23] = 0.5f;
+    container[6] = -1.0f + 0.405f, container[7] = 0.25f;
+    container[8] = -0.09f, container[9] = 0.05f;
+    container[10] = -0.09f, container[11] = -0.13f;
 
-    gameCoordsData[CONTAINER] = new GameCoordsData(container, 12, CONTAINER);
+    container[12] = -0.09f, container[13] = -0.22f;
+    container[14] = 0.09f, container[15] = -0.22f;
+
+    container[16] = 0.09f, container[17] = -0.13f;
+    container[18] = 0.09f, container[19] = 0.05f;
+    container[20] = 1.0f - 0.405f, container[21] = 0.25f;
+    container[22] = 1.0f - 0.405f, container[23] = 1.0f;
+    container[24] = 0.2f, container[25] = 1.0f;
+    container[26] = 0.2f, container[27] = 0.5f;
+
+    gameCoordsData[CONTAINER] = new GameCoordsData(container, 14, CONTAINER);
 }
 
 GameCoords *GameCoords::getInstance() {
@@ -69,36 +73,6 @@ void GameCoords::init(float w, float h) {
 
 GameCoordsData::GameCoordsData(float *flatCoords, int type) : data(flatCoords), size(0),
                                                               type(type) { }
-
-float *GameCoordsData::createCoordsForShader(float zCoord) {
-    float *result = NULL;
-    switch (type) {
-        case GLASS:
-        case CONTAINER:
-            result = new float[size * 4];
-            for (int i = 0; i < size; i++) {
-                result[i * 4] = data[i * 2];
-                result[i * 4 + 1] = data[i * 2 + 1];
-                result[i * 4 + 2] = zCoord;
-                result[i * 4 + 3] = 1.0f;
-            }
-            break;
-        case CIRCLE:
-            result = new float[4 * 6];
-            result[0] = -data[0], result[1] = -data[0], result[2] = zCoord, result[3] = 1.0f;
-            result[4] = 0.0f, result[5] = 0.0f;
-            result[6] = -data[0], result[7] = data[0], result[8] = zCoord, result[9] = 1.0f;
-            result[10] = 0.0f, result[11] = 1.0f;
-            result[12] = data[0], result[13] = data[0], result[14] = zCoord, result[15] = 1.0f;
-            result[16] = 1.0f, result[17] = 1.0f;
-            result[18] = data[0], result[19] = -data[0], result[20] = zCoord, result[21] = 1.0f;
-            result[22] = 1.0f, result[23] = 0.0f;
-            break;
-        default:
-            break;
-    }
-    return result;
-}
 
 GameCoordsData::GameCoordsData(float value, int type) : size(0), type(type) {
     data = new float[1];
@@ -117,7 +91,7 @@ int GameCoordsData::getSize() { return size; }
 int GameCoordsData::getType() { return type; }
 
 void GameCoords::createCircleCoords(float w, float h) {
-    gameCoordsData[CIRCLE] = new GameCoordsData(0.036f, CIRCLE);
+    gameCoordsData[CIRCLE] = new GameCoordsData(0.0355f, CIRCLE);
 }
 
 void GameCoords::createPathCoordsAndScreenBorders(float w, float h) {
@@ -140,21 +114,7 @@ void GameCoords::createPathCoordsAndScreenBorders(float w, float h) {
     gameCoordsData[PATH] = new GameCoordsData(path, PATH);
 
     float *screenBorders = new float[2];
-    screenBorders[WIDTH] = 1.0f, screenBorders[HEIGHT] = rel;
+    screenBorders[WIDTH] = 1.0f, screenBorders[HIGH] = rel;
     gameCoordsData[SCREEN_BORDERS] = new GameCoordsData(screenBorders, SCREEN_BORDERS);
 }
 
-float *GameCoordsData::createCoordsForShader(float down, float up, float left, float right, float texDown,
-                                   float texUp, float texLeft, float texRight) {
-
-    float* result = new float[4 * 6];
-    result[0] = left, result[1] = down, result[2] = 0, result[3] = 1.0f;
-    result[4] = texLeft, result[5] = texDown;
-    result[6] = left, result[7] = up, result[8] = 0, result[9] = 1.0f;
-    result[10] = texLeft, result[11] = texUp;
-    result[12] = right, result[13] = up, result[14] = 0, result[15] = 1.0f;
-    result[16] = texRight, result[17] = texUp;
-    result[18] = right, result[19] = down, result[20] = 0, result[21] = 1.0f;
-    result[22] = texRight, result[23] = texDown;
-    return result;
-}

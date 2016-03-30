@@ -37,3 +37,24 @@ void AABB::set(const AABB *aabb, const Vec2 &moveVec) {
     up = fmaxf(aabb->up, aabb->up + moveVec.y());
     down = fminf(aabb->down, aabb->down + moveVec.y());
 }
+
+bool AABB::isPointBelong(const Vec2 &point) {
+    float x = point.x();
+    float y = point.y();
+    return left <= x && right >= x && down <= y && up >= y;
+}
+
+AABB::AABB(const AABB &aabb, const Vec2 &moveVec) {
+    set(&aabb, moveVec);
+}
+
+void AABB::getCoords(float &left, float &right, float &up, float &down) const {
+    left = this->left;
+    right = this->right;
+    up = this->up;
+    down = this->down;
+}
+
+Vec2 AABB::getCenter() const {
+    return Vec2(left + (right - left) / 2.0f, down + (up - down) / 2.0f);
+}

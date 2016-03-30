@@ -8,8 +8,10 @@ class GlassShape : public BaseShape {
 public:
     GlassShape();
 
-    virtual int type() const { return 10; }
+    virtual unsigned int type() const;
 
+private:
+    static float *vertices;
 };
 
 #endif //NATIVE_ACTIVITY_GLASSSHAPE_H

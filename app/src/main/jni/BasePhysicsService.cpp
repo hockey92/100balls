@@ -1,6 +1,7 @@
 #include "BasePhysicsService.h"
 #include "Constraint.h"
 #include "CollisionFactory.h"
+#include "common.hpp"
 #include <list>
 
 void BasePhysicsService::nextFrame() {
@@ -45,7 +46,7 @@ void BasePhysicsService::nextFrame() {
         }
     }
 
-//    LOGE("num of constraints %d", constraints.size());
+    LOGE("num of constraints %d", constraints.size());
 
     for (int i = 0; i < 10; i++) {
         for (std::list<Constraint *>::iterator iter = constraints.begin();
@@ -68,8 +69,4 @@ void BasePhysicsService::nextFrame() {
     }
 
     doActionAfter();
-}
-
-std::vector<PhysicsObject *> *BasePhysicsService::getObjects() {
-    return &physicsObjects;
 }

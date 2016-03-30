@@ -11,7 +11,7 @@ public:
 
     float getR() const;
 
-    virtual int type() const;
+    virtual unsigned int type() const;
 
     virtual void setInnerAABB();
 

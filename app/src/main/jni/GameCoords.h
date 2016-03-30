@@ -10,7 +10,7 @@ enum {
 };
 
 enum {
-    WIDTH, HEIGHT
+    WIDTH, HIGH
 };
 
 class GameCoordsData {
@@ -31,8 +31,8 @@ public:
 
     float *createCoordsForShader(float zCoord);
 
-    static float *createCoordsForShader(float down, float up, float left, float right, float texDown,
-                                       float texUp, float texLeft, float texRight);
+    static float *createCoordsForShader(float down, float up, float left, float right,
+                                        float texDown, float texUp, float texLeft, float texRight);
 
 private:
     float *data;
@@ -42,8 +42,6 @@ private:
 
 class GameCoords {
 public:
-    GameCoords(float w, float h);
-
     ~GameCoords();
 
     GameCoordsData *getCoords(int type);
@@ -53,6 +51,8 @@ public:
     static GameCoords *getInstance();
 
 private:
+    GameCoords(float w, float h);
+
     GameCoordsData *gameCoordsData[4];
 
     static GameCoords *instance;

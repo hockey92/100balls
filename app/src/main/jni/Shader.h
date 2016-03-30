@@ -1,14 +1,16 @@
 #ifndef NATIVE_ACTIVITY_SHADER_H
 #define NATIVE_ACTIVITY_SHADER_H
 
-#include "VertexBuf.h"
+#include "VertexBuff.h"
+#include "Color.h"
 
 class Shader {
 protected:
     int vertShader, fragShader, program;
     int MVPMatrix;
     int positionAttrib;
-    VertexBuf *preparedVertexBuf;
+    int colorAttrib;
+    VertexBuff *preparedVertexBuf;
 
 public:
     Shader();
@@ -21,9 +23,13 @@ public:
 
     void unbindShader();
 
-    virtual void beginRender(VertexBuf *vbuf, int size, int stride);
+    virtual void beginRender(VertexBuff *vbuf, int size, int stride);
 
-    void setMVP(float* mvp);
+    void setMVP(float *mvp);
+
+    void setColor(float r, float g, float b, float a);
+
+    void setColor(const Color &color);
 
     // Renders one copy of the prepared geometry, given a model-view-projection matrix.
 //    inline void Render(glm::mat4 *mvpMat) {

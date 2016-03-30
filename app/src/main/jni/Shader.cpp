@@ -35,17 +35,21 @@ const char *Shader::getShaderName() {
 
 const char *Shader::getVertexShaderSource() {
     return "attribute vec4 a_Position; \n"
+            "uniform vec4 a_Color;   \n"
+            "varying vec4 v_Color;     \n"
             "uniform mat4 projection; \n"
             "void main() \n"
             "{ \n"
             "     gl_Position = projection * a_Position; \n"
+            "     v_Color = a_Color;          \n"
             "} \n";
 }
 
 const char *Shader::getFragmentShaderSource() {
     return "precision mediump float; \n"
+            "varying vec4 v_Color;          \n"
             "void main() { \n"
-            "    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0); \n"
+            "    gl_FragColor = v_Color; \n"
             "} \n";
 }
 
@@ -130,6 +134,14 @@ void Shader::compile() {
         ABORT_GAME;
     }
     LOGD("Shader compilation/linking successful.");
+
+    colorAttrib = glGetUniformLocation(program, "a_Color");
+    if (colorAttrib < 0) {
+        LOGE("*** Couldn't get shader's a_Color attribute location.");
+        ABORT_GAME;
+    }
+    LOGD("Shader compilation/linking successful.");
+
     glUseProgram(0);
 }
 
@@ -160,7 +172,7 @@ void Shader::PushPositions(int vbo_offset, int stride) {
 //    glEnableVertexAttribArray(mPositionAttribLoc);
 }
 
-void Shader::beginRender(VertexBuf *vbuf, int size, int stride) {
+void Shader::beginRender(VertexBuff *vbuf, int size, int stride) {
     bindShader();
     vbuf->bindBuffer();
 
@@ -205,4 +217,12 @@ void Shader::endRender() {
 
 void Shader::setMVP(float *mvp) {
     glUniformMatrix4fv(MVPMatrix, 1, GL_FALSE, mvp);
+}
+
+void Shader::setColor(float r, float g, float b, float a) {
+    glUniform4f(colorAttrib, r, g, b, a);
+}
+
+void Shader::setColor(const Color &color) {
+    glUniform4f(colorAttrib, color.r(), color.g(), color.b(), color.a());
 }

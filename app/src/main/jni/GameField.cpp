@@ -2,6 +2,8 @@
 #include "GameField.h"
 #include "FileBuf.h"
 #include "GameCoords.h"
+#include "ScoreService.h"
+#include "TouchEventData.h"
 
 bool GameField::init() {
 
@@ -9,46 +11,40 @@ bool GameField::init() {
         return false;
     }
 
-    textureShader = new TextureShader();
-    textureShader->compile();
-
-    simpleShader = new Shader();
-    simpleShader->compile();
-
-    float *container = GameCoords::getInstance()->getCoords(CONTAINER)->createCoordsForShader(0.0f);
-    float *glass = GameCoords::getInstance()->getCoords(GLASS)->createCoordsForShader(0.1f);
-    float *vertices = GameCoords::getInstance()->getCoords(CIRCLE)->createCoordsForShader(0.0f);
-
-    circleVertices = new VertexBuf(vertices, 24 * sizeof(float));
-    containerVertices = new VertexBuf(container,
-                                      GameCoords::getInstance()->getCoords(CONTAINER)->getSize() *
-                                      4 * sizeof(float));
-    glassVertices = new VertexBuf(glass, 16 * sizeof(float));
-
-    TGAImage *image = new TGAImage(FileBuf::getInstance()->getCircle());
-
-    texture = new Texture(*image);
-
+//    float *container = GameCoords::getInstance()->getCoords(CONTAINER)->createCoordsForShader(0.0f);
+//    float *glass = GameCoords::getInstance()->getCoords(GLASS)->createCoordsForShader(0.1f);
+//    float *vertices = GameCoords::getInstance()->getCoords(CIRCLE)->createCoordsForShader(0.0f);
+//
+//    circleVertices = new VertexBuff(vertices, 24 * sizeof(float));
+//    containerVertices = new VertexBuff(container,
+//                                      GameCoords::getInstance()->getCoords(CONTAINER)->getSize() *
+//                                      4 * sizeof(float));
+//    glassVertices = new VertexBuff(glass, 16 * sizeof(float));
+//
+//    TGAImage *image = new TGAImage(FileBuf::getInstance()->getCircle());
+//
+//    texture = new Texture(*image);
+//
     font->init();
-
-    delete[] glass;
-    delete[] vertices;
-    delete[] container;
-
-    return true;
-}
-
-void GameField::doFrame(float *projMat) {
+//
+//    delete[] glass;
+//    delete[] vertices;
+//    delete[] container;
 
     if (physicsService == NULL && GameCoords::getInstance() != NULL) {
-        physicsService = new PhysicsService();
+        physicsService = new PhysicsService(0, 0);
     }
 
-    glClearColor(0.5, 0.5, 0.5, 1.0);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    if (physicsService == NULL) {
+        return false;
+    }
+
+    physicsService->init();
+
+    return ScreenElement::init();
+}
+
+void GameField::draw(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
 
     if (physicsService == NULL) {
         return;
@@ -56,58 +52,41 @@ void GameField::doFrame(float *projMat) {
 
     physicsService->nextFrame();
 
-    simpleShader->beginRender(containerVertices, 4, 4);
-    textureShader->setMVP(ndk_helper::Mat4(projMat).Ptr());
-    GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11};
-    glDrawElements(GL_LINES, 22, GL_UNSIGNED_SHORT, indices);
+    font->setColor(Color(0.7f, 0.7f, 0.7f, 0.0f));
+    font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
 
-    simpleShader->endRender();
+    physicsService->draw(DrawableData(simpleShader, textureShader, projMat));
 
-    textureShader->beginRender(circleVertices, 4, 6);
-    textureShader->setTexture(texture);
+//    physicsService->draw(projMat, simpleShader, containerVertices);
+//
+//    textureShader->beginRender(circleVertices, 4, 6);
+//    textureShader->setTexture(texture);
+//    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
+//         iter != physicsService->getObjects()->end(); iter++) {
+//        if ((*iter)->isDeleted()) continue;
+//        BaseShape *shape = (*iter)->getShape();
+//        if (shape->type() == 1) {
+//            Vec2 center = shape->getCenter();
+//            textureShader->setMVP((ndk_helper::Mat4(projMat) *
+//                                   ndk_helper::Mat4::Translation(center.x(), center.y(),
+//                                                                 0.0f)).Ptr());
+//            textureShader->render();
+//        }
+//    }
+//    textureShader->endRender();
+//
+//    simpleShader->beginRender(glassVertices, 4, 4);
+//    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
+//         iter != physicsService->getObjects()->end(); iter++) {
+//        (*iter)->draw(projMat, simpleShader);
+//    }
+//    simpleShader->endRender();
+//
 
-    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
-         iter != physicsService->getObjects()->end(); iter++) {
-        if ((*iter)->isDeleted()) continue;
-        BaseShape *shape = (*iter)->getShape();
-        if (shape->type() == 1) {
-            Vec2 center = shape->getCenter();
-            textureShader->setMVP((ndk_helper::Mat4(projMat) *
-                                   ndk_helper::Mat4::Translation(center.x(), center.y(),
-                                                                 0.0f)).Ptr());
-            textureShader->render();
-        }
-    }
-    textureShader->endRender();
-
-    simpleShader->beginRender(glassVertices, 4, 4);
-    for (std::vector<PhysicsObject *>::iterator iter = physicsService->getObjects()->begin();
-         iter != physicsService->getObjects()->end(); iter++) {
-        if ((*iter)->isDeleted() || !(*iter)->isVisible()) continue;
-        BaseShape *shape = (*iter)->getShape();
-        if (shape->type() == 10) {
-            Vec2 center = shape->getCenter();
-            simpleShader->setMVP((ndk_helper::Mat4(projMat) *
-                                  ndk_helper::Mat4::Translation(center.x(), center.y(),
-                                                                0.0f) *
-                                  ndk_helper::Mat4::RotationZ(-shape->getAngel())).Ptr());
-//            GLushort indices[] = {0, 1, 2, 0, 2, 3};
-//            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-
-            GLushort indices[] = {0, 1, 1, 2, 2, 3};
-            glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices);
-        }
-    }
-    simpleShader->endRender();
-
-    font->renderInteger(physicsService->score, textureShader, projMat, -0.6f);
+    ScreenElement::draw(projMat, simpleShader, textureShader);
 }
 
-PhysicsService *GameField::getPhysicsService() {
-    return physicsService;
-}
-
-GameField::GameField(PhysicsService *physicsService) : physicsService(NULL) {
+GameField::GameField() : physicsService(NULL) {
     font = new Font(new TGAImage(FileBuf::getInstance()->getFontImage()));
 }
 
@@ -115,4 +94,27 @@ GameField::~GameField() {
     if (font) {
         delete font;
     }
+}
+
+bool GameField::doOperation(void *data) {
+    if (ScreenElement::doOperation(data)) {
+        return true;
+    }
+
+    if (physicsService == NULL) {
+        return false;
+    }
+
+    TouchEventData *eventData = (TouchEventData *) data;
+    switch (eventData->type) {
+        case EVENT_DOWN:
+            physicsService->open();
+            break;
+        case EVENT_UP:
+            physicsService->close();
+            break;
+        default:
+            break;
+    }
+    return true;
 }

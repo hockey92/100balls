@@ -25,7 +25,7 @@ PhysicsObject::~PhysicsObject() {
     }
 }
 
-void PhysicsObject::draw(float *projection) {
+void PhysicsObject::draw(float *projection, Shader* shader) {
     if (shape) {
         shape->draw(projection);
     }

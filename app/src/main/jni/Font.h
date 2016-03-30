@@ -2,10 +2,12 @@
 #define NATIVE_ACTIVITY_FONT_H
 
 #include "TGAImage.h"
-#include "VertexBuf.h"
+#include "VertexBuff.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "TextureShader.h"
+#include "Color.h"
+#include <string>
 
 class Font {
 public:
@@ -15,16 +17,28 @@ public:
 
     void init();
 
-    void renderInteger(unsigned int num, TextureShader *shader, float *mvp, float y);
+    void setColor(const Color &color);
+
+    void renderInteger(unsigned int num, TextureShader *shader, float *mvp, float x, float y);
+
+    void renderInteger(unsigned int num, TextureShader *shader, float *mvp, const Vec2 &pos);
+
+    void renderText(const std::string &text, TextureShader *shader, float *mvp, float x, float y);
+
+    void renderText(const std::string &text, TextureShader *shader, float *mvp, const Vec2 &pos);
 
 private:
     TGAImage *image;
-    VertexBuf *fontBuf[300];
-    Texture* texture;
+    std::pair<VertexBuff *, float> fontBuff[300]; // pair(height, buff)
+    Texture *texture;
 
-    void bfs();
+    void bfs(char firstSymbol, size_t count, int yPosition);
 
     bool checkRange(int value, int lower, int upper);
+
+    float maxLetterHigh;
+
+    Color color;
 };
 
 #endif //NATIVE_ACTIVITY_FONT_H

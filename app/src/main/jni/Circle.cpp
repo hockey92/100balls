@@ -10,7 +10,7 @@ float Circle::getR() const {
     return r;
 }
 
-int Circle::type() const {
+unsigned int Circle::type() const {
     return 1;
 }
 

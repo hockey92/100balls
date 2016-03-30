@@ -6,6 +6,8 @@
 
 #include <android/input.h>
 #include "GameField.h"
+#include "Button.h"
+#include "Menu.h"
 
 class Application {
 public:
@@ -22,13 +24,17 @@ public:
 private:
     struct android_app *app;
 
-    GameField *gameField;
+    ScreenElement *screenManager;
+
     PhysicsService *physicsService;
 
     EGLDisplay mEglDisplay;
     EGLSurface mEglSurface;
     EGLContext mEglContext;
     EGLConfig mEglConfig;
+
+    float screenW;
+    float screenH;
 
     bool mHasFocus, mIsVisible, mHasWindow;
 

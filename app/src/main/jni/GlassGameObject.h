@@ -6,17 +6,19 @@
 #include "Line.h"
 #include "CirclePhysicsObject.h"
 #include "GlassPath.h"
+#include "Shader.h"
+#include "Drawable.h"
 #include <list>
 
-class GlassPhysicsObject : public PhysicsObject {
+class GlassGameObject : public PhysicsObject, public Drawable {
 public:
-    GlassPhysicsObject(GlassPath *glassPath);
+    GlassGameObject(GlassPath *glassPath);
 
-    ~GlassPhysicsObject();
+    ~GlassGameObject();
 
     void update();
 
-    void setChild(GlassPhysicsObject *child);
+    void setChild(GlassGameObject *child);
 
     bool containsCircles();
 
@@ -28,21 +30,26 @@ public:
 
     virtual void updatePos();
 
-    GlassPhysicsObject *getTail();
+    GlassGameObject *getTail();
 
-    GlassPhysicsObject *getHead();
+    GlassGameObject *getHead();
 
     void doActionAfter();
 
-    Vec2 normal;
+    void draw(const DrawableData &drawableDate);
+
+    unsigned int type();
+
+    Initializer *createInitializer();
 
 private:
-    GlassPhysicsObject *parent;
-    GlassPhysicsObject *child;
+    GlassGameObject *parent;
+    GlassGameObject *child;
 
     float positionOnPath;
     float len;
 
+    Vec2 normal;
     float clearVel;
     bool isRotate;
     Line *lines[4];
@@ -51,10 +58,11 @@ private:
     float initVelValue;
     bool wasted;
     int numOfGlassesToParent;
+    int score;
 
     GlassPath *glassPath;
 
-    void setParent(GlassPhysicsObject *parent);
+    void setParent(GlassGameObject *parent);
 
     void innerUpdate();
 
