@@ -23,7 +23,12 @@ PhysicsService::PhysicsService(float w, float h) : w(w), h(h) {
                GameCoords::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
                distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, true, 40);
 
-    container = new PhysicsObject(new Container(), 0.f);
+    gate = new PhysicsObject(new Gate(), 0.f);
+    physicsObjects.push_back(gate);
+
+    container = new ContainerGameObject(new Container(), 0.f);
+    container->setGate(gate);
+    drawService.add(container);
     physicsObjects.push_back(container);
 
     for (int i = 0; i < 7; i++) {
@@ -39,9 +44,6 @@ PhysicsService::PhysicsService(float w, float h) : w(w), h(h) {
         }
         drawService.add(po);
     }
-
-    gate = new PhysicsObject(new Gate(), 0.f);
-    physicsObjects.push_back(gate);
 }
 
 void PhysicsService::addCircles(float initX, float initY, float direction, float r,
@@ -49,7 +51,7 @@ void PhysicsService::addCircles(float initX, float initY, float direction, float
     for (int i = 0; i < numOfCircles; i++) {
         float x = initX + direction * (i % 5) * (2.0f * r + distanceBetweenCircles);
         float y = initY - (i / 5) * (2.0f * r + distanceBetweenCircles);
-        CirclePhysicsObject *po = new CirclePhysicsObject(r, 1.0f);
+        CircleGameObject *po = new CircleGameObject(r, 1.0f);
         if (!active) {
             frozenCircles.push(po);
         }
@@ -88,7 +90,7 @@ void PhysicsService::doActionAfter() {
     int MAX_NUM_OF_ACTIVE_CIRCLES = 40;
     int realNumOfActiveCircles = 0;
     for (int i = 0; i < circles.size(); i++) {
-        CirclePhysicsObject *circle = circles[i];
+        CircleGameObject *circle = circles[i];
         if (circle->isActive()) {
             realNumOfActiveCircles++;
             bool insideGlass = false;

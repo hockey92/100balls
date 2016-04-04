@@ -1,13 +1,14 @@
 #include <vecmath.h>
-#include "CirclePhysicsObject.h"
 #include "GameCoords.h"
 #include "Circle.h"
 #include "TextureInitializer.h"
+#include "CircleGameObject.h"
 
-CirclePhysicsObject::CirclePhysicsObject(float r, float invM) : PhysicsObject(new Circle(r), invM),
-                                                                insideGlass(false) { }
+CircleGameObject::CircleGameObject(float r, float invM) : PhysicsObject(new Circle(r), invM),
+                                                          insideGlass(false),
+                                                          color(Color(1.0f, 1.0f, 0.0f, 1.0f)) { }
 
-void CirclePhysicsObject::updatePos() {
+void CircleGameObject::updatePos() {
     PhysicsObject::updatePos();
     if (getShape() != NULL) {
         float lowerBound = -GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
@@ -17,15 +18,15 @@ void CirclePhysicsObject::updatePos() {
     }
 }
 
-bool CirclePhysicsObject::isInsideGlass() {
+bool CircleGameObject::isInsideGlass() {
     return insideGlass;
 }
 
-void CirclePhysicsObject::setInsideGlass(bool insideGlass) {
+void CircleGameObject::setInsideGlass(bool insideGlass) {
     this->insideGlass = insideGlass;
 }
 
-void CirclePhysicsObject::draw(const DrawableData &drawableDate) {
+void CircleGameObject::draw(const DrawableData &drawableDate) {
     if (isDeleted()) {
         return;
     }
@@ -33,14 +34,18 @@ void CirclePhysicsObject::draw(const DrawableData &drawableDate) {
     drawableDate.textureShader->setMVP((ndk_helper::Mat4(drawableDate.projMat) *
                                         ndk_helper::Mat4::Translation(center.x(), center.y(),
                                                                       0.0f)).Ptr());
-    drawableDate.textureShader->setColor(1.0f, 1.0f, 0.0f, 0.0f);
+    drawableDate.textureShader->setColor(color);
     drawableDate.textureShader->render();
 }
 
-unsigned int CirclePhysicsObject::type() {
+unsigned int CircleGameObject::type() {
     return getShape()->type();
 }
 
-Initializer *CirclePhysicsObject::createInitializer() {
+Initializer *CircleGameObject::createInitializer() {
     return new TextureInitializer();
+}
+
+void CircleGameObject::setColor(const Color &color) {
+    this->color = color;
 }

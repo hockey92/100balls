@@ -52,7 +52,7 @@ void GameField::draw(float *projMat, Shader *simpleShader, TextureShader *textur
 
     physicsService->nextFrame();
 
-    font->setColor(Color(0.7f, 0.7f, 0.7f, 0.0f));
+    font->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
     font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
 
     physicsService->draw(DrawableData(simpleShader, textureShader, projMat));

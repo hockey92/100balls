@@ -1,10 +1,22 @@
 #include "GlassShape.h"
 #include "Segment.h"
-#include "GameCoords.h"
 
-GlassShape::GlassShape() : BaseShape() {
+GlassShape::GlassShape() : SimpleShape() {
+    float vertices[8];
 
-    float *vertices = GameCoords::getInstance()->getCoords(GLASS)->getData();
+    float d = 0.2f;
+
+    float left = -d * 0.8f;
+    float down = -d;
+    float right = d * 0.8f;
+    float up = d;
+
+    vertices[0] = left, vertices[1] = up;
+    vertices[2] = 0.65f * left, vertices[3] = down;
+    vertices[4] = 0.65f * right, vertices[5] = down;
+    vertices[6] = right, vertices[7] = up;
+
+    array.setValues(vertices, 8);
 
     realChildCount = 3;
     children = new BaseShape *[3];

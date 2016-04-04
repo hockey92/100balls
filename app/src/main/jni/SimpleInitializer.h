@@ -2,12 +2,12 @@
 #define NATIVE_ACTIVITY_GLASSINITIALIZER_H
 
 #include "Initializer.h"
+#include "BaseShape.h"
+#include "ArrayWrapper.h"
 
 class SimpleInitializer : public Initializer {
 public:
-    SimpleInitializer(float *vertices, int size);
-
-    ~SimpleInitializer();
+    SimpleInitializer(BaseShape* shape);
 
     bool init();
 
@@ -15,7 +15,7 @@ public:
 
 private:
     VertexBuff *glassVertexBuff;
-    float *vertices;
+    ArrayWrapper vertices;
 };
 
 #endif //NATIVE_ACTIVITY_GLASSDRAWABLE_H

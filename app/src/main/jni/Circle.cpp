@@ -1,5 +1,4 @@
 #include "Circle.h"
-#include "GameCoords.h"
 
 Circle::Circle(float r) : BaseShape() {
     this->r = r;

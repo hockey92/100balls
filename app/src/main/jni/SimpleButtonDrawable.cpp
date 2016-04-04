@@ -2,7 +2,7 @@
 
 #include "FileBuf.h"
 
-SimpleButtonDrawable::SimpleButtonDrawable() {
+SimpleButtonDrawable::SimpleButtonDrawable() : fontColor(Color(1.0f, 1.0f, 1.0f, 1.0f)) {
     font = new Font(new TGAImage(FileBuf::getInstance()->getFontImage()));
 }
 
@@ -20,7 +20,7 @@ void SimpleButtonDrawable::draw(const DrawableData &drawableDate) {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices1);
     }
 
-    font->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+    font->setColor(fontColor);
     font->renderText(buttonData->text(), textureShader, projMat, buttonData->aabb()->getCenter());
 }
 
@@ -30,4 +30,9 @@ bool SimpleButtonDrawable::init() {
     font->init();
 
     return true;
+}
+
+SimpleButtonDrawable *SimpleButtonDrawable::setFontColor(Color fontColor) {
+    this->fontColor = fontColor;
+    return this;
 }

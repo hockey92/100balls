@@ -37,6 +37,10 @@ public:
 
     virtual void setAABB();
 
+    virtual void getVertices(float *vertices) { }
+
+    virtual int verticesSize() { return -1; }
+
 protected:
     Vec2 center;
     int realChildCount;

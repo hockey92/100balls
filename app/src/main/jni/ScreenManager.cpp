@@ -50,6 +50,15 @@ ScreenManager::ScreenManager() {
     pauseButton->setCommand(new PauseButtonCommand(this));
     gameField->addScreenElement(pauseButton);
 
+//    if (true) {
+//        SimpleButtonDrawable* buttonDrawable = new SimpleButtonDrawable();
+//        buttonDrawable->setColor(Color(0.0f, 0.0f, 0.0f, 0.0f));
+//        buttonDrawable->setFontColor(Color(1.0f, 0.0f, 0.0f, 1.0f));
+//        Button *tapToContinueButton = new Button(AABB(-w, -h, w, h), Vec2(0, 0), buttonDrawable);
+//        tapToContinueButton->setText("TAP TO START");
+//        gameField->addScreenElement(tapToContinueButton);
+//    }
+
     startButton->setCommand(new StartButtonCommand(this));
     menu->addScreenElement(startButton);
     menu->addScreenElement(exitButton);

@@ -2,16 +2,15 @@
 #define NATIVE_ACTIVITY_GLASSSHAPE_H
 
 #include "BaseShape.h"
+#include "ArrayWrapper.h"
+#include "SimpleShape.h"
 
-class GlassShape : public BaseShape {
+class GlassShape : public SimpleShape {
 
 public:
     GlassShape();
 
     virtual unsigned int type() const;
-
-private:
-    static float *vertices;
 };
 
 #endif //NATIVE_ACTIVITY_GLASSSHAPE_H
