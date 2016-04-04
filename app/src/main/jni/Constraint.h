@@ -15,12 +15,7 @@ private:
     Collision *c;
     float totalImpulse;
 
-    float clamp(float impulse) {
-        if (impulse < 0) {
-            return 0;
-        }
-        return impulse;
-    }
+    float clamp(float impulse);
 };
 
 #endif //NATIVE_ACTIVITY_CONSTRAINT_H

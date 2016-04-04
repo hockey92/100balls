@@ -12,9 +12,12 @@ public:
 
     bool init();
 
+    SimpleButtonDrawable * setFontColor(Color fontColor);
+
 private:
     VertexBuff *buttonVertex;
     Font *font;
+    Color fontColor;
 };
 
 #endif //NATIVE_ACTIVITY_SIMPLEBUTTONDRAWABLE_H

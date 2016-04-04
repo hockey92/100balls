@@ -24,9 +24,7 @@ public:
 
     virtual bool init() { }
 
-    virtual Initializer *createInitializer() {
-        return NULL;
-    }
+    virtual Initializer * createInitializer();
 };
 
 #endif //NATIVE_ACTIVITY_DRAWABLE_H

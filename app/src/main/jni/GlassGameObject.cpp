@@ -6,7 +6,7 @@
 #include "ScoreService.h"
 #include "SimpleInitializer.h"
 
-GlassGameObject::GlassGameObject(GlassPath *glassPath) : PhysicsObject(new GlassShape(), 0.f),
+GlassGameObject::GlassGameObject(GlassPath *glassPath) : GameObject(new GlassShape(), 0.f),
                                                          child(NULL),
                                                          parent(NULL),
                                                          isRotate(false),
@@ -14,7 +14,8 @@ GlassGameObject::GlassGameObject(GlassPath *glassPath) : PhysicsObject(new Glass
                                                          numOfCircles(0),
                                                          wasted(false),
                                                          numOfGlassesToParent(1),
-                                                         score(0) {
+                                                         score(0),
+                                                         color(Color(1.0f, 1.0f, 1.0f, 1.0f)) {
     for (int i = 0; i < 3; i++) {
         lines[i] = new Line(
                 ((Segment *) getShape()->getChildren(i))->getPoint(0),
@@ -107,7 +108,7 @@ void GlassGameObject::clearCircles() {
     circles.clear();
 }
 
-void GlassGameObject::addCircle(CirclePhysicsObject *circlePhysicsObject) {
+void GlassGameObject::addCircle(CircleGameObject *circlePhysicsObject) {
     circles.push_back(circlePhysicsObject);
     if (glassPath->isDown(normal)) {
         if (0 <= score && score < 50) {
@@ -121,6 +122,23 @@ void GlassGameObject::addCircle(CirclePhysicsObject *circlePhysicsObject) {
             ScoreService::getInstance()->add(5);
         }
         score++;
+    }
+    bool changeColor = true;
+    if (0 <= score && score < 50) {
+        changeColor = false;
+        color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+    } else if (50 <= score && score < 100) {
+        color = Color(1.0f, 0.0f, 0.0f, 1.0f);
+    } else if (100 <= score && score < 150) {
+        color = Color(0.0f, 1.0f, 0.0f, 1.0f);
+    } else if (150 <= score) {
+        color = Color(1.0f, 0.0f, 1.0f, 1.0f);
+    }
+    if (changeColor) {
+        for (std::list<CircleGameObject *>::iterator iter = circles.begin();
+             iter != circles.end(); ++iter) {
+            (*iter)->setColor(color);
+        }
     }
 }
 
@@ -189,48 +207,16 @@ void GlassGameObject::draw(const DrawableData &drawableDate) {
     simpleShader->setMVP((ndk_helper::Mat4(projMat) *
                           ndk_helper::Mat4::Translation(center.x(), center.y(), 0.0f) *
                           ndk_helper::Mat4::RotationZ(-shape->getAngel())).Ptr());
-    if (0 <= score && score < 50) {
-        simpleShader->setColor(1.0f, 1.0f, 1.0f, 0.5f);
-    } else if (50 <= score && score < 100) {
-        simpleShader->setColor(1.0f, 0.0f, 0.0f, 0.5f);
-    } else if (100 <= score && score < 150) {
-        simpleShader->setColor(0.0f, 1.0f, 0.0f, 0.5f);
-    } else if (150 <= score) {
-        simpleShader->setColor(1.0f, 0.0f, 1.0f, 0.5f);
-    }
+    simpleShader->setColor(color.r(), color.g(), color.b(), 0.5f);
+
     GLushort indices1[] = {0, 1, 2, 0, 2, 3};
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices1);
-//    simpleShader->setColor(0.0f, 0.0f, 0.0f, 1.0f);
-    if (0 <= score && score < 50) {
-        simpleShader->setColor(1.0f, 1.0f, 1.0f, 1.0f);
-    } else if (50 <= score && score < 100) {
-        simpleShader->setColor(1.0f, 0.0f, 0.0f, 1.0f);
-    } else if (100 <= score && score < 150) {
-        simpleShader->setColor(0.0f, 1.0f, 0.0f, 1.0f);
-    } else if (150 <= score) {
-        simpleShader->setColor(1.0f, 0.0f, 1.0f, 1.0f);
-    }
+    simpleShader->setColor(color);
+
     GLushort indices2[] = {0, 1, 1, 2, 2, 3};
     glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices2);
 }
 
 unsigned int GlassGameObject::type() {
     return getShape()->type();
-}
-
-Initializer *GlassGameObject::createInitializer() {
-    float vertices[8];
-    float d = 0.2f;
-
-    float left = -d * 0.8f;
-    float down = -d;
-    float right = d * 0.8f;
-    float up = d;
-
-    vertices[0] = left, vertices[1] = up;
-    vertices[2] = 0.65f * left, vertices[3] = down;
-    vertices[4] = 0.65f * right, vertices[5] = down;
-    vertices[6] = right, vertices[7] = up;
-
-    return new SimpleInitializer(vertices, 8);
 }

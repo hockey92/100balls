@@ -6,6 +6,10 @@
 
 void BasePhysicsService::nextFrame() {
 
+    if (paused) {
+        return;
+    }
+
     doActionBefore();
     for (int i = 0; i < physicsObjects.size(); i++) {
         PhysicsObject *po = physicsObjects[i];
@@ -69,4 +73,12 @@ void BasePhysicsService::nextFrame() {
     }
 
     doActionAfter();
+}
+
+bool BasePhysicsService::isPaused() {
+    return false;
+}
+
+void BasePhysicsService::setPaused(bool paused) {
+    this->paused = paused;
 }

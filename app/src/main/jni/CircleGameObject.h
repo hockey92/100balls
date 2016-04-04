@@ -4,9 +4,9 @@
 #include "PhysicsObject.h"
 #include "Drawable.h"
 
-class CirclePhysicsObject : public PhysicsObject, public Drawable {
+class CircleGameObject : public PhysicsObject, public Drawable {
 public:
-    CirclePhysicsObject(float r, float invM);
+    CircleGameObject(float r, float invM);
 
     virtual void updatePos();
 
@@ -20,8 +20,11 @@ public:
 
     Initializer *createInitializer();
 
+    void setColor(const Color& color);
+
 private:
     bool insideGlass;
+    Color color;
 
 };
 

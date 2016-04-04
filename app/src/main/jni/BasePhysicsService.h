@@ -8,9 +8,13 @@
 
 class BasePhysicsService {
 public:
-    BasePhysicsService() { }
+    BasePhysicsService() : paused(false) { }
 
     void nextFrame();
+
+    bool isPaused();
+
+    void setPaused(bool paused);
 
 protected:
     std::vector<PhysicsObject *> physicsObjects;
@@ -18,6 +22,9 @@ protected:
     virtual void doActionBefore() { }
 
     virtual void doActionAfter() { }
+
+private:
+    bool paused;
 };
 
 #endif //NATIVE_ACTIVITY_BASEPHYSICSSERVICE_H

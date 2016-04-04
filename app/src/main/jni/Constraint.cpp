@@ -17,3 +17,10 @@ void Constraint::fix() {
     o1->applyImpulse(-j * o1->getInvM() * c->getNormal());
     o2->applyImpulse(j * o2->getInvM() * c->getNormal());
 }
+
+float Constraint::clamp(float impulse) {
+    if (impulse < 0) {
+        return 0;
+    }
+    return impulse;
+}

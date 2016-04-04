@@ -9,6 +9,8 @@
 #include "BasePhysicsService.h"
 #include "GlassGameObject.h"
 #include "DrawService.h"
+#include "Container.h"
+#include "ContainerGameObject.h"
 
 class PhysicsService : public BasePhysicsService, public Drawable {
 public:
@@ -39,9 +41,9 @@ private:
     std::stack<PhysicsObject *> frozenCircles;
     std::stack<GlassGameObject *> frozenGlasses;
 
-    std::vector<CirclePhysicsObject *> circles;
+    std::vector<CircleGameObject *> circles;
     std::vector<GlassGameObject *> glasses;
-    PhysicsObject *container;
+    ContainerGameObject *container;
     GlassGameObject *firstGlass;
 
     GlassPath glassPath;
