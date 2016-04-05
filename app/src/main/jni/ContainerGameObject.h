@@ -5,14 +5,15 @@
 
 class ContainerGameObject : public GameObject {
 public:
-    ContainerGameObject(BaseShape *shape, float invM) : GameObject(shape, invM),
-                                                        gate(NULL) { }
+    ContainerGameObject(BaseShape *shape, float invM);
+
+    ~ContainerGameObject();
 
     void draw(const DrawableData &drawableDate);
 
     unsigned int type();
 
-    void setGate(PhysicsObject *gate);
+    PhysicsObject *getGate();
 
 private:
     PhysicsObject *gate;

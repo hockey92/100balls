@@ -1,7 +1,6 @@
 #include "Gate.h"
-#include "GameCoords.h"
+#include "Context.h"
 
-Gate::Gate() {
-    float *points = (GameCoords::getInstance()->getCoords(CONTAINER)->getData() + 10);
-    init(Vec2(points[0], points[1]), Vec2(points[6], points[7]));
+Gate::Gate(float *vertices) {
+    init(Vec2(vertices[10], vertices[11]), Vec2(vertices[16], vertices[17]));
 }

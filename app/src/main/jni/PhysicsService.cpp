@@ -1,35 +1,32 @@
 #include "PhysicsService.h"
 #include "Container.h"
-#include "Gate.h"
 #include "common.hpp"
-#include "GameCoords.h"
+#include "Context.h"
 
 PhysicsService::PhysicsService(float w, float h) : w(w), h(h) {
 
     float distanceBetweenCircles = 0.005f;
-    float r = GameCoords::getInstance()->getCoords(CIRCLE)->getData()[0];
+    float r = 0.0355f;
 
-    addCircles(GameCoords::getInstance()->getCoords(CONTAINER)->getData()[4] + r +
+    addCircles(Context::getInstance()->getCoords(CONTAINER)->getData()[4] + r +
                distanceBetweenCircles,
-               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[5] - r -
+               Context::getInstance()->getCoords(CONTAINER)->getData()[5] - r -
                distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, false, 30);
 
-    addCircles(GameCoords::getInstance()->getCoords(CONTAINER)->getData()[22] - r -
+    addCircles(Context::getInstance()->getCoords(CONTAINER)->getData()[22] - r -
                distanceBetweenCircles,
-               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
+               Context::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
                distanceBetweenCircles, -1.0f, r, distanceBetweenCircles, false, 30);
 
     addCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
-               GameCoords::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
+               Context::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
                distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, true, 40);
 
-    gate = new PhysicsObject(new Gate(), 0.f);
-    physicsObjects.push_back(gate);
-
     container = new ContainerGameObject(new Container(), 0.f);
-    container->setGate(gate);
     drawService.add(container);
     physicsObjects.push_back(container);
+    gate = container->getGate();
+    physicsObjects.push_back(gate);
 
     for (int i = 0; i < 7; i++) {
         GlassGameObject *po = new GlassGameObject(&glassPath);

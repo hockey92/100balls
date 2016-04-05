@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "common.hpp"
 #include "FileBuf.h"
-#include "GameCoords.h"
+#include "Context.h"
 #include "TouchEventData.h"
 #include "ScreenManager.h"
 
@@ -230,7 +230,7 @@ bool Application::handleInput(AInputEvent *event) {
         return 1;
     };
 
-    if (!mHasWindow || GameCoords::getInstance() == NULL) {
+    if (!mHasWindow || Context::getInstance() == NULL) {
         return 0;
     }
     int eventType = AInputEvent_getType(event);
@@ -242,8 +242,8 @@ bool Application::handleInput(AInputEvent *event) {
 
         LOGE("POINT_ID %d", pointId);
 
-        float xMax = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[WIDTH];
-        float yMax = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
+        float xMax = Context::getInstance()->getW();
+        float yMax = Context::getInstance()->getH();
 
         float x = -xMax + xMax * 2.0f * (AMotionEvent_getX(event, pointId) / screenW);
         float y = yMax - yMax * 2.0f * (AMotionEvent_getY(event, pointId) / screenH);
@@ -417,7 +417,7 @@ bool Application::prepareToRender() {
         int width, height;
         eglQuerySurface(mEglDisplay, mEglSurface, EGL_WIDTH, &width);
         eglQuerySurface(mEglDisplay, mEglSurface, EGL_HEIGHT, &height);
-        GameCoords::init(width, height);
+        Context::init(width, height);
 
         if (screenManager == NULL) {
             screenManager = new ScreenManager();

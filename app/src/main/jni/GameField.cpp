@@ -1,13 +1,13 @@
 #include <vecmath.h>
 #include "GameField.h"
 #include "FileBuf.h"
-#include "GameCoords.h"
+#include "Context.h"
 #include "ScoreService.h"
 #include "TouchEventData.h"
 
 bool GameField::init() {
 
-    if (GameCoords::getInstance() == NULL) {
+    if (Context::getInstance() == NULL) {
         return false;
     }
 
@@ -31,7 +31,7 @@ bool GameField::init() {
 //    delete[] vertices;
 //    delete[] container;
 
-    if (physicsService == NULL && GameCoords::getInstance() != NULL) {
+    if (physicsService == NULL && Context::getInstance() != NULL) {
         physicsService = new PhysicsService(0, 0);
     }
 

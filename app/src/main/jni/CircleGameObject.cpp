@@ -1,5 +1,5 @@
 #include <vecmath.h>
-#include "GameCoords.h"
+#include "Context.h"
 #include "Circle.h"
 #include "TextureInitializer.h"
 #include "CircleGameObject.h"
@@ -11,7 +11,7 @@ CircleGameObject::CircleGameObject(float r, float invM) : PhysicsObject(new Circ
 void CircleGameObject::updatePos() {
     PhysicsObject::updatePos();
     if (getShape() != NULL) {
-        float lowerBound = -GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
+        float lowerBound = -Context::getInstance()->getH();
         if (getShape()->getCenter().y() < lowerBound) {
             setDeleted(true);
         }
