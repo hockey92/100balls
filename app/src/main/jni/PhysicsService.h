@@ -9,7 +9,6 @@
 #include "BasePhysicsService.h"
 #include "GlassGameObject.h"
 #include "DrawService.h"
-#include "Container.h"
 #include "ContainerGameObject.h"
 
 class PhysicsService : public BasePhysicsService, public Drawable {

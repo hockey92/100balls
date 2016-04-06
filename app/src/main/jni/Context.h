@@ -2,15 +2,7 @@
 #define NATIVE_ACTIVITY_CONTEXT_H
 
 enum {
-    GLASS, CONTAINER, CIRCLE, PATH, SCREEN_BORDERS
-};
-
-enum {
-    LEFT, DOWN, RIGHT, UP, DIST_FROM_PATH
-};
-
-enum {
-    WIDTH, HIGH
+    CONTAINER, CIRCLE
 };
 
 class GameCoordsData {
@@ -35,30 +27,31 @@ private:
     int type;
 };
 
-class GameCoords {
+class Context {
 public:
-    ~GameCoords();
+    ~Context();
 
     GameCoordsData *getCoords(int type);
 
     static void init(float w, float h);
 
-    static GameCoords *getInstance();
+    static Context *getInstance();
+
+    float getW();
+
+    float getH();
 
 private:
-    GameCoords(float w, float h);
+    Context(float w, float h);
 
     GameCoordsData *gameCoordsData[4];
 
-    static GameCoords *instance;
-
-    void createGlassCoords(float w, float h);
+    static Context *instance;
 
     void createContainerCoords(float w, float h);
 
-    void createCircleCoords(float w, float h);
-
-    void createPathCoordsAndScreenBorders(float w, float h);
+    float relW;
+    float relH;
 };
 
 #endif //NATIVE_ACTIVITY_CONTEXT_H

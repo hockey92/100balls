@@ -1,6 +1,6 @@
 #include <vecmath.h>
 #include "Menu.h"
-#include "GameCoords.h"
+#include "Context.h"
 
 Menu::Menu() : slideX(0.0f) { }
 
@@ -52,8 +52,8 @@ bool Menu::init() {
     if (!ScreenElement::init()) {
         return false;
     }
-    float w = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[WIDTH];
-    float h = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
+    float w = Context::getInstance()->getW();
+    float h = Context::getInstance()->getH();
     blackScreen = new VertexBuff(AABB(-w, -h, w, h), 0);
     return true;
 }

@@ -1,15 +1,15 @@
 #include "GlassPath.h"
-#include "GameCoords.h"
+#include "Context.h"
 #include "Constants.h"
 #include "CollisionFactory.h"
 
 GlassPath::GlassPath() {
-    right = GameCoords::getInstance()->getCoords(PATH)->getData()[RIGHT];
-    left = GameCoords::getInstance()->getCoords(PATH)->getData()[LEFT];
-    down = GameCoords::getInstance()->getCoords(PATH)->getData()[DOWN];
-    up = GameCoords::getInstance()->getCoords(PATH)->getData()[UP];
+    left = -0.6f;
+    down = -Context::getInstance()->getH() + 0.44f;
+    right = 0.6f;
+    up = Context::getInstance()->getH() - 0.44f;
 
-    distFromPath = GameCoords::getInstance()->getCoords(PATH)->getData()[DIST_FROM_PATH];
+    distFromPath = 0.2f;
 
     path[0] = new Segment(Vec2(right, up), Vec2(right, down));
     path[1] = new Segment(Vec2(right, down), Vec2(left, down));

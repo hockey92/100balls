@@ -1,4 +1,5 @@
 #include "ContainerGameObject.h"
+#include "Gate.h"
 
 void ContainerGameObject::draw(const DrawableData &drawableDate) {
     Shader *simpleShader = drawableDate.simpleShader;
@@ -20,6 +21,18 @@ unsigned int ContainerGameObject::type() {
     return getShape()->type();
 }
 
-void ContainerGameObject::setGate(PhysicsObject *gate) {
-    this->gate = gate;
+ContainerGameObject::ContainerGameObject(BaseShape *shape, float invM) : GameObject(shape, invM) {
+    float vertices[getShape()->verticesSize()];
+    getShape()->getVertices(vertices);
+    gate = new PhysicsObject(new Gate(vertices), 0.f);
+}
+
+PhysicsObject *ContainerGameObject::getGate() {
+    return gate;
+}
+
+ContainerGameObject::~ContainerGameObject() {
+    if (gate) {
+        delete gate;
+    }
 }

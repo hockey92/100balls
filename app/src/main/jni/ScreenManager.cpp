@@ -2,7 +2,7 @@
 #include "ScreenManager.h"
 #include "GameField.h"
 #include "Menu.h"
-#include "GameCoords.h"
+#include "Context.h"
 #include "SimpleButtonDrawable.h"
 #include "TextureButtonDrawable.h"
 
@@ -41,8 +41,8 @@ ScreenManager::ScreenManager() {
             Color(0.0f, 0.5f, 0.0f, 1.0f)));
     exitButton->setText("EXIT");
 
-    float w = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[WIDTH];
-    float h = GameCoords::getInstance()->getCoords(SCREEN_BORDERS)->getData()[HIGH];
+    float w = Context::getInstance()->getW();
+    float h = Context::getInstance()->getH();
 
     Button *pauseButton = new Button(AABB(-0.1f, -0.1f, 0.1f, 0.1f), Vec2(w - 0.15f, h - 0.15f),
                                      (new TextureButtonDrawable())->setColor(
