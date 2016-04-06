@@ -8,21 +8,23 @@ PhysicsService::PhysicsService(float w, float h) : w(w), h(h) {
     float distanceBetweenCircles = 0.005f;
     float r = 0.0355f;
 
-    addCircles(Context::getInstance()->getCoords(CONTAINER)->getData()[4] + r +
-               distanceBetweenCircles,
-               Context::getInstance()->getCoords(CONTAINER)->getData()[5] - r -
-               distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, false, 30);
+    container = new ContainerGameObject(new Container(), 0.f);
 
-    addCircles(Context::getInstance()->getCoords(CONTAINER)->getData()[22] - r -
-               distanceBetweenCircles,
-               Context::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
-               distanceBetweenCircles, -1.0f, r, distanceBetweenCircles, false, 30);
+    float containerVertices[container->getShape()->verticesSize()];
+    container->getShape()->getVertices(containerVertices);
+
+    addCircles(containerVertices[4] + r + distanceBetweenCircles,
+               containerVertices[5] - r - distanceBetweenCircles,
+               1.0f, r, distanceBetweenCircles, false, 30);
+
+    addCircles(containerVertices[22] - r - distanceBetweenCircles,
+               containerVertices[23] - r - distanceBetweenCircles,
+               -1.0f, r, distanceBetweenCircles, false, 30);
 
     addCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
-               Context::getInstance()->getCoords(CONTAINER)->getData()[23] - r -
-               distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, true, 40);
+               containerVertices[23] - r - distanceBetweenCircles,
+               1.0f, r, distanceBetweenCircles, true, 40);
 
-    container = new ContainerGameObject(new Container(), 0.f);
     drawService.add(container);
     physicsObjects.push_back(container);
     gate = container->getGate();
