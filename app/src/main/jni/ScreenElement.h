@@ -1,5 +1,5 @@
-#ifndef NATIVE_ACTIVITY_SCREEN_H
-#define NATIVE_ACTIVITY_SCREEN_H
+#ifndef NATIVE_ACTIVITY_SCREENELEMENT_H
+#define NATIVE_ACTIVITY_SCREENELEMENT_H
 
 #include "Operationable.h"
 #include "Shader.h"
@@ -22,4 +22,4 @@ protected:
     std::vector<ScreenElement *> screenElements;
 };
 
-#endif //NATIVE_ACTIVITY_SCENE_H
+#endif //NATIVE_ACTIVITY_SCREENELEMENT_H

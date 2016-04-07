@@ -1,14 +1,10 @@
-#include <stddef.h>
 #include "Context.h"
+#include "PhysicsService.h"
 
 Context *Context::instance = NULL;
 
-Context::Context(float w, float h) {
-
-    float rel = h / w;
-
-    relW = 1.0f;
-    relH = rel;
+Context::Context(float w, float h) : screen(Screen(1.0f, h / w)) {
+    basePhysicsService = NULL;
 }
 
 Context *Context::getInstance() {
@@ -22,9 +18,16 @@ void Context::init(float w, float h) {
 }
 
 float Context::getW() {
-    return relW;
+    return screen.w();
 }
 
 float Context::getH() {
-    return relH;
+    return screen.h();
+}
+
+BasePhysicsService *Context::getPhysicsService() {
+    if (basePhysicsService == NULL) {
+        basePhysicsService = new PhysicsService(getW(), getH());
+    }
+    return basePhysicsService;
 }

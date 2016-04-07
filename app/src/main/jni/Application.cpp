@@ -23,7 +23,6 @@ Application::Application(struct android_app *app) {
     mEglContext = EGL_NO_CONTEXT;
     mEglConfig = 0;
     mHasFocus = false, mIsVisible = false, mHasWindow = false;
-    physicsService = NULL;//new PhysicsService();
     screenManager = NULL;//new ScreenManager();//new GameField(physicsService);
 }
 
