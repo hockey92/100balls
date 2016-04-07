@@ -26,8 +26,6 @@ private:
 
     ScreenElement *screenManager;
 
-    PhysicsService *physicsService;
-
     EGLDisplay mEglDisplay;
     EGLSurface mEglSurface;
     EGLContext mEglContext;

@@ -23,10 +23,6 @@ public:
     bool doOperation(void *data);
 
 private:
-    PhysicsService *physicsService;
-    VertexBuff *circleVertices;
-    VertexBuff *glassVertices;
-    VertexBuff *containerVertices;
     Texture *texture;
     Font* font;
 };
