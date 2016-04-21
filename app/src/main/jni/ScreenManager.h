@@ -2,9 +2,10 @@
 #define NATIVE_ACTIVITY_SCREENMANAGER_H
 
 #include "ScreenElement.h"
+#include "CallbackObject.h"
 #include <vector>
 
-class ScreenManager : public ScreenElement {
+class ScreenManager : public ScreenElement, public CallbackObject {
 public:
     ScreenManager();
 
@@ -16,8 +17,14 @@ public:
 
     void setCurrentScreen(int currentScreen);
 
+    static void callbackPushPauseButton(CallbackObject *callbackObject, void *callbackData);
+
+    static void callbackPushContinueButton(CallbackObject *callbackObject, void *callbackData);
+
+    static void callbackPushStartButton(CallbackObject *callbackObject, void *callbackData);
+
 private:
-    std::vector<ScreenElement *> screens;
+    ScreenElement *screens[2];
     int currentScreen;
     Shader *simpleShader;
     TextureShader *textureShader;

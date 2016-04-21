@@ -26,9 +26,8 @@ GlassGameObject::GlassGameObject(GlassPath *glassPath) : GameObject(new GlassSha
             ((Segment *) getShape()->getChildren(2))->getPoint(1),
             ((Segment *) getShape()->getChildren(0))->getPoint(0)
     );
-    getShape()->move(glassPath->getStartPoint());
-    updatePositionOnPath();
-    initVelValue = -0.5f;
+
+    reset();
 }
 
 GlassGameObject::~GlassGameObject() {
@@ -219,4 +218,21 @@ void GlassGameObject::draw(const DrawableData &drawableDate) {
 
 unsigned int GlassGameObject::type() {
     return getShape()->type();
+}
+
+void GlassGameObject::reset() {
+    child = NULL;
+    parent = NULL;
+    isRotate = false;
+    numOfCircles = 0;
+    wasted = false;
+    numOfGlassesToParent = 1;
+    score = 0;
+    color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+    initVelValue = -0.5f;
+    BaseShape *shape = getShape();
+    shape->setCenter(glassPath->getGlassStartPoint());
+    shape->rotate(shape->getAngel());
+    setDeleted(false);
+    updatePositionOnPath();
 }

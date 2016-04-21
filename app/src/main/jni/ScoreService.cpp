@@ -8,7 +8,7 @@ unsigned int ScoreService::getTotal() {
 }
 
 float ScoreService::getGlassVel() {
-    float vel = initGlassVel - 0.01f * (float) (total / 100);
+    float vel = initGlassVel - 0.05f * (float) (total / 100);
     return vel > 2.0f ? 2.0f : vel;
 }
 

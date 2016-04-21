@@ -17,9 +17,9 @@ public:
 
     Vec2 getCenter() const;
 
-    float getAngel() const;
+    void setCenter(const Vec2& center);
 
-    void setAngle(float angle);
+    float getAngel() const;
 
     void draw(float *projection);
 
@@ -51,6 +51,8 @@ protected:
     AABB *extendedAABB;
 
     virtual void innerRotate(float angle);
+
+    void setAngle(float angle);
 };
 
 #endif //TEAPOT_BASESHAPE_H

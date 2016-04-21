@@ -13,7 +13,7 @@
 
 class PhysicsService : public BasePhysicsService, public Drawable {
 public:
-    PhysicsService(float w, float h);
+    PhysicsService(float w, float h, DrawService *drawService);
 
     void open();
 
@@ -23,9 +23,11 @@ public:
 
     void draw(const DrawableData &drawableDate);
 
-    unsigned int type() {return 76543;};
+    unsigned int type() { return 76543; };
 
     bool init();
+
+    void reset();
 
 protected:
     virtual void doActionBefore();
@@ -35,6 +37,8 @@ protected:
 private:
     float w;
     float h;
+
+    float r;
 
     PhysicsObject *gate;
     std::stack<PhysicsObject *> frozenCircles;
@@ -47,10 +51,11 @@ private:
 
     GlassPath glassPath;
 
-    DrawService drawService;
+    DrawService *drawService;
 
-    void addCircles(float initX, float initY, float direction, float r,
-                    float distanceBetweenCircles, bool active, int numOfCircles);
+    void resetCircles(float initX, float initY, float direction, float r,
+                      float distanceBetweenCircles, bool active, int numOfCircles,
+                      int startCircleNumber);
 
     void checkFrozenGlasses();
 };

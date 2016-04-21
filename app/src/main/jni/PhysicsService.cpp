@@ -1,73 +1,66 @@
 #include "PhysicsService.h"
 #include "Container.h"
 #include "common.hpp"
-#include "Context.h"
+#include "ScoreService.h"
 
-PhysicsService::PhysicsService(float w, float h) : w(w), h(h) {
+PhysicsService::PhysicsService(float w, float h, DrawService *drawService) : w(w), h(h),
+                                                                             drawService(
+                                                                                     drawService) {
 
-    float distanceBetweenCircles = 0.005f;
-    float r = 0.0355f;
+    r = 0.0355f;
 
     container = new ContainerGameObject(new Container(), 0.f);
 
-    float containerVertices[container->getShape()->verticesSize()];
-    container->getShape()->getVertices(containerVertices);
+    for (int i = 0; i < 100; i++) {
+        CircleGameObject *circleGO = new CircleGameObject(r, 1.0f);
+        drawService->add(circleGO);
+        physicsObjects.push_back(circleGO);
+        circles.push_back(circleGO);
+    }
 
-    addCircles(containerVertices[4] + r + distanceBetweenCircles,
-               containerVertices[5] - r - distanceBetweenCircles,
-               1.0f, r, distanceBetweenCircles, false, 30);
-
-    addCircles(containerVertices[22] - r - distanceBetweenCircles,
-               containerVertices[23] - r - distanceBetweenCircles,
-               -1.0f, r, distanceBetweenCircles, false, 30);
-
-    addCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
-               containerVertices[23] - r - distanceBetweenCircles,
-               1.0f, r, distanceBetweenCircles, true, 40);
-
-    drawService.add(container);
+    drawService->add(container);
     physicsObjects.push_back(container);
     gate = container->getGate();
     physicsObjects.push_back(gate);
 
     for (int i = 0; i < 7; i++) {
-        GlassGameObject *po = new GlassGameObject(&glassPath);
-        physicsObjects.push_back(po);
-        glasses.push_back(po);
-        if (i == 0) {
-            firstGlass = po;
-        } else {
-            po->setActive(false);
-            po->setVisible(false);
-            frozenGlasses.push(po);
-        }
-        drawService.add(po);
+        GlassGameObject *glassGO = new GlassGameObject(&glassPath);
+        physicsObjects.push_back(glassGO);
+        glasses.push_back(glassGO);
+        drawService->add(glassGO);
     }
+
+    reset();
 }
 
-void PhysicsService::addCircles(float initX, float initY, float direction, float r,
-                                float distanceBetweenCircles, bool active, int numOfCircles) {
+void PhysicsService::resetCircles(float initX, float initY, float direction, float r,
+                                  float distanceBetweenCircles, bool active, int numOfCircles,
+                                  int startCircleNumber) {
     for (int i = 0; i < numOfCircles; i++) {
+        CircleGameObject *go = circles[startCircleNumber + i];
         float x = initX + direction * (i % 5) * (2.0f * r + distanceBetweenCircles);
         float y = initY - (i / 5) * (2.0f * r + distanceBetweenCircles);
-        CircleGameObject *po = new CircleGameObject(r, 1.0f);
         if (!active) {
-            frozenCircles.push(po);
+            frozenCircles.push(go);
         }
-        drawService.add(po);
-        po->setActive(active);
-        po->getShape()->move(Vec2(x, y));
-        physicsObjects.push_back(po);
-        circles.push_back(po);
+        go->setDeleted(false);
+        go->setActive(active);
+        go->setVisible(true);
+        go->setVel(Vec2());
+        go->getShape()->setCenter(Vec2(x, y));
     }
 }
 
 void PhysicsService::open() {
-    gate->setActive(false);
+    if (getStatus() == PROCESSING) {
+        gate->setActive(false);
+    }
 }
 
 void PhysicsService::close() {
-    gate->setActive(true);
+    if (getStatus() == PROCESSING) {
+        gate->setActive(true);
+    }
 }
 
 void PhysicsService::doActionBefore() {
@@ -148,9 +141,54 @@ void PhysicsService::draw(float *projMat, Shader *simpleShader, VertexBuff *vert
 }
 
 void PhysicsService::draw(const DrawableData &drawableDate) {
-    drawService.draw(drawableDate.simpleShader, drawableDate.textureShader, drawableDate.projMat);
+    drawService->draw(drawableDate.simpleShader, drawableDate.textureShader, drawableDate.projMat);
 }
 
 bool PhysicsService::init() {
-    return drawService.init();
+    return drawService->init();
+}
+
+void PhysicsService::reset() {
+
+    ScoreService::getInstance()->reset();
+
+    float distanceBetweenCircles = 0.005f;
+
+    float containerVertices[container->getShape()->verticesSize()];
+    container->getShape()->getVertices(containerVertices);
+
+    while (!frozenCircles.empty()) {
+        frozenCircles.pop();
+    }
+
+    resetCircles(containerVertices[4] + r + distanceBetweenCircles,
+                 containerVertices[5] - r - distanceBetweenCircles, 1.0f, r, distanceBetweenCircles,
+                 false, 30, 0);
+
+    resetCircles(containerVertices[22] - r - distanceBetweenCircles,
+                 containerVertices[23] - r - distanceBetweenCircles, -1.0f, r,
+                 distanceBetweenCircles,
+                 false, 30, 30);
+
+    resetCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
+                 containerVertices[23] - r - distanceBetweenCircles, 1.0f, r,
+                 distanceBetweenCircles,
+                 true, 40, 60);
+
+    while (!frozenGlasses.empty()) {
+        frozenGlasses.pop();
+    }
+    for (int i = 0; i < 7; i++) {
+        GlassGameObject *po = glasses[i];
+        po->reset();
+        if (i == 0) {
+            firstGlass = po;
+            po->setActive(true);
+            po->setVisible(true);
+        } else {
+            po->setActive(false);
+            po->setVisible(false);
+            frozenGlasses.push(po);
+        }
+    }
 }

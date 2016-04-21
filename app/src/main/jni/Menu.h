@@ -6,7 +6,7 @@
 #include "ScreenElement.h"
 #include <vector>
 
-class Menu : public ScreenElement {
+class Menu : public ScreenElement, public CallbackObject {
 public:
     Menu();
 

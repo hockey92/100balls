@@ -56,10 +56,10 @@ bool GameField::doOperation(void *data) {
 
     TouchEventData *eventData = (TouchEventData *) data;
     switch (eventData->type) {
-        case EVENT_DOWN:
+        case BUTTON_EVENT_DOWN:
             ((PhysicsService*) Context::getInstance()->getPhysicsService())->open();
             break;
-        case EVENT_UP:
+        case BUTTON_EVENT_UP:
             ((PhysicsService*) Context::getInstance()->getPhysicsService())->close();
             break;
         default:

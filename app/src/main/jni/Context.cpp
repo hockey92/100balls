@@ -5,6 +5,8 @@ Context *Context::instance = NULL;
 
 Context::Context(float w, float h) : screen(Screen(1.0f, h / w)) {
     basePhysicsService = NULL;
+    drawService = NULL;
+    callbackService = NULL;
 }
 
 Context *Context::getInstance() {
@@ -27,7 +29,21 @@ float Context::getH() {
 
 BasePhysicsService *Context::getPhysicsService() {
     if (basePhysicsService == NULL) {
-        basePhysicsService = new PhysicsService(getW(), getH());
+        basePhysicsService = new PhysicsService(getW(), getH(), getDrawService());
     }
     return basePhysicsService;
+}
+
+DrawService *Context::getDrawService() {
+    if (drawService == NULL) {
+        drawService = new DrawService();
+    }
+    return drawService;
+}
+
+CallbackService *Context::getCallbackService() {
+    if (callbackService == NULL) {
+        callbackService = new CallbackService();
+    }
+    return callbackService;
 }

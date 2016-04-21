@@ -6,15 +6,19 @@
 #include "PhysicsObject.h"
 #include "BaseShape.h"
 
+enum {
+    STOPPED, PROCESSING, PAUSED
+};
+
 class BasePhysicsService {
 public:
-    BasePhysicsService() : paused(false) { }
+    BasePhysicsService();
 
     void nextFrame();
 
-    bool isPaused();
+    int getStatus();
 
-    void setPaused(bool paused);
+    void setStatus(int status);
 
 protected:
     std::vector<PhysicsObject *> physicsObjects;
@@ -24,7 +28,8 @@ protected:
     virtual void doActionAfter() { }
 
 private:
-    bool paused;
+
+    int status;
 };
 
 #endif //NATIVE_ACTIVITY_BASEPHYSICSSERVICE_H
