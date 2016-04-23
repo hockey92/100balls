@@ -4,6 +4,7 @@
 #include "Context.h"
 #include "ScoreService.h"
 #include "TouchEventData.h"
+#include "TextureButtonDrawable.h"
 
 bool GameField::init() {
 
@@ -13,7 +14,7 @@ bool GameField::init() {
 
     font->init();
 
-    ((PhysicsService *) Context::getInstance()->getPhysicsService())->init();
+    ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->init();
 
     return ScreenElement::init();
 }
@@ -24,12 +25,12 @@ void GameField::draw(float *projMat, Shader *simpleShader, TextureShader *textur
         return;
     }
 
-    ((PhysicsService *) Context::getInstance()->getPhysicsService())->nextFrame();
+    ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->nextFrame();
 
     font->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
     font->renderInteger(ScoreService::getInstance()->getTotal(), textureShader, projMat, 0, -0.6f);
 
-    ((PhysicsService *) Context::getInstance()->getPhysicsService())->draw(
+    ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->draw(
             DrawableData(simpleShader, textureShader, projMat));
 
     ScreenElement::draw(projMat, simpleShader, textureShader);
@@ -37,6 +38,15 @@ void GameField::draw(float *projMat, Shader *simpleShader, TextureShader *textur
 
 GameField::GameField() {
     font = new Font(new TGAImage(FileBuf::getInstance()->getFontImage()));
+
+    float w = Context::getInstance()->getW();
+    float h = Context::getInstance()->getH();
+
+    Button *pauseButton = new Button(AABB(-0.1f, -0.1f, 0.1f, 0.1f), Vec2(w - 0.15f, h - 0.15f),
+                                     (new TextureButtonDrawable())->setColor(
+                                             Color(1.0f, 1.0f, 1.0f, 1.0f)),
+                                     "gameFieldPauseButton");
+    addScreenElement(pauseButton);
 }
 
 GameField::~GameField() {
@@ -56,11 +66,11 @@ bool GameField::doOperation(void *data) {
 
     TouchEventData *eventData = (TouchEventData *) data;
     switch (eventData->type) {
-        case EVENT_DOWN:
-            ((PhysicsService*) Context::getInstance()->getPhysicsService())->open();
+        case BUTTON_EVENT_DOWN:
+            ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->open();
             break;
-        case EVENT_UP:
-            ((PhysicsService*) Context::getInstance()->getPhysicsService())->close();
+        case BUTTON_EVENT_UP:
+            ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->close();
             break;
         default:
             break;

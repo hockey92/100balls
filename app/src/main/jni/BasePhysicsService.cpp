@@ -6,7 +6,7 @@
 
 void BasePhysicsService::nextFrame() {
 
-    if (paused) {
+    if (status != PROCESSING) {
         return;
     }
 
@@ -75,10 +75,12 @@ void BasePhysicsService::nextFrame() {
     doActionAfter();
 }
 
-bool BasePhysicsService::isPaused() {
-    return false;
+int BasePhysicsService::getStatus() {
+    return status;
 }
 
-void BasePhysicsService::setPaused(bool paused) {
-    this->paused = paused;
+void BasePhysicsService::setStatus(int status) {
+    this->status = status;
 }
+
+BasePhysicsService::BasePhysicsService() : status(STOPPED) { }

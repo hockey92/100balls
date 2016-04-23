@@ -41,6 +41,8 @@ public:
 
     unsigned int type();
 
+    void reset();
+
 private:
     GlassGameObject *parent;
     GlassGameObject *child;

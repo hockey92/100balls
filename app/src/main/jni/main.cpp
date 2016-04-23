@@ -21,7 +21,7 @@ void android_main(struct android_app* app) {
 //#include <android/log.h>
 //#include <android_native_app_glue.h>
 //#include <stl/_string_fwd.h>
-//#include "PhysicsService.h"
+//#include "GamePhysicsService.h"
 //#include "TextureRenderer.h"
 //#include "RendererPool.h"
 //#include <string>
@@ -57,7 +57,7 @@ void android_main(struct android_app* app) {
 //    struct saved_state state;
 //
 //    float projectionMatrix[16];
-//    PhysicsService *physicsService;
+//    GamePhysicsService *physicsService;
 //
 //    TextureRenderer* textureRenderer;
 //};
@@ -143,7 +143,7 @@ void android_main(struct android_app* app) {
 //    createProjectionMatrix(engine->projectionMatrix, 3.f, 3.f, w, h);
 //
 //    RendererPool::initialize(engine->app);
-////    engine->physicsService = new PhysicsService();
+////    engine->physicsService = new GamePhysicsService();
 //
 //    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 //    glEnable(GL_DEPTH_TEST);

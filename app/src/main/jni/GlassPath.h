@@ -21,7 +21,7 @@ public:
 
     float getDistFromPath() const;
 
-    Vec2 getStartPoint() const;
+    Vec2 getGlassStartPoint() const;
 
     bool isRight(const Vec2 &normal) const;
 

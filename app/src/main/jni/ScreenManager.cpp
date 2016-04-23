@@ -3,70 +3,24 @@
 #include "GameField.h"
 #include "Menu.h"
 #include "Context.h"
-#include "SimpleButtonDrawable.h"
-#include "TextureButtonDrawable.h"
 
-class StartButtonCommand : public Command {
-public:
-    StartButtonCommand(ScreenManager *screenManager) : screenManager(screenManager) { }
-
-    void *execute(void *data) { screenManager->setCurrentScreen(1); }
-
-private:
-    ScreenManager *screenManager;
+enum {
+    SCREEN_MANAGER_MENU_SCREEN, SCREEN_MANAGER_GAME_SCREEN, SCREEN_MANAGER_GAME_OVER_SCREEN
 };
 
-class PauseButtonCommand : public Command {
-public:
-    PauseButtonCommand(ScreenManager *screenManager) : screenManager(screenManager) { }
+ScreenManager::ScreenManager() : CallbackObject("screenManager") {
 
-    void *execute(void *data) { screenManager->setCurrentScreen(0); }
-
-private:
-    ScreenManager *screenManager;
-};
-
-ScreenManager::ScreenManager() {
+    addFunction("callbackPushPauseButton", ScreenManager::callbackPushPauseButton);
+    addFunction("callbackPushContinueButton", ScreenManager::callbackPushContinueButton);
+    addFunction("callbackPushStartButton", ScreenManager::callbackPushStartButton);
 
     Menu *menu = new Menu();
     GameField *gameField = new GameField();
 
-    AABB buttonAABB = AABB(-0.90f, -0.15f, 0.90f, 0.15f);
-    Button *startButton = new Button(buttonAABB, Vec2(0, -0.5f),
-                                     (new SimpleButtonDrawable())->setColor(
-                                             Color(1.0f, 0.0f, 0.0f, 1.0f)));
-    startButton->setText("NEW GAME");
+    screens[SCREEN_MANAGER_MENU_SCREEN] = menu;
+    screens[SCREEN_MANAGER_GAME_SCREEN] = gameField;
 
-    Button *exitButton = new Button(buttonAABB, Vec2(0, -0.9f), (new SimpleButtonDrawable())->setColor(
-            Color(0.0f, 0.5f, 0.0f, 1.0f)));
-    exitButton->setText("EXIT");
-
-    float w = Context::getInstance()->getW();
-    float h = Context::getInstance()->getH();
-
-    Button *pauseButton = new Button(AABB(-0.1f, -0.1f, 0.1f, 0.1f), Vec2(w - 0.15f, h - 0.15f),
-                                     (new TextureButtonDrawable())->setColor(
-                                             Color(1.0f, 1.0f, 1.0f, 1.0f)));
-    pauseButton->setCommand(new PauseButtonCommand(this));
-    gameField->addScreenElement(pauseButton);
-
-//    if (true) {
-//        SimpleButtonDrawable* buttonDrawable = new SimpleButtonDrawable();
-//        buttonDrawable->setColor(Color(0.0f, 0.0f, 0.0f, 0.0f));
-//        buttonDrawable->setFontColor(Color(1.0f, 0.0f, 0.0f, 1.0f));
-//        Button *tapToContinueButton = new Button(AABB(-w, -h, w, h), Vec2(0, 0), buttonDrawable);
-//        tapToContinueButton->setText("TAP TO START");
-//        gameField->addScreenElement(tapToContinueButton);
-//    }
-
-    startButton->setCommand(new StartButtonCommand(this));
-    menu->addScreenElement(startButton);
-    menu->addScreenElement(exitButton);
-
-    screens.push_back(menu);
-    screens.push_back(gameField);
-
-    currentScreen = 0;
+    setCurrentScreen(this, SCREEN_MANAGER_MENU_SCREEN);
 }
 
 bool ScreenManager::init() {
@@ -76,7 +30,7 @@ bool ScreenManager::init() {
     textureShader = new TextureShader();
     textureShader->compile();
 
-    for (int i = 0; i < screens.size(); i++) {
+    for (int i = 0; i < 2; i++) {
         if (!screens[i]->init()) {
             return false;
         }
@@ -85,26 +39,38 @@ bool ScreenManager::init() {
 }
 
 void ScreenManager::draw(float *projMat) {
-//    screens[currentScreen]->draw(projMat);
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    screens[1]->draw(projMat, simpleShader, textureShader);
-
-    screens[0]->draw(projMat, simpleShader, textureShader);
+    drawCurrentScreen(projMat);
 }
 
 bool ScreenManager::doOperation(void *data) {
     return screens[currentScreen]->doOperation(data);
 }
 
-void ScreenManager::setCurrentScreen(int currentScreen) {
-    Menu *menu = (Menu *) screens[0];
-    if (currentScreen == 1) {
-        menu->setSlideDirection(-1.0f);
-    } else if (currentScreen == 0) {
-        menu->setSlideDirection(1.0f);
-    }
+void ScreenManager::setCurrentScreen(ScreenManager *screenManager, int currentScreen) {
+    screenManager->currentScreen = currentScreen;
+}
 
-    this->currentScreen = currentScreen;
+void ScreenManager::callbackPushPauseButton(CallbackObject *callbackObject, void *callbackData) {
+    ScreenManager *screenManager = (ScreenManager *) callbackObject;
+    Context::getInstance()->getPhysicsService()->setStatus(PAUSED);
+    setCurrentScreen(screenManager, SCREEN_MANAGER_MENU_SCREEN);
+}
+
+void ScreenManager::callbackPushStartButton(CallbackObject *callbackObject, void *callbackData) {
+    ScreenManager *screenManager = (ScreenManager *) callbackObject;
+    setCurrentScreen(screenManager, SCREEN_MANAGER_GAME_SCREEN);
+    ((GamePhysicsService*) Context::getInstance()->getPhysicsService())->reset();
+    Context::getInstance()->getPhysicsService()->setStatus(PROCESSING);
+}
+
+void ScreenManager::callbackPushContinueButton(CallbackObject *callbackObject, void *callbackData) {
+    ScreenManager *screenManager = (ScreenManager *) callbackObject;
+    setCurrentScreen(screenManager, SCREEN_MANAGER_GAME_SCREEN);
+    Context::getInstance()->getPhysicsService()->setStatus(PROCESSING);
+}
+
+void ScreenManager::drawCurrentScreen(float *projMat) {
+    screens[currentScreen]->beforeDraw();
+    screens[currentScreen]->draw(projMat, simpleShader, textureShader);
 }

@@ -2,8 +2,8 @@
 #define NATIVE_ACTIVITY_OPERATIONABLE_H
 
 enum {
-    EVENT_DOWN,
-    EVENT_UP
+    BUTTON_EVENT_DOWN,
+    BUTTON_EVENT_UP
 };
 
 class Operationable {

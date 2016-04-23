@@ -1,7 +1,10 @@
 #include <vecmath.h>
 #include "BaseShape.h"
 
-BaseShape::BaseShape() : realChildCount(0), parent(NULL), angle(0.f), aabb(NULL),
+BaseShape::BaseShape() : realChildCount(0),
+                         parent(NULL),
+                         angle(0.f),
+                         aabb(NULL),
                          extendedAABB(NULL) {
 }
 
@@ -98,4 +101,8 @@ void BaseShape::setAABB() {
         children[i]->setAABB();
     }
     setInnerAABB();
+}
+
+void BaseShape::setCenter(const Vec2 &center) {
+    this->center = center;
 }

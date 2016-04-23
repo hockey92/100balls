@@ -161,6 +161,6 @@ float GlassPath::getDistanceBetweenPoints(float point1, float point2) const {
     return distanceBetweenPoints;
 }
 
-Vec2 GlassPath::getStartPoint() const {
+Vec2 GlassPath::getGlassStartPoint() const {
     return Vec2(right + distFromPath + 0.5f, -h / 4.0f);
 }

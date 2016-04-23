@@ -225,7 +225,7 @@ void Application::handleCommand(int32_t cmd) {
 bool Application::handleInput(AInputEvent *event) {
 
     if (AKeyEvent_getKeyCode(event) == AKEYCODE_BACK) {
-        ((ScreenManager *) screenManager)->setCurrentScreen(0);
+        ((ScreenManager *) screenManager)->setCurrentScreen((ScreenManager *) screenManager, 0);
         return 1;
     };
 
@@ -249,7 +249,7 @@ bool Application::handleInput(AInputEvent *event) {
 
         TouchEventData touchEventData(action, Vec2(x, y), pointId);
 
-//        PhysicsService *physicsService = gameField->getPhysicsService();
+//        GamePhysicsService *physicsService = gameField->getPhysicsService();
         if (action == AMOTION_EVENT_ACTION_DOWN) {
             if (screenManager) {
                 screenManager->doOperation(&touchEventData);

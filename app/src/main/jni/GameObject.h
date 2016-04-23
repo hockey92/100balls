@@ -9,6 +9,8 @@ class GameObject : public PhysicsObject, public Drawable {
 public:
     GameObject(BaseShape *shape, float invM) : PhysicsObject(shape, invM) { }
 
+    void reset() { }
+
     virtual Initializer *createInitializer();
 };
 
