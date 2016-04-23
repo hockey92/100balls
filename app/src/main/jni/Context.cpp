@@ -1,5 +1,5 @@
 #include "Context.h"
-#include "PhysicsService.h"
+#include "GamePhysicsService.h"
 
 Context *Context::instance = NULL;
 
@@ -29,7 +29,7 @@ float Context::getH() {
 
 BasePhysicsService *Context::getPhysicsService() {
     if (basePhysicsService == NULL) {
-        basePhysicsService = new PhysicsService(getW(), getH(), getDrawService());
+        basePhysicsService = new GamePhysicsService(getW(), getH(), getDrawService());
     }
     return basePhysicsService;
 }

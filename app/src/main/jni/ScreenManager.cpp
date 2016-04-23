@@ -5,7 +5,7 @@
 #include "Context.h"
 
 enum {
-    SCREEN_MANAGER_MENU, SCREEN_MANAGER_GAME_FIELD
+    SCREEN_MANAGER_MENU_SCREEN, SCREEN_MANAGER_GAME_SCREEN, SCREEN_MANAGER_GAME_OVER_SCREEN
 };
 
 ScreenManager::ScreenManager() : CallbackObject("screenManager") {
@@ -17,10 +17,10 @@ ScreenManager::ScreenManager() : CallbackObject("screenManager") {
     Menu *menu = new Menu();
     GameField *gameField = new GameField();
 
-    screens[SCREEN_MANAGER_MENU] = menu;
-    screens[SCREEN_MANAGER_GAME_FIELD] = gameField;
+    screens[SCREEN_MANAGER_MENU_SCREEN] = menu;
+    screens[SCREEN_MANAGER_GAME_SCREEN] = gameField;
 
-    currentScreen = SCREEN_MANAGER_MENU;
+    setCurrentScreen(this, SCREEN_MANAGER_MENU_SCREEN);
 }
 
 bool ScreenManager::init() {
@@ -39,41 +39,38 @@ bool ScreenManager::init() {
 }
 
 void ScreenManager::draw(float *projMat) {
-//    screens[currentScreen]->draw(projMat);
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    screens[currentScreen]->draw(projMat, simpleShader, textureShader);
-
-//    screens[1]->draw(projMat, simpleShader, textureShader);
-//
-//    screens[0]->draw(projMat, simpleShader, textureShader);
+    drawCurrentScreen(projMat);
 }
 
 bool ScreenManager::doOperation(void *data) {
     return screens[currentScreen]->doOperation(data);
 }
 
-void ScreenManager::setCurrentScreen(int currentScreen) {
-    Menu *menu = (Menu *) screens[0];
-    if (currentScreen == 1) {
-        menu->setSlideDirection(-1.0f);
-    } else if (currentScreen == 0) {
-        menu->setSlideDirection(1.0f);
-    }
-    this->currentScreen = currentScreen;
+void ScreenManager::setCurrentScreen(ScreenManager *screenManager, int currentScreen) {
+    screenManager->currentScreen = currentScreen;
 }
 
 void ScreenManager::callbackPushPauseButton(CallbackObject *callbackObject, void *callbackData) {
-    int i = 0;
+    ScreenManager *screenManager = (ScreenManager *) callbackObject;
+    Context::getInstance()->getPhysicsService()->setStatus(PAUSED);
+    setCurrentScreen(screenManager, SCREEN_MANAGER_MENU_SCREEN);
 }
 
 void ScreenManager::callbackPushStartButton(CallbackObject *callbackObject, void *callbackData) {
-    ScreenManager* screenManager = (ScreenManager*) callbackObject;
-    screenManager->currentScreen = SCREEN_MANAGER_GAME_FIELD;
+    ScreenManager *screenManager = (ScreenManager *) callbackObject;
+    setCurrentScreen(screenManager, SCREEN_MANAGER_GAME_SCREEN);
+    ((GamePhysicsService*) Context::getInstance()->getPhysicsService())->reset();
     Context::getInstance()->getPhysicsService()->setStatus(PROCESSING);
 }
 
 void ScreenManager::callbackPushContinueButton(CallbackObject *callbackObject, void *callbackData) {
-    int i = 0;
+    ScreenManager *screenManager = (ScreenManager *) callbackObject;
+    setCurrentScreen(screenManager, SCREEN_MANAGER_GAME_SCREEN);
+    Context::getInstance()->getPhysicsService()->setStatus(PROCESSING);
+}
+
+void ScreenManager::drawCurrentScreen(float *projMat) {
+    screens[currentScreen]->beforeDraw();
+    screens[currentScreen]->draw(projMat, simpleShader, textureShader);
 }

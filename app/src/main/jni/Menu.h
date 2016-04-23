@@ -24,10 +24,13 @@ public:
 
     virtual bool init();
 
+    virtual void beforeDraw();
+
 private:
     float slideX;
     float slideDirection;
     VertexBuff *blackScreen;
+    Button *continueButton;
 };
 
 #endif //NATIVE_ACTIVITY_MENU_H

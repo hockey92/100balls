@@ -18,10 +18,10 @@ void CallbackService::addCallbackLink(std::string transmitterId,
 
 void CallbackService::addCallbackObject(CallbackObject *callbackObject) {
     callbackObjectsById.put(callbackObject->getCallbackObjectId(), callbackObject);
-    bool exist = callbackObjectsById.contains(callbackObject->getCallbackObjectId());
-    int i = 0;
 }
 
 CallbackService::CallbackService() {
     addCallbackLink("menuStartButton", "screenManager", "callbackPushStartButton");
+    addCallbackLink("menuContinueButton", "screenManager", "callbackPushContinueButton");
+    addCallbackLink("gameFieldPauseButton", "screenManager", "callbackPushPauseButton");
 }

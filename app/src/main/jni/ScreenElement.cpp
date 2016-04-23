@@ -7,7 +7,7 @@ void ScreenElement::addScreenElement(ScreenElement *screenElement) {
 bool ScreenElement::doOperation(void *data) {
     bool operationIsApplied = false;
     for (int i = 0; i < screenElements.size(); i++) {
-        if (screenElements[i]->doOperation(data)) {
+        if (screenElements[i]->isActive && screenElements[i]->doOperation(data)) {
             operationIsApplied = true;
         }
     }
@@ -25,10 +25,16 @@ bool ScreenElement::init() {
 
 void ScreenElement::draw(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
     for (int i = 0; i < screenElements.size(); i++) {
-        screenElements[i]->draw(projMat, simpleShader, textureShader);
+        if (screenElements[i]->isActive) {
+            screenElements[i]->draw(projMat, simpleShader, textureShader);
+        }
     }
 }
 
 void ScreenElement::draw(float *projMat) {
 
+}
+
+void ScreenElement::setActive(bool isActive) {
+    this->isActive = isActive;
 }

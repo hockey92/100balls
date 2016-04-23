@@ -15,7 +15,7 @@ public:
 
     bool doOperation(void *data);
 
-    void setCurrentScreen(int currentScreen);
+    static void setCurrentScreen(ScreenManager *screenManager, int currentScreen);
 
     static void callbackPushPauseButton(CallbackObject *callbackObject, void *callbackData);
 
@@ -28,6 +28,8 @@ private:
     int currentScreen;
     Shader *simpleShader;
     TextureShader *textureShader;
+
+    void drawCurrentScreen(float* projMat);
 };
 
 #endif //NATIVE_ACTIVITY_SCREENMANAGER_H

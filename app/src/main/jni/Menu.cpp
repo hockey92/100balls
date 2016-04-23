@@ -15,10 +15,9 @@ Menu::Menu() : slideX(0.0f), CallbackObject("Menu") {
                                             Color(0.0f, 0.5f, 0.0f, 1.0f)), "menuExitButton");
     exitButton->setText("EXIT");
 
-    Button *continueButton = new Button(buttonAABB, Vec2(0, -0.1f),
-                                        (new SimpleButtonDrawable())->setColor(
-                                                Color(0.0f, 0.0f, 0.5f, 1.0f)),
-                                        "menuContinueButton");
+    continueButton = new Button(buttonAABB, Vec2(0, -0.1f),
+                                (new SimpleButtonDrawable())->setColor(
+                                        Color(0.0f, 0.0f, 0.5f, 1.0f)), "menuContinueButton");
     continueButton->setText("CONTINUE");
 
     addScreenElement(startButton);
@@ -28,14 +27,16 @@ Menu::Menu() : slideX(0.0f), CallbackObject("Menu") {
 
 void Menu::draw(float *projMat, Shader *simpleShader, TextureShader *textureShader) {
 
-    slideX += slideDirection * 0.2f;
+//    slideX += slideDirection * 0.2f;
+//
+//    if (slideX < -2.0f && slideDirection == -1.0f) {
+//        slideDirection = 0.0f;
+//    } else if (slideX > 0.0f && slideDirection == 1.0f) {
+//        slideX = 0.0f;
+//        slideDirection = 0.0f;
+//    }
 
-    if (slideX < -2.0f && slideDirection == -1.0f) {
-        slideDirection = 0.0f;
-    } else if (slideX > 0.0f && slideDirection == 1.0f) {
-        slideX = 0.0f;
-        slideDirection = 0.0f;
-    }
+    slideX = 0;
 
     ndk_helper::Mat4 newProjMat =
             ndk_helper::Mat4(projMat) * ndk_helper::Mat4::Translation(slideX, 0.0f, 0.0f);
@@ -86,7 +87,7 @@ bool Menu::init() {
 //
 //    void *execute(void *data) {
 ////        screenManager->setCurrentScreen(1);
-////        ((PhysicsService *) Context::getInstance()->getPhysicsService())->reset();
+////        ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->reset();
 ////        Context::getInstance()->getPhysicsService()->setStatus(PROCESSING);
 //    }
 //
@@ -120,3 +121,10 @@ bool Menu::init() {
 //    ScreenElement *screenManager;
 //};
 
+void Menu::beforeDraw() {
+    if (Context::getInstance()->getPhysicsService()->getStatus() == STOPPED) {
+        continueButton->setActive(false);
+    } else {
+        continueButton->setActive(true);
+    }
+}

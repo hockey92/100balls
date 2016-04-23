@@ -1,9 +1,9 @@
-#include "PhysicsService.h"
+#include "GamePhysicsService.h"
 #include "Container.h"
 #include "common.hpp"
 #include "ScoreService.h"
 
-PhysicsService::PhysicsService(float w, float h, DrawService *drawService) : w(w), h(h),
+GamePhysicsService::GamePhysicsService(float w, float h, DrawService *drawService) : w(w), h(h),
                                                                              drawService(
                                                                                      drawService) {
 
@@ -33,7 +33,7 @@ PhysicsService::PhysicsService(float w, float h, DrawService *drawService) : w(w
     reset();
 }
 
-void PhysicsService::resetCircles(float initX, float initY, float direction, float r,
+void GamePhysicsService::resetCircles(float initX, float initY, float direction, float r,
                                   float distanceBetweenCircles, bool active, int numOfCircles,
                                   int startCircleNumber) {
     for (int i = 0; i < numOfCircles; i++) {
@@ -51,23 +51,23 @@ void PhysicsService::resetCircles(float initX, float initY, float direction, flo
     }
 }
 
-void PhysicsService::open() {
+void GamePhysicsService::open() {
     if (getStatus() == PROCESSING) {
         gate->setActive(false);
     }
 }
 
-void PhysicsService::close() {
+void GamePhysicsService::close() {
     if (getStatus() == PROCESSING) {
         gate->setActive(true);
     }
 }
 
-void PhysicsService::doActionBefore() {
+void GamePhysicsService::doActionBefore() {
 
 }
 
-void PhysicsService::doActionAfter() {
+void GamePhysicsService::doActionAfter() {
 
     for (int i = 0; i < glasses.size(); i++) {
         GlassGameObject *glass = glasses[i];
@@ -106,7 +106,7 @@ void PhysicsService::doActionAfter() {
     }
 }
 
-void PhysicsService::checkFrozenGlasses() {
+void GamePhysicsService::checkFrozenGlasses() {
     if (!frozenGlasses.empty()) {
         GlassGameObject *glass = frozenGlasses.top();
         GlassGameObject *tail = firstGlass->getTail();
@@ -123,32 +123,15 @@ void PhysicsService::checkFrozenGlasses() {
     }
 }
 
-void PhysicsService::draw(float *projMat, Shader *simpleShader, VertexBuff *vertexBuf) {
-    simpleShader->beginRender(vertexBuf, 4, 4);
-    simpleShader->setMVP(projMat);
-    simpleShader->setColor(1, 1, 1, 1);
-
-    if (gate->isActive()) {
-        GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12,
-                              13};
-        glDrawElements(GL_LINES, 22, GL_UNSIGNED_SHORT, indices);
-    } else {
-        GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 6, 7, 9, 9, 10, 10, 11, 11, 12, 12, 13};
-        glDrawElements(GL_LINES, 20, GL_UNSIGNED_SHORT, indices);
-    }
-
-    simpleShader->endRender();
-}
-
-void PhysicsService::draw(const DrawableData &drawableDate) {
+void GamePhysicsService::draw(const DrawableData &drawableDate) {
     drawService->draw(drawableDate.simpleShader, drawableDate.textureShader, drawableDate.projMat);
 }
 
-bool PhysicsService::init() {
+bool GamePhysicsService::init() {
     return drawService->init();
 }
 
-void PhysicsService::reset() {
+void GamePhysicsService::reset() {
 
     ScoreService::getInstance()->reset();
 

@@ -11,15 +11,13 @@
 #include "DrawService.h"
 #include "ContainerGameObject.h"
 
-class PhysicsService : public BasePhysicsService, public Drawable {
+class GamePhysicsService : public BasePhysicsService, public Drawable {
 public:
-    PhysicsService(float w, float h, DrawService *drawService);
+    GamePhysicsService(float w, float h, DrawService *drawService);
 
     void open();
 
     void close();
-
-    void draw(float *projMat, Shader *simpleShader, VertexBuff *vertexBuf);
 
     void draw(const DrawableData &drawableDate);
 

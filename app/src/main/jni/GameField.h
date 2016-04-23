@@ -5,7 +5,7 @@
 #include "VertexBuff.h"
 #include "Texture.h"
 #include "PhysicsObject.h"
-#include "PhysicsService.h"
+#include "GamePhysicsService.h"
 #include "Font.h"
 #include "ScreenElement.h"
 #include "Operationable.h"

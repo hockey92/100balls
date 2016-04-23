@@ -8,6 +8,8 @@
 
 class ScreenElement : public Operationable {
 public:
+    ScreenElement() : isActive(true) { }
+
     virtual bool init();
 
     virtual void draw(float *projMat, Shader *simpleShader, TextureShader *textureShader);
@@ -18,8 +20,13 @@ public:
 
     virtual bool doOperation(void *data);
 
+    virtual void beforeDraw() { }
+
+    void setActive(bool isActive);
+
 protected:
     std::vector<ScreenElement *> screenElements;
+    bool isActive;
 };
 
 #endif //NATIVE_ACTIVITY_SCREENELEMENT_H
