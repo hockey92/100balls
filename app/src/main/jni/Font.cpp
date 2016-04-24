@@ -60,12 +60,12 @@ void Font::bfs(char firstSymbol, size_t count, int yPosition) {
             }
         }
 
-        float texUp = ((float) (up + 2)) / ((float) image->getH());
-        float texDown = ((float) (down - 2)) / ((float) image->getH());
-        float texLeft = ((float) (left - 2)) / ((float) image->getW());
-        float texRight = ((float) (right + 2)) / ((float) image->getW());
+        float texUp = ((float) (up + 5)) / ((float) image->getH());
+        float texDown = ((float) (down - 5)) / ((float) image->getH());
+        float texLeft = ((float) (left - 5)) / ((float) image->getW());
+        float texRight = ((float) (right + 5)) / ((float) image->getW());
 
-        float coeff = 300.0f;
+        float coeff = 720.0f;
         float h = (float) (up - down) / coeff;
         float w = (float) (right - left) / coeff;
 
@@ -104,9 +104,9 @@ void Font::init() {
     texture = new Texture(*image);
 
     maxLetterHigh = 0;
-    bfs('a', 26, 140);
-    bfs('A', 26, 90);
-    bfs('0', 10, 40);
+//    bfs('a', 26, 140);
+    bfs('A', 26, 200);
+    bfs('0', 10, 100);
 }
 
 void Font::renderInteger(unsigned int num, TextureShader *shader, float *mvp, float x, float y) {

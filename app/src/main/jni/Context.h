@@ -5,6 +5,7 @@
 #include "Screen.h"
 #include "DrawService.h"
 #include "CallbackService.h"
+#include "ScoreService.h"
 
 class Context {
 public:
@@ -19,9 +20,11 @@ public:
 
     BasePhysicsService *getPhysicsService();
 
-    DrawService* getDrawService();
+    DrawService *getDrawService();
 
-    CallbackService* getCallbackService();
+    CallbackService *getCallbackService();
+
+    ScoreService *getScoreService();
 
 private:
     Context(float w, float h);
@@ -32,9 +35,11 @@ private:
 
     BasePhysicsService *basePhysicsService;
 
-    DrawService* drawService;
+    DrawService *drawService;
 
-    CallbackService* callbackService;
+    CallbackService *callbackService;
+
+    ScoreService *scoreService;
 };
 
 #endif //NATIVE_ACTIVITY_CONTEXT_H

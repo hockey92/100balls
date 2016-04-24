@@ -7,6 +7,7 @@ Context::Context(float w, float h) : screen(Screen(1.0f, h / w)) {
     basePhysicsService = NULL;
     drawService = NULL;
     callbackService = NULL;
+    scoreService = NULL;
 }
 
 Context *Context::getInstance() {
@@ -46,4 +47,11 @@ CallbackService *Context::getCallbackService() {
         callbackService = new CallbackService();
     }
     return callbackService;
+}
+
+ScoreService *Context::getScoreService() {
+    if (scoreService == NULL) {
+        scoreService = new ScoreService();
+    }
+    return scoreService;
 }

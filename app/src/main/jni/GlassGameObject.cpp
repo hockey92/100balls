@@ -5,6 +5,7 @@
 #include "common.hpp"
 #include "ScoreService.h"
 #include "SimpleInitializer.h"
+#include "Context.h"
 
 GlassGameObject::GlassGameObject(GlassPath *glassPath) : GameObject(new GlassShape(), 0.f),
                                                          child(NULL),
@@ -53,7 +54,7 @@ void GlassGameObject::setParent(GlassGameObject *parent) {
 
 void GlassGameObject::innerUpdate() {
     if (!parent) {
-        clearVel = ScoreService::getInstance()->getGlassVel();
+        clearVel = Context::getInstance()->getScoreService()->getGlassVel();
     } else {
         float parentPositionOnPath = parent->positionOnPath;
         float distanceFromParent = glassPath->getDistanceBetweenPoints(parentPositionOnPath,
@@ -112,13 +113,13 @@ void GlassGameObject::addCircle(CircleGameObject *circlePhysicsObject) {
     if (glassPath->isDown(normal)) {
         if (0 <= score && score < 50) {
             score += 1;
-            ScoreService::getInstance()->add(1);
+            Context::getInstance()->getScoreService()->add(1);
         } else if (50 <= score && score < 100) {
             score += 2;
-            ScoreService::getInstance()->add(2);
+            Context::getInstance()->getScoreService()->add(2);
         } else if (100 <= score) {
             score += 5;
-            ScoreService::getInstance()->add(5);
+            Context::getInstance()->getScoreService()->add(5);
         }
         score++;
     }

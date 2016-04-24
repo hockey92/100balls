@@ -1,10 +1,10 @@
 #ifndef NATIVE_ACTIVITY_SIMPLEBUTTONDRAWABLE_H
 #define NATIVE_ACTIVITY_SIMPLEBUTTONDRAWABLE_H
 
-#include "ButtonDrawable.h"
+#include "ButtonDrawer.h"
 #include "Font.h"
 
-class SimpleButtonDrawable : public ButtonDrawable {
+class SimpleButtonDrawable : public ButtonDrawer {
 public:
     SimpleButtonDrawable();
 

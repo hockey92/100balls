@@ -23,7 +23,7 @@ Application::Application(struct android_app *app) {
     mEglContext = EGL_NO_CONTEXT;
     mEglConfig = 0;
     mHasFocus = false, mIsVisible = false, mHasWindow = false;
-    screenManager = NULL;//new ScreenManager();//new GameField(physicsService);
+    screenManager = NULL;//new ScreenManager();//new GameScreen(physicsService);
 }
 
 Application::~Application() {
@@ -521,5 +521,5 @@ void Application::killGLObjects() {
 void Application::configureOpenGL() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 }

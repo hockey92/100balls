@@ -10,8 +10,9 @@
 #include "GlassGameObject.h"
 #include "DrawService.h"
 #include "ContainerGameObject.h"
+#include "CallbackObject.h"
 
-class GamePhysicsService : public BasePhysicsService, public Drawable {
+class GamePhysicsService : public BasePhysicsService, public CallbackObject, public Drawable {
 public:
     GamePhysicsService(float w, float h, DrawService *drawService);
 

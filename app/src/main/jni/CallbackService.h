@@ -26,7 +26,7 @@ class CallbackService {
 public:
     CallbackService();
 
-    void callback(CallbackObject *callbackObject);
+    void callback(CallbackObject *callbackObject, void *callbackData);
 
     void addCallbackObject(CallbackObject *callbackObject);
 
@@ -35,9 +35,6 @@ private:
 
     MapWrapper<std::string, CallbackObject *> callbackObjectsById;
     MapWrapper<std::string, CallbackInfo> callbackLinks;
-
-    std::map<std::string, CallbackObject *> qwerty;
-
 };
 
 #endif //NATIVE_ACTIVITY_CALLBACKSERVICE_H

@@ -1,7 +1,4 @@
-#include <stddef.h>
 #include "ScoreService.h"
-
-ScoreService *ScoreService::instance = NULL;
 
 unsigned int ScoreService::getTotal() {
     return total;
@@ -19,13 +16,6 @@ void ScoreService::add(int score) {
 void ScoreService::reset() {
     total = 0;
     initGlassVel = -0.3f;
-}
-
-ScoreService *ScoreService::getInstance() {
-    if (instance == NULL) {
-        instance = new ScoreService();
-    }
-    return instance;
 }
 
 ScoreService::ScoreService() {

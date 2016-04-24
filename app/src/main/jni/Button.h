@@ -11,12 +11,12 @@
 #include "Command.h"
 #include "ButtonData.h"
 #include "Drawable.h"
-#include "ButtonDrawable.h"
+#include "ButtonDrawer.h"
 #include "CallbackObject.h"
 
 class Button : public ScreenElement, public CallbackObject {
 public:
-    Button(const AABB &aabb, const Vec2 &center, ButtonDrawable* drawable, std::string buttonId);
+    Button(const AABB &aabb, const Vec2 &center, ButtonDrawer *drawable, std::string buttonId);
 
     ~Button();
 
@@ -29,7 +29,7 @@ public:
     Button *setText(const std::string &text);
 
 private:
-    ButtonDrawable* drawable;
+    ButtonDrawer *drawable;
     Texture *texture;
     Command *command;
     ButtonData buttonData;
