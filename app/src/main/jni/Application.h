@@ -5,9 +5,9 @@
 #include <EGL/egl.h>
 
 #include <android/input.h>
-#include "GameField.h"
+#include "GameScreen.h"
 #include "Button.h"
-#include "Menu.h"
+#include "MenuScreen.h"
 
 class Application {
 public:

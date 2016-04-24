@@ -23,13 +23,15 @@ public:
 
     static void callbackPushStartButton(CallbackObject *callbackObject, void *callbackData);
 
+    static void callbackGameOver(CallbackObject *callbackObject, void *callbackData);
+
 private:
-    ScreenElement *screens[2];
+    ScreenElement *screens[3];
     int currentScreen;
     Shader *simpleShader;
     TextureShader *textureShader;
 
-    void drawCurrentScreen(float* projMat);
+    void drawCurrentScreen(float *projMat);
 };
 
 #endif //NATIVE_ACTIVITY_SCREENMANAGER_H

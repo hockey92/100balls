@@ -13,8 +13,8 @@ void CallbackObject::addFunction(std::string functionId, CallbackFunction callba
     functions.put(functionId, callbackFunction);
 }
 
-void CallbackObject::callback() {
-    Context::getInstance()->getCallbackService()->callback(this);
+void CallbackObject::callback(void *callbackData) {
+    Context::getInstance()->getCallbackService()->callback(this, callbackData);
 }
 
 void CallbackObject::executeCallback(std::string functionId, void *callbackData) {

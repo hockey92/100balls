@@ -1,9 +1,9 @@
 #ifndef NATIVE_ACTIVITY_TEXTUREBUTTONDRAWABLE_H
 #define NATIVE_ACTIVITY_TEXTUREBUTTONDRAWABLE_H
 
-#include "ButtonDrawable.h"
+#include "ButtonDrawer.h"
 
-class TextureButtonDrawable : public ButtonDrawable {
+class TextureButtonDrawable : public ButtonDrawer {
 public:
     TextureButtonDrawable();
 

@@ -20,7 +20,7 @@ public:
 protected:
     void addFunction(std::string functionId, CallbackFunction callbackFunction);
 
-    void callback();
+    void callback(void *callbackData);
 
 private:
     std::string callbackObjectId;

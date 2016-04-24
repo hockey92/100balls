@@ -1,11 +1,11 @@
 #include "CallbackService.h"
 
-void CallbackService::callback(CallbackObject *callbackObject) {
+void CallbackService::callback(CallbackObject *callbackObject, void *callbackData) {
     CallbackInfo *callbackInfo = callbackLinks.get(callbackObject->getCallbackObjectId());
     if (callbackInfo != NULL) {
         CallbackObject **receiver = callbackObjectsById.get(callbackInfo->getReceiverId());
         if (receiver != NULL) {
-            (*receiver)->executeCallback(callbackInfo->getFunctionId(), NULL);
+            (*receiver)->executeCallback(callbackInfo->getFunctionId(), callbackData);
         }
     }
 }
@@ -24,4 +24,7 @@ CallbackService::CallbackService() {
     addCallbackLink("menuStartButton", "screenManager", "callbackPushStartButton");
     addCallbackLink("menuContinueButton", "screenManager", "callbackPushContinueButton");
     addCallbackLink("gameFieldPauseButton", "screenManager", "callbackPushPauseButton");
+    addCallbackLink("gamePhysicsService", "screenManager", "callbackGameOver");
+    addCallbackLink("gameOverRestartButton", "screenManager", "callbackPushStartButton");
+    addCallbackLink("gameOverMenuButton", "screenManager", "callbackPushPauseButton");
 }

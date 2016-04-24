@@ -2,10 +2,12 @@
 #include "Container.h"
 #include "common.hpp"
 #include "ScoreService.h"
+#include "Context.h"
 
-GamePhysicsService::GamePhysicsService(float w, float h, DrawService *drawService) : w(w), h(h),
-                                                                             drawService(
-                                                                                     drawService) {
+GamePhysicsService::GamePhysicsService(float w, float h, DrawService *drawService)
+        : w(w), h(h),
+          drawService(drawService),
+          CallbackObject("gamePhysicsService") {
 
     r = 0.0355f;
 
@@ -34,8 +36,8 @@ GamePhysicsService::GamePhysicsService(float w, float h, DrawService *drawServic
 }
 
 void GamePhysicsService::resetCircles(float initX, float initY, float direction, float r,
-                                  float distanceBetweenCircles, bool active, int numOfCircles,
-                                  int startCircleNumber) {
+                                      float distanceBetweenCircles, bool active, int numOfCircles,
+                                      int startCircleNumber) {
     for (int i = 0; i < numOfCircles; i++) {
         CircleGameObject *go = circles[startCircleNumber + i];
         float x = initX + direction * (i % 5) * (2.0f * r + distanceBetweenCircles);
@@ -69,12 +71,21 @@ void GamePhysicsService::doActionBefore() {
 
 void GamePhysicsService::doActionAfter() {
 
+    bool gameOver = true;
+
     for (int i = 0; i < glasses.size(); i++) {
         GlassGameObject *glass = glasses[i];
         if (!glass->isActive()) {
             continue;
         }
+        gameOver = false;
         glass->doActionAfter();
+    }
+
+    if (gameOver) {
+        setStatus(STOPPED);
+        callback(NULL);
+        return;
     }
 
     checkFrozenGlasses();
@@ -133,7 +144,7 @@ bool GamePhysicsService::init() {
 
 void GamePhysicsService::reset() {
 
-    ScoreService::getInstance()->reset();
+    Context::getInstance()->getScoreService()->reset();
 
     float distanceBetweenCircles = 0.005f;
 

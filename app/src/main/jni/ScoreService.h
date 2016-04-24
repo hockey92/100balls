@@ -3,6 +3,8 @@
 
 class ScoreService {
 public:
+    ScoreService();
+
     unsigned int getTotal();
 
     float getGlassVel();
@@ -11,12 +13,7 @@ public:
 
     void reset();
 
-    static ScoreService *getInstance();
-
 private:
-    ScoreService();
-
-    static ScoreService *instance;
     unsigned int total;
     float initGlassVel;
 };

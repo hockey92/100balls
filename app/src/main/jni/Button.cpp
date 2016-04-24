@@ -2,7 +2,7 @@
 #include "Button.h"
 #include "TouchEventData.h"
 
-Button::Button(const AABB &aabb, const Vec2 &center, ButtonDrawable *drawable, std::string buttonId)
+Button::Button(const AABB &aabb, const Vec2 &center, ButtonDrawer *drawable, std::string buttonId)
         : command(NULL),
           drawable(drawable),
           buttonData(ButtonData(aabb, center)),
@@ -36,7 +36,7 @@ bool Button::doOperation(void *data) {
             if (pushed) {
                 buttonData.setPushed(false);
                 if (aabb->isPointBelong(eventData->position)) {
-                    callback();
+                    callback(this);
                     return true;
                 }
             }
