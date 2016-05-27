@@ -1,13 +1,10 @@
 #include "GamePhysicsService.h"
 #include "Container.h"
-#include "common.hpp"
+#include "common.h"
 #include "ScoreService.h"
 #include "Context.h"
 
-GamePhysicsService::GamePhysicsService(float w, float h, DrawService *drawService)
-        : w(w), h(h),
-          drawService(drawService),
-          CallbackObject("gamePhysicsService") {
+GamePhysicsService::GamePhysicsService(float w, float h, DrawService *drawService) : w(w), h(h), drawService(drawService), CallbackObject("gamePhysicsService") {
 
     r = 0.0355f;
 
@@ -25,7 +22,7 @@ GamePhysicsService::GamePhysicsService(float w, float h, DrawService *drawServic
     gate = container->getGate();
     physicsObjects.push_back(gate);
 
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < NUM_OF_GLASSES; i++) {
         GlassGameObject *glassGO = new GlassGameObject(&glassPath);
         physicsObjects.push_back(glassGO);
         glasses.push_back(glassGO);
@@ -35,9 +32,7 @@ GamePhysicsService::GamePhysicsService(float w, float h, DrawService *drawServic
     reset();
 }
 
-void GamePhysicsService::resetCircles(float initX, float initY, float direction, float r,
-                                      float distanceBetweenCircles, bool active, int numOfCircles,
-                                      int startCircleNumber) {
+void GamePhysicsService::resetCircles(float initX, float initY, float direction, float r, float distanceBetweenCircles, bool active, int numOfCircles, int startCircleNumber) {
     for (int i = 0; i < numOfCircles; i++) {
         CircleGameObject *go = circles[startCircleNumber + i];
         float x = initX + direction * (i % 5) * (2.0f * r + distanceBetweenCircles);
@@ -79,7 +74,7 @@ void GamePhysicsService::doActionAfter() {
             continue;
         }
         gameOver = false;
-        glass->doActionAfter();
+        glass->doActionAfter(&firstGlass);
     }
 
     if (gameOver) {
@@ -121,10 +116,7 @@ void GamePhysicsService::checkFrozenGlasses() {
     if (!frozenGlasses.empty()) {
         GlassGameObject *glass = frozenGlasses.top();
         GlassGameObject *tail = firstGlass->getTail();
-        float dist = glassPath.getDistanceBetweenPoints(
-                tail->getShape()->getCenter(),
-                glass->getShape()->getCenter()
-        );
+        float dist = glassPath.getDistanceBetweenPoints(tail->getShape()->getCenter(), glass->getShape()->getCenter());
         if (dist >= glassPath.getDistanceBetweenGlasses()) {
             tail->setChild(glass);
             glass->setVisible(true);
@@ -155,24 +147,16 @@ void GamePhysicsService::reset() {
         frozenCircles.pop();
     }
 
-    resetCircles(containerVertices[4] + r + distanceBetweenCircles,
-                 containerVertices[5] - r - distanceBetweenCircles, 1.0f, r, distanceBetweenCircles,
-                 false, 30, 0);
+    resetCircles(containerVertices[4] + r + distanceBetweenCircles, containerVertices[5] - r - distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, false, 30, 0);
 
-    resetCircles(containerVertices[22] - r - distanceBetweenCircles,
-                 containerVertices[23] - r - distanceBetweenCircles, -1.0f, r,
-                 distanceBetweenCircles,
-                 false, 30, 30);
+    resetCircles(containerVertices[22] - r - distanceBetweenCircles, containerVertices[23] - r - distanceBetweenCircles, -1.0f, r, distanceBetweenCircles, false, 30, 30);
 
-    resetCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
-                 containerVertices[23] - r - distanceBetweenCircles, 1.0f, r,
-                 distanceBetweenCircles,
-                 true, 40, 60);
+    resetCircles(-2.0f * (2.0f * r + distanceBetweenCircles), containerVertices[23] - r - distanceBetweenCircles, 1.0f, r, distanceBetweenCircles, true, 40, 60);
 
     while (!frozenGlasses.empty()) {
         frozenGlasses.pop();
     }
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < NUM_OF_GLASSES; i++) {
         GlassGameObject *po = glasses[i];
         po->reset();
         if (i == 0) {

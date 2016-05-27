@@ -14,7 +14,7 @@
 class GameScreen : public ScreenElement {
 public:
     GameScreen();
-    ~GameScreen();
+    virtual ~GameScreen();
 
     bool init();
 

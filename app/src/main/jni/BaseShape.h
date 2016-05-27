@@ -17,11 +17,9 @@ public:
 
     Vec2 getCenter() const;
 
-    void setCenter(const Vec2& center);
+    void setCenter(const Vec2 &center);
 
     float getAngel() const;
-
-    void draw(float *projection);
 
     virtual int getSimpleShapesCount() const;
 

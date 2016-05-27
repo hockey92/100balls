@@ -9,7 +9,7 @@ class ButtonData {
 public:
     ButtonData(const AABB &aabb, const Vec2 &center);
 
-    ~ButtonData();
+    virtual ~ButtonData();
 
     bool pushed() const { return _pushed; }
 

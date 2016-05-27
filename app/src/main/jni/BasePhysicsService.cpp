@@ -1,8 +1,9 @@
 #include "BasePhysicsService.h"
 #include "Constraint.h"
 #include "CollisionFactory.h"
-#include "common.hpp"
 #include <list>
+
+BasePhysicsService::BasePhysicsService() : status(STOPPED) { }
 
 void BasePhysicsService::nextFrame() {
 
@@ -41,26 +42,22 @@ void BasePhysicsService::nextFrame() {
                     }
                     Collision *c = CollisionFactory::createCollision(shape1, shape2);
                     if (c != NULL) {
-                        constraints.push_back(
-                                new Constraint(physicsObjects[i], physicsObjects[j], c)
-                        );
+                        constraints.push_back(new Constraint(physicsObjects[i], physicsObjects[j], c));
                     }
                 }
             }
         }
     }
 
-    LOGE("num of constraints %d", constraints.size());
+//    LOGE("num of constraints %d", constraints.size());
 
     for (int i = 0; i < 10; i++) {
-        for (std::list<Constraint *>::iterator iter = constraints.begin();
-             iter != constraints.end(); ++iter) {
+        for (std::list<Constraint *>::iterator iter = constraints.begin(); iter != constraints.end(); ++iter) {
             (*iter)->fix();
         }
     }
 
-    for (std::list<Constraint *>::iterator iterator = constraints.begin();
-         iterator != constraints.end(); ++iterator) {
+    for (std::list<Constraint *>::iterator iterator = constraints.begin(); iterator != constraints.end(); ++iterator) {
         delete *iterator;
     }
 
@@ -83,4 +80,8 @@ void BasePhysicsService::setStatus(int status) {
     this->status = status;
 }
 
-BasePhysicsService::BasePhysicsService() : status(STOPPED) { }
+BasePhysicsService::~BasePhysicsService() {
+    for (int i = 0; i < physicsObjects.size(); i++) {
+        delete physicsObjects[i];
+    }
+}

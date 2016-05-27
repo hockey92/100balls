@@ -8,7 +8,6 @@
 #include "AABB.h"
 #include "Vec2.h"
 #include "ScreenElement.h"
-#include "Command.h"
 #include "ButtonData.h"
 #include "Drawable.h"
 #include "ButtonDrawer.h"
@@ -18,7 +17,7 @@ class Button : public ScreenElement, public CallbackObject {
 public:
     Button(const AABB &aabb, const Vec2 &center, ButtonDrawer *drawable, std::string buttonId);
 
-    ~Button();
+    virtual ~Button();
 
     bool init();
 
@@ -30,8 +29,6 @@ public:
 
 private:
     ButtonDrawer *drawable;
-    Texture *texture;
-    Command *command;
     ButtonData buttonData;
 };
 

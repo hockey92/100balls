@@ -5,16 +5,21 @@ SimpleInitializer::SimpleInitializer(BaseShape *shape) {
     size_t verticesSize = (size_t) shape->verticesSize();
     float temp[verticesSize];
     shape->getVertices(temp);
-    vertices.setValues(temp, verticesSize);
+    float *coordsForShader = DrawUtils::createCoordsForShader(temp, 0.0f, verticesSize / 2);
+    glassVertexBuff = new VertexBuff(coordsForShader, verticesSize * 2);
+
+    delete[] coordsForShader;
 }
 
 bool SimpleInitializer::init() {
-    float *coordsForShader = DrawUtils::createCoordsForShader(vertices.ptr(), 0.0f,
-                                                              vertices.size() / 2);
-    glassVertexBuff = new VertexBuff(coordsForShader, vertices.size() * 2 * sizeof(float));
+    glassVertexBuff->init();
     return true;
 }
 
 void SimpleInitializer::startRender(Shader *simpleShader, TextureShader *textureShader) {
     simpleShader->beginRender(glassVertexBuff, 4, 4);
+}
+
+bool SimpleInitializer::kill() {
+    return false;
 }

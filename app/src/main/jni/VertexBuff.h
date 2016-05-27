@@ -3,19 +3,29 @@
 
 #include <GLES2/gl2.h>
 #include "AABB.h"
+#include "ArrayWrapper.h"
+#include "OpenGLObject.h"
 
-class VertexBuff {
+class VertexBuff : public OpenGLObject {
 public:
     VertexBuff(GLfloat *vertices, int size);
-    VertexBuff(const AABB &aabb, float z);
-    ~VertexBuff();
 
-    void bindBuffer();
-    void unbindBuffer();
+    VertexBuff(const AABB &aabb, float z);
+
+    virtual ~VertexBuff();
+
+    bool init();
+
+    void kill();
+
+    void bind();
+
+    void unbind();
+
 private:
     GLuint vbo;
 
-    void init(GLfloat *vertices, int size);
+    ArrayWrapper arrayWrapper;
 };
 
 #endif //NATIVE_ACTIVITY_VERTEXBUFF_H

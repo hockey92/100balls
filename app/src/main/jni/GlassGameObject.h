@@ -15,7 +15,7 @@ class GlassGameObject : public GameObject {
 public:
     GlassGameObject(GlassPath *glassPath);
 
-    ~GlassGameObject();
+    virtual ~GlassGameObject();
 
     void update();
 
@@ -35,7 +35,7 @@ public:
 
     GlassGameObject *getHead();
 
-    void doActionAfter();
+    void doActionAfter(GlassGameObject **firstGlassPtr);
 
     void draw(const DrawableData &drawableDate);
 
@@ -56,9 +56,8 @@ private:
     Line *lines[4];
     int numOfCircles;
     std::list<CircleGameObject *> circles;
-    float initVelValue;
     bool wasted;
-    int numOfGlassesToParent;
+    int numOfGlassesDistsBeetweenThisAndParentGlasses;
     int score;
     Color color;
     GlassPath *glassPath;
@@ -69,7 +68,9 @@ private:
 
     void updatePositionOnPath();
 
-    void waste();
+    void waste(GlassGameObject **firstGlassPtr);
+
+    GlassGameObject *findNonRotateParent();
 };
 
 #endif //NATIVE_ACTIVITY_GLASSPHYSICSOBJECT_H

@@ -1,17 +1,11 @@
 #include <vecmath.h>
 #include "Shader.h"
-#include "common.hpp"
-//#include "indexbuf.hpp"
-#include "Shader.h"
-//#include "vertexbuf.hpp"
+#include "common.h"
 
 Shader::Shader() {
     vertShader = 0;
     fragShader = 0;
     program = 0;
-//    mMVPMatrixLoc = -1;
-//    mPositionAttribLoc = -1;
-//    mPreparedVertexBuf = NULL;
 }
 
 Shader::~Shader() {
@@ -174,7 +168,7 @@ void Shader::PushPositions(int vbo_offset, int stride) {
 
 void Shader::beginRender(VertexBuff *vbuf, int size, int stride) {
     bindShader();
-    vbuf->bindBuffer();
+    vbuf->bind();
 
     ASSERT(positionAttrib >= 0);
     glVertexAttribPointer(positionAttrib, size, GL_FLOAT, GL_FALSE, stride * sizeof(float),
@@ -210,7 +204,7 @@ void Shader::render() {
 
 void Shader::endRender() {
     if (preparedVertexBuf) {
-        preparedVertexBuf->unbindBuffer();
+        preparedVertexBuf->unbind();
         preparedVertexBuf = NULL;
     }
 }

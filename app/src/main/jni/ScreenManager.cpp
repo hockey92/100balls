@@ -6,11 +6,12 @@
 #include "GameOverScreen.h"
 
 enum {
-    SCREEN_MANAGER_MENU_SCREEN, SCREEN_MANAGER_GAME_SCREEN, SCREEN_MANAGER_GAME_OVER_SCREEN
+    SCREEN_MANAGER_MENU_SCREEN,
+    SCREEN_MANAGER_GAME_SCREEN,
+    SCREEN_MANAGER_GAME_OVER_SCREEN
 };
 
 ScreenManager::ScreenManager() : CallbackObject("screenManager") {
-
     addFunction("callbackPushPauseButton", ScreenManager::callbackPushPauseButton);
     addFunction("callbackPushContinueButton", ScreenManager::callbackPushContinueButton);
     addFunction("callbackPushStartButton", ScreenManager::callbackPushStartButton);

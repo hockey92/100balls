@@ -8,12 +8,11 @@
 class PhysicsObject {
 
 public:
-    PhysicsObject(BaseShape *shape, float invM) : angleVel(0), shape(shape), invM(invM),
-                                                  active(true), deleted(false), visible(true) { }
+    PhysicsObject(BaseShape *shape, float invM) : angleVel(0), shape(shape), invM(invM), active(true), deleted(false), visible(true) { }
 
-    ~PhysicsObject();
+    virtual ~PhysicsObject();
 
-    void updateVel();
+    virtual void updateVel();
 
     virtual void update() { }
 
@@ -38,8 +37,6 @@ public:
     void applyImpulse(const Vec2 &dVel) { vel += dVel; }
 
     BaseShape *getShape() const { return shape; }
-
-    virtual void draw(float *projection, Shader* shader);
 
     bool isActive();
 

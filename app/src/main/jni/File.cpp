@@ -4,19 +4,21 @@
 #include "File.h"
 
 File::File(const char *fileName, struct android_app *app) {
+    _fileName = std::string(fileName);
+
     AAsset *asset = AAssetManager_open(app->activity->assetManager, fileName, AASSET_MODE_UNKNOWN);
     int len = AAsset_getLength(asset);
-    buf = new unsigned char[len];
-    AAsset_read(asset, buf, (size_t) len);
+    _buff = new unsigned char[len];
+    AAsset_read(asset, _buff, (size_t) len);
     AAsset_close(asset);
 }
 
-void *File::getBuf() const {
-    return buf;
+void *File::buff() const {
+    return _buff;
 }
 
 File::~File() {
-    if (buf) {
-        delete buf;
+    if (_buff) {
+        delete _buff;
     }
 }

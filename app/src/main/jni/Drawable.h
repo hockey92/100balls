@@ -6,10 +6,7 @@
 #include "Initializer.h"
 
 struct DrawableData {
-    DrawableData(Shader *simpleShader, TextureShader *textureShader, float *projMat)
-            : simpleShader(simpleShader),
-              textureShader(textureShader),
-              projMat(projMat) { }
+    DrawableData(Shader *simpleShader, TextureShader *textureShader, float *projMat) : simpleShader(simpleShader), textureShader(textureShader), projMat(projMat) { }
 
     Shader *simpleShader;
     TextureShader *textureShader;
@@ -22,9 +19,9 @@ public:
 
     virtual unsigned int type() = 0;
 
-    virtual bool init() { }
+    virtual bool init() { return true; }
 
-    virtual Initializer * createInitializer();
+    virtual Initializer *createInitializer();
 };
 
 #endif //NATIVE_ACTIVITY_DRAWABLE_H

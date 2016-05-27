@@ -6,11 +6,15 @@
 #include "TextureShader.h"
 #include <vector>
 
-class ScreenElement : public Operationable {
+class ScreenElement : public Operationable, public OpenGLObject {
 public:
     ScreenElement() : isActive(true) { }
 
+    virtual ~ScreenElement();
+
     virtual bool init();
+
+    virtual void kill();
 
     virtual void draw(float *projMat, Shader *simpleShader, TextureShader *textureShader);
 

@@ -1,5 +1,5 @@
 #include "FileBuf.h"
-#include "common.hpp"
+#include "common.h"
 
 FileBuf *FileBuf::instance = NULL;
 struct android_app *FileBuf::app = NULL;
@@ -31,7 +31,7 @@ File *FileBuf::getFontImage() {
 }
 
 File *FileBuf::getFile(std::string fileName) {
-    return NULL;
+    return *(_files.get(fileName));
 }
 
 File *FileBuf::getPauseButton() {

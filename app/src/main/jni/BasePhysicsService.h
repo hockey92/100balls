@@ -14,6 +14,8 @@ class BasePhysicsService {
 public:
     BasePhysicsService();
 
+    virtual ~BasePhysicsService();
+
     void nextFrame();
 
     int getStatus();

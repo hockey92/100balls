@@ -15,7 +15,6 @@ public:
 
 private:
     unsigned int total;
-    float initGlassVel;
 };
 
 #endif //NATIVE_ACTIVITY_SCORESERVICE_H

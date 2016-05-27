@@ -21,6 +21,8 @@ public:
     }
 
 protected:
+    virtual void afterButtonDataIsDefined() { }
+
     ButtonData *buttonData;
     Color color;
 };

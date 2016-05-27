@@ -4,6 +4,7 @@
 #include <map>
 #include <android_native_app_glue.h>
 #include "File.h"
+#include "MapWrapper.h"
 #include <string>
 
 class FileBuf {
@@ -12,7 +13,7 @@ public:
 
     static void init(struct android_app *app);
 
-    File* getFile(std::string fileName);
+    File *getFile(std::string fileName);
 
     File *getCircle();
 
@@ -27,7 +28,9 @@ private:
     static FileBuf *instance;
     File *circle;
     File *fontImage;
-    File* pauseButton;
+    File *pauseButton;
+
+    MapWrapper<std::string, File *> _files;
 };
 
 #endif //NATIVE_ACTIVITY_FILEPOOL_H

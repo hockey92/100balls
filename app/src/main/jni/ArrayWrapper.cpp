@@ -1,7 +1,7 @@
 #include "ArrayWrapper.h"
-#include "common.hpp"
+#include "common.h"
 
-void ArrayWrapper::setSize(size_t size) {
+void ArrayWrapper::setSize(int size) {
     if (_array != NULL) {
         delete[] _array;
     }
@@ -9,7 +9,7 @@ void ArrayWrapper::setSize(size_t size) {
     _array = new float[size];
 }
 
-void ArrayWrapper::setValues(float *array, size_t size) {
+void ArrayWrapper::setValues(float *array, int size) {
     setSize(size);
     for (size_t i = 0; i < size; i++) {
         this->_array[i] = array[i];
@@ -27,7 +27,7 @@ float ArrayWrapper::get(int i) const {
     return _array[i];
 }
 
-size_t ArrayWrapper::size() const {
+int ArrayWrapper::size() const {
     return _size;
 }
 

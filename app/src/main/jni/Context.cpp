@@ -3,7 +3,7 @@
 
 Context *Context::instance = NULL;
 
-Context::Context(float w, float h) : screen(Screen(1.0f, h / w)) {
+Context::Context(float w, float h) : screen(Screen(w, h)) {
     basePhysicsService = NULL;
     drawService = NULL;
     callbackService = NULL;
@@ -54,4 +54,16 @@ ScoreService *Context::getScoreService() {
         scoreService = new ScoreService();
     }
     return scoreService;
+}
+
+float *Context::getProjMat() const {
+    return screen.projMat();
+}
+
+float Context::getRealW() {
+    return screen.realW();
+}
+
+float Context::getRealH() {
+    return screen.realH();
 }

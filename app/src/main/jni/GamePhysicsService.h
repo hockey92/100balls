@@ -57,6 +57,8 @@ private:
                       int startCircleNumber);
 
     void checkFrozenGlasses();
+
+    const int NUM_OF_GLASSES = 7;
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSSERVER_H

@@ -8,10 +8,14 @@
 class Texture {
 private:
     GLuint texture;
+    TGAImage *image;
 
 public:
-    Texture(const TGAImage &image);
-    ~Texture();
+    Texture(TGAImage *image);
+
+    virtual ~Texture();
+
+    void init();
 
     void bind(int unit);
 

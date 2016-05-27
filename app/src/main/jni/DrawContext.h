@@ -1,0 +1,9 @@
+#ifndef NATIVE_ACTIVITY_DRAWCONTEXT_H
+#define NATIVE_ACTIVITY_DRAWCONTEXT_H
+
+class DrawContext {
+public:
+
+};
+
+#endif //NATIVE_ACTIVITY_DRAWCONTEXT_H

@@ -3,8 +3,7 @@
 
 #include <map>
 
-template<typename K, typename V>
-class MapWrapper {
+template<typename K, typename V> class MapWrapper {
 public:
     bool put(K key, V value);
 
@@ -16,18 +15,15 @@ private:
     std::map<K, V> _map;
 };
 
-template<typename K, typename V>
-bool MapWrapper<K, V>::put(K key, V value) {
+template<typename K, typename V> bool MapWrapper<K, V>::put(K key, V value) {
     return _map.insert(std::pair<K, V>(key, value)).second;
 }
 
-template<typename K, typename V>
-bool MapWrapper<K, V>::contains(K key) {
+template<typename K, typename V> bool MapWrapper<K, V>::contains(K key) {
     return _map.find(key) != _map.end();
 }
 
-template<typename K, typename V>
-V *MapWrapper<K, V>::get(K key) {
+template<typename K, typename V> V *MapWrapper<K, V>::get(K key) {
     typename std::map<K, V>::iterator pos = _map.find(key);
     if (pos == _map.end()) {
         return NULL;

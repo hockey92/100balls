@@ -15,7 +15,7 @@ class GameOverScreen : public ScreenElement {
 public:
     GameOverScreen();
 
-    ~GameOverScreen();
+    virtual ~GameOverScreen();
 
     bool init();
 
@@ -26,7 +26,6 @@ public:
     void setFinalScore(unsigned int finalScore);
 
 private:
-    Texture *texture;
     Font *font;
     unsigned int finalScore;
 };

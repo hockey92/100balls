@@ -38,3 +38,18 @@ void ScreenElement::draw(float *projMat) {
 void ScreenElement::setActive(bool isActive) {
     this->isActive = isActive;
 }
+
+ScreenElement::~ScreenElement() {
+    kill();
+    for (int i = 0; i < screenElements.size(); i++) {
+        if (screenElements[i] != NULL) {
+            delete screenElements[i];
+        }
+    }
+}
+
+void ScreenElement::kill() {
+    for (int i = 0; i < screenElements.size(); i++) {
+        screenElements[i]->kill();
+    }
+}

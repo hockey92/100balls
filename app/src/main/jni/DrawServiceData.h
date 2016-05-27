@@ -10,7 +10,7 @@ class DrawServiceData {
 public:
     DrawServiceData(Initializer *initializer);
 
-    ~DrawServiceData();
+    virtual ~DrawServiceData();
 
     bool init();
 

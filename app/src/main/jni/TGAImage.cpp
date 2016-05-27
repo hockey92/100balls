@@ -29,9 +29,9 @@ void *TGAImage::getPtr() const {
 }
 
 TGAImage::TGAImage(File *file) : file(file) {
-    w = ((TGAHeader *) file->getBuf())->width;
-    h = ((TGAHeader *) file->getBuf())->height;
-    ptr = (file->getBuf() + sizeof(TGAHeader));
+    w = ((TGAHeader *) file->buff())->width;
+    h = ((TGAHeader *) file->buff())->height;
+    ptr = (file->buff() + sizeof(TGAHeader));
 }
 
 Pixel TGAImage::getPixel(int y, int x) const {

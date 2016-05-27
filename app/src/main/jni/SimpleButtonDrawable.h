@@ -14,6 +14,9 @@ public:
 
     SimpleButtonDrawable * setFontColor(Color fontColor);
 
+protected:
+    void afterButtonDataIsDefined();
+
 private:
     VertexBuff *buttonVertex;
     Font *font;

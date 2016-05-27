@@ -5,9 +5,7 @@
 
 class CallbackInfo {
 public:
-    CallbackInfo(std::string callbackObjectId, std::string functionId)
-            : callbackObjectId(callbackObjectId),
-              functionId(functionId) { }
+    CallbackInfo(std::string callbackObjectId, std::string functionId) : callbackObjectId(callbackObjectId), functionId(functionId) { }
 
     std::string getReceiverId() {
         return callbackObjectId;
