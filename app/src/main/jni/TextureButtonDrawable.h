@@ -13,6 +13,9 @@ public:
 
     bool init();
 
+protected:
+    void afterButtonDataIsDefined();
+
 private:
     VertexBuff *buttonVertex;
     Texture *texture;

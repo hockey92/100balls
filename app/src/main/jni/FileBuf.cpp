@@ -1,5 +1,5 @@
 #include "FileBuf.h"
-#include "common.hpp"
+#include "common.h"
 
 FileBuf *FileBuf::instance = NULL;
 struct android_app *FileBuf::app = NULL;
@@ -9,6 +9,7 @@ FileBuf::FileBuf() {
     circle = new File("circle.tga", FileBuf::app);
     fontImage = new File("font.tga", FileBuf::app);
     pauseButton = new File("pause_button.tga", FileBuf::app);
+    sound = new File("misc128.wav", FileBuf::app);
 }
 
 FileBuf *FileBuf::getInstance() {
@@ -31,9 +32,13 @@ File *FileBuf::getFontImage() {
 }
 
 File *FileBuf::getFile(std::string fileName) {
-    return NULL;
+    return *(_files.get(fileName));
 }
 
 File *FileBuf::getPauseButton() {
     return pauseButton;
+}
+
+File *FileBuf::getSound() {
+    return sound;
 }

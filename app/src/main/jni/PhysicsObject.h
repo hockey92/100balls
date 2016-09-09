@@ -4,16 +4,14 @@
 #include "Vec2.h"
 #include "BaseShape.h"
 #include "Shader.h"
+#include "Mutex.h"
 
 class PhysicsObject {
 
 public:
-    PhysicsObject(BaseShape *shape, float invM) : angleVel(0), shape(shape), invM(invM),
-                                                  active(true), deleted(false), visible(true) { }
+    PhysicsObject(BaseShape *shape, float invM);
 
-    ~PhysicsObject();
-
-    void updateVel();
+    virtual ~PhysicsObject();
 
     virtual void update() { }
 
@@ -39,8 +37,6 @@ public:
 
     BaseShape *getShape() const { return shape; }
 
-    virtual void draw(float *projection, Shader* shader);
-
     bool isActive();
 
     bool isDeleted() { return deleted; }
@@ -55,6 +51,8 @@ public:
 
     void setVisible(bool visible) { this->visible = visible; }
 
+    unsigned int getId() const { return id;}
+
 private:
     Vec2 vel;
     float angleVel;
@@ -64,6 +62,11 @@ private:
     bool active;
     bool deleted;
     bool visible;
+
+    unsigned int id;
+
+    static Mutex idMutex;
+    static unsigned int idCounter;
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSOBJECT_H

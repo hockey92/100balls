@@ -4,22 +4,22 @@
 Container::Container() : SimpleShape() {
     float rawVertices[28];
 
-    rawVertices[0] = -0.2f, rawVertices[1] = 0.5f;
-    rawVertices[2] = -0.2f, rawVertices[3] = 1.0f;
-    rawVertices[4] = -1.0f + 0.405f, rawVertices[5] = 1.0f;
-    rawVertices[6] = -1.0f + 0.405f, rawVertices[7] = 0.25f;
-    rawVertices[8] = -0.09f, rawVertices[9] = 0.05f;
-    rawVertices[10] = -0.09f, rawVertices[11] = -0.13f;
+    rawVertices[0] = -0.2f, rawVertices[1] = 0.7f;
+    rawVertices[2] = -0.2f, rawVertices[3] = 1.2f;
+    rawVertices[4] = -1.0f + 0.405f, rawVertices[5] = 1.2f;
+    rawVertices[6] = -1.0f + 0.405f, rawVertices[7] = 0.45f;
+    rawVertices[8] = -0.09f, rawVertices[9] = 0.25f;
+    rawVertices[10] = -0.09f, rawVertices[11] = 0.07f;
 
-    rawVertices[12] = -0.09f, rawVertices[13] = -0.22f;
-    rawVertices[14] = 0.09f, rawVertices[15] = -0.22f;
+    rawVertices[12] = -0.09f, rawVertices[13] = -0.02f;
+    rawVertices[14] = 0.09f, rawVertices[15] = -0.02f;
 
-    rawVertices[16] = 0.09f, rawVertices[17] = -0.13f;
-    rawVertices[18] = 0.09f, rawVertices[19] = 0.05f;
-    rawVertices[20] = 1.0f - 0.405f, rawVertices[21] = 0.25f;
-    rawVertices[22] = 1.0f - 0.405f, rawVertices[23] = 1.0f;
-    rawVertices[24] = 0.2f, rawVertices[25] = 1.0f;
-    rawVertices[26] = 0.2f, rawVertices[27] = 0.5f;
+    rawVertices[16] = 0.09f, rawVertices[17] = 0.07f;
+    rawVertices[18] = 0.09f, rawVertices[19] = 0.25f;
+    rawVertices[20] = 1.0f - 0.405f, rawVertices[21] = 0.45f;
+    rawVertices[22] = 1.0f - 0.405f, rawVertices[23] = 1.2f;
+    rawVertices[24] = 0.2f, rawVertices[25] = 1.2f;
+    rawVertices[26] = 0.2f, rawVertices[27] = 0.7f;
 
     size_t size = 28;
 

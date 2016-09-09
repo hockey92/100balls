@@ -7,4 +7,5 @@ ButtonDrawer *ButtonDrawer::setColor(const Color &color) {
 
 void ButtonDrawer::setButtonData(ButtonData *buttonData) {
     this->buttonData = buttonData;
+    afterButtonDataIsDefined();
 }

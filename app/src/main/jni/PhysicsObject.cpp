@@ -1,8 +1,19 @@
 #include "Constants.h"
 #include "PhysicsObject.h"
 
-void PhysicsObject::updateVel() {
+unsigned int PhysicsObject::idCounter = 0;
 
+Mutex PhysicsObject::idMutex;
+
+PhysicsObject::PhysicsObject(BaseShape *shape, float invM) : angleVel(0),
+                                                             shape(shape),
+                                                             invM(invM),
+                                                             active(true),
+                                                             deleted(false),
+                                                             visible(true) {
+    idMutex.lock();
+    id = idCounter++;
+    idMutex.unlock();
 }
 
 void PhysicsObject::updatePos() {
@@ -15,19 +26,13 @@ void PhysicsObject::updatePos() {
 
 void PhysicsObject::applyGravity() {
     if (invM > 0.f) {
-        vel += Vec2(0.f, -10.f) * DT;
+        vel += Vec2(0.0f, -9.8f) * DT;
     }
 }
 
 PhysicsObject::~PhysicsObject() {
     if (shape) {
         delete shape;
-    }
-}
-
-void PhysicsObject::draw(float *projection, Shader* shader) {
-    if (shape) {
-        shape->draw(projection);
     }
 }
 

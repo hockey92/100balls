@@ -4,7 +4,7 @@
 #include "DrawUtils.h"
 
 TextureButtonDrawable::TextureButtonDrawable() {
-
+    texture = new Texture(new TGAImage(FileBuf::getInstance()->getPauseButton()));
 }
 
 void TextureButtonDrawable::draw(const DrawableData &drawableDate) {
@@ -25,18 +25,16 @@ unsigned int TextureButtonDrawable::type() {
 }
 
 bool TextureButtonDrawable::init() {
+    buttonVertex->init();
+    texture->init();
+    return true;
+}
+
+void TextureButtonDrawable::afterButtonDataIsDefined() {
     float u, d, l, r;
     buttonData->aabb()->getCoords(l, r, u, d);
 
-    float *vertices = DrawUtils::createCoordsForTextureShader(
-            d, u, l, r, 0, 1, 0, 1
-    );
-
-    buttonVertex = new VertexBuff(vertices, 24 * sizeof(float));
-
-    texture = new Texture(TGAImage(FileBuf::getInstance()->getPauseButton()));
-
-    delete[] vertices;
-
-    return true;
+    float *coordsForTextureShader = DrawUtils::createCoordsForTextureShader(d, u, l, r, 0, 1, 0, 1);
+    buttonVertex = new VertexBuff(coordsForTextureShader, 24);
+    delete[] coordsForTextureShader;
 }

@@ -10,12 +10,12 @@ public:
     SimpleInitializer(BaseShape* shape);
 
     bool init();
+    bool kill();
 
     void startRender(Shader *simpleShader, TextureShader *textureShader);
 
 private:
     VertexBuff *glassVertexBuff;
-    ArrayWrapper vertices;
 };
 
 #endif //NATIVE_ACTIVITY_GLASSDRAWABLE_H

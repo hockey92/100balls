@@ -7,7 +7,7 @@ class ContainerGameObject : public GameObject {
 public:
     ContainerGameObject(BaseShape *shape, float invM);
 
-    ~ContainerGameObject();
+    virtual ~ContainerGameObject();
 
     void draw(const DrawableData &drawableDate);
 

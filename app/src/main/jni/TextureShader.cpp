@@ -1,7 +1,7 @@
 #include <GLES2/gl2.h>
 #include <vecmath.h>
 #include "TextureShader.h"
-#include "common.hpp"
+#include "common.h"
 
 struct TGAHeader {
     unsigned char m_idSize;

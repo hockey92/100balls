@@ -1,8 +1,6 @@
 #ifndef NATIVE_ACTIVITY_AABB_H
 #define NATIVE_ACTIVITY_AABB_H
 
-//#include "Circle.h"
-
 #include "Vec2.h"
 
 class AABB {

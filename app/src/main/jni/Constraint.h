@@ -6,8 +6,15 @@
 
 class Constraint {
 public:
-    Constraint(PhysicsObject* o1, PhysicsObject* o2, Collision* c);
-    void fix();
+    Constraint(PhysicsObject *o1, PhysicsObject *o2, Collision *c);
+
+    virtual ~Constraint();
+
+    bool fix();
+
+    void set(PhysicsObject *o1, PhysicsObject *o2, Collision *c);
+
+    void reset();
 
 private:
     PhysicsObject *o1;

@@ -2,11 +2,7 @@
 #include "Button.h"
 #include "TouchEventData.h"
 
-Button::Button(const AABB &aabb, const Vec2 &center, ButtonDrawer *drawable, std::string buttonId)
-        : command(NULL),
-          drawable(drawable),
-          buttonData(ButtonData(aabb, center)),
-          CallbackObject(buttonId) {
+Button::Button(const AABB &aabb, const Vec2 &center, ButtonDrawer *drawable, std::string buttonId) : drawable(drawable), buttonData(ButtonData(aabb, center)), CallbackObject(buttonId) {
     this->drawable = drawable;
     drawable->setButtonData(&buttonData);
 }

@@ -18,6 +18,12 @@ public:
 
     float getH();
 
+    float getRealW();
+
+    float getRealH();
+
+    float* getProjMat() const;
+
     BasePhysicsService *getPhysicsService();
 
     DrawService *getDrawService();

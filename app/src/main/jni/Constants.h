@@ -3,5 +3,6 @@
 
 #define DT 0.02f
 #define PI 3.141592f
+#define INIT_GLASS_VEL -0.3f
 
 #endif //NATIVE_ACTIVITY_CONSTANTS_H

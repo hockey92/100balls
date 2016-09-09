@@ -10,9 +10,7 @@ void CallbackService::callback(CallbackObject *callbackObject, void *callbackDat
     }
 }
 
-void CallbackService::addCallbackLink(std::string transmitterId,
-                                      std::string receiverId,
-                                      std::string receiverFunctionId) {
+void CallbackService::addCallbackLink(std::string transmitterId, std::string receiverId, std::string receiverFunctionId) {
     callbackLinks.put(transmitterId, CallbackInfo(receiverId, receiverFunctionId));
 }
 

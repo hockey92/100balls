@@ -9,7 +9,7 @@ public:
 
     float getPositionOnPath(const Vec2 &center, float &len, Vec2 &normal) const;
 
-    float getDistanceBetweenPoints(const Vec2& point1, const Vec2& point2) const;
+    float getDistanceBetweenPoints(const Vec2 &point1, const Vec2 &point2) const;
 
     float getDistanceBetweenPoints(float point1, float point2) const;
 

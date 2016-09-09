@@ -27,10 +27,9 @@ void GameScreen::draw(float *projMat, Shader *simpleShader, TextureShader *textu
     ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->nextFrame();
 
     font->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
-    font->renderInteger(Context::getInstance()->getScoreService()->getTotal(), textureShader, projMat, 0, -0.6f);
+    font->renderText(Context::getInstance()->getScoreService()->getTotal(), textureShader, projMat, 0, -0.6f);
 
-    ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->draw(
-            DrawableData(simpleShader, textureShader, projMat));
+    ((GamePhysicsService *) Context::getInstance()->getPhysicsService())->draw(DrawableData(simpleShader, textureShader, projMat));
 
     ScreenElement::draw(projMat, simpleShader, textureShader);
 }
@@ -41,10 +40,7 @@ GameScreen::GameScreen() {
     float w = Context::getInstance()->getW();
     float h = Context::getInstance()->getH();
 
-    Button *pauseButton = new Button(AABB(-0.1f, -0.1f, 0.1f, 0.1f), Vec2(w - 0.15f, h - 0.15f),
-                                     (new TextureButtonDrawable())->setColor(
-                                             Color(1.0f, 1.0f, 1.0f, 1.0f)),
-                                     "gameFieldPauseButton");
+    Button *pauseButton = new Button(AABB(-0.1f, -0.1f, 0.1f, 0.1f), Vec2(w - 0.15f, h - 0.15f), (new TextureButtonDrawable())->setColor(Color(1.0f, 1.0f, 1.0f, 1.0f)), "gameFieldPauseButton");
     addScreenElement(pauseButton);
 }
 

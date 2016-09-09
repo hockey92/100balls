@@ -1,6 +1,6 @@
 #include <math.h>
 #include "Line.h"
-#include "common.hpp"
+#include "common.h"
 
 Line::Line(const Vec2 &p1, const Vec2 &p2) {
     c[0] = p1.y() - p2.y();

@@ -7,7 +7,7 @@ class TextureInitializer : public Initializer {
 public:
     TextureInitializer();
 
-    ~TextureInitializer();
+    virtual ~TextureInitializer();
 
     void startRender(Shader *simpleShader, TextureShader *textureShader);
 

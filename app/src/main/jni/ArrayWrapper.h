@@ -8,25 +8,25 @@ class ArrayWrapper {
 public:
     ArrayWrapper() : _size(0), _array(NULL) { }
 
-    ~ArrayWrapper();
+    virtual ~ArrayWrapper();
 
-    void setValues(float *array, size_t size);
+    void setValues(float *array, int size);
 
     float get(int i) const;
 
-    size_t size() const;
+    int size() const;
 
     ArrayWrapper & operator=(const ArrayWrapper &a);
 
-    float *ptr() {
+    float *ptr() const {
         return _array;
     }
 
 private:
-    size_t _size;
+    int _size;
     float *_array;
 
-    void setSize(size_t size);
+    void setSize(int size);
 };
 
 #endif //NATIVE_ACTIVITY_ARRAYWRAPPER_H

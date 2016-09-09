@@ -13,15 +13,15 @@ class Font {
 public:
     Font(TGAImage *image);
 
-    ~Font();
+    virtual ~Font();
 
     void init();
 
     void setColor(const Color &color);
 
-    void renderInteger(unsigned int num, TextureShader *shader, float *mvp, float x, float y);
+    void renderText(unsigned int num, TextureShader *shader, float *mvp, float x, float y);
 
-    void renderInteger(unsigned int num, TextureShader *shader, float *mvp, const Vec2 &pos);
+    void renderText(unsigned int num, TextureShader *shader, float *mvp, const Vec2 &pos);
 
     void renderText(const std::string &text, TextureShader *shader, float *mvp, float x, float y);
 
