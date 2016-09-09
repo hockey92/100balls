@@ -1,8 +1,19 @@
 #include "Constants.h"
 #include "PhysicsObject.h"
 
-void PhysicsObject::updateVel() {
+unsigned int PhysicsObject::idCounter = 0;
 
+Mutex PhysicsObject::idMutex;
+
+PhysicsObject::PhysicsObject(BaseShape *shape, float invM) : angleVel(0),
+                                                             shape(shape),
+                                                             invM(invM),
+                                                             active(true),
+                                                             deleted(false),
+                                                             visible(true) {
+    idMutex.lock();
+    id = idCounter++;
+    idMutex.unlock();
 }
 
 void PhysicsObject::updatePos() {

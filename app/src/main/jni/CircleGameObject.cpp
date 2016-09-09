@@ -31,7 +31,9 @@ void CircleGameObject::draw(const DrawableData &drawableDate) {
         return;
     }
     Vec2 center = getShape()->getCenter();
-    drawableDate.textureShader->setMVP((ndk_helper::Mat4(drawableDate.projMat) * ndk_helper::Mat4::Translation(center.x(), center.y(), 0.0f)).Ptr());
+    drawableDate.textureShader->setMVP(
+            (ndk_helper::Mat4(drawableDate.projMat) * ndk_helper::Mat4::Translation(center.x(), center.y(), 0.0f)).Ptr()
+    );
     drawableDate.textureShader->setColor(color);
     drawableDate.textureShader->render();
 }

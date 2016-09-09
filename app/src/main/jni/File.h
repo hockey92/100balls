@@ -14,10 +14,12 @@ public:
 
     std::string fileName() const { return _fileName; }
 
+    long length() const { return _length; }
+
 private:
     std::string _fileName;
-
     void *_buff;
+    long _length;
 };
 
 #endif //NATIVE_ACTIVITY_FILE_H

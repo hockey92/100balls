@@ -31,6 +31,7 @@ float Context::getH() {
 BasePhysicsService *Context::getPhysicsService() {
     if (basePhysicsService == NULL) {
         basePhysicsService = new GamePhysicsService(getW(), getH(), getDrawService());
+//        basePhysicsService->start();
     }
     return basePhysicsService;
 }

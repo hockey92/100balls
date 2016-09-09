@@ -9,6 +9,7 @@
 #include "Button.h"
 #include "MenuScreen.h"
 #include "DisplayService.h"
+#include "AudioService.h"
 
 class Application {
 public:
@@ -25,6 +26,7 @@ public:
 private:
     struct android_app *app;
     DisplayService *displayService;
+    AudioService *audioService;
 };
 
 #endif

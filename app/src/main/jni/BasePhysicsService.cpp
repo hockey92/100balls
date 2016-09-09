@@ -1,11 +1,21 @@
 #include "BasePhysicsService.h"
-#include "Constraint.h"
 #include "CollisionFactory.h"
-#include <list>
+#include "common.h"
+#include "IdUtils.h"
 
-BasePhysicsService::BasePhysicsService() : status(STOPPED) { }
+BasePhysicsService::BasePhysicsService() : status(STOPPED) {
+    pthread_mutex_init(&mutex, NULL);
+
+    for (int i = 0; i < 10000000; i++) {
+        collisionInfos[i] = NULL;
+    }
+}
 
 void BasePhysicsService::nextFrame() {
+
+//    double beforeTime = now();
+
+    std::vector<CollisionInfo *> collisionInfos1;
 
     if (status != PROCESSING) {
         return;
@@ -22,7 +32,8 @@ void BasePhysicsService::nextFrame() {
         po->calculateExtendedAABB();
     }
 
-    std::list<Constraint *> constraints;
+    int newCollisionsCount = 0;
+
     for (int i = 0; i < physicsObjects.size(); i++) {
         PhysicsObject *po1 = physicsObjects[i];
         if (!po1->isActive()) {
@@ -33,34 +44,69 @@ void BasePhysicsService::nextFrame() {
             if (!po2->isActive()) {
                 continue;
             }
-            for (int k = 0; k < po1->getShape()->getSimpleShapesCount(); k++) {
-                for (int l = 0; l < po2->getShape()->getSimpleShapesCount(); l++) {
-                    BaseShape *shape1 = po1->getShape()->getChildren(k);
-                    BaseShape *shape2 = po2->getShape()->getChildren(l);
-                    if (!AABB::isIntersect(shape1->getExtendedAABB(), shape2->getExtendedAABB())) {
-                        continue;
+            int collisionId = IdUtils::createKey(po1->getId(), po2->getId());
+
+            CollisionInfo *collisionInfo = collisionInfos[collisionId];
+            if (collisionInfo == NULL) {
+                collisionInfo = collisionInfos[collisionId] = new CollisionInfo(po1, po2);
+            }
+
+            if (!collisionInfo->isCalculateNewCollision()) {
+                if (!collisionInfo->isEmpty()) {
+                    collisionInfos1.push_back(collisionInfo);
+                }
+            } else {
+                collisionInfo->calculateDiff();
+                for (int k = 0; k < po1->getShape()->getSimpleShapesCount(); k++) {
+                    for (int l = 0; l < po2->getShape()->getSimpleShapesCount(); l++) {
+                        BaseShape *shape1 = po1->getShape()->getChildren(k);
+                        BaseShape *shape2 = po2->getShape()->getChildren(l);
+                        if (!AABB::isIntersect(shape1->getExtendedAABB(),
+                                               shape2->getExtendedAABB())) {
+                            continue;
+                        }
+                        newCollisionsCount++;
+                        Collision *c = CollisionFactory::createCollision(shape1, shape2);
+                        if (c != NULL) {
+                            collisionInfo->addConstraint(c);
+                        }
                     }
-                    Collision *c = CollisionFactory::createCollision(shape1, shape2);
-                    if (c != NULL) {
-                        constraints.push_back(new Constraint(physicsObjects[i], physicsObjects[j], c));
-                    }
+                }
+                if (!collisionInfo->isEmpty()) {
+                    collisionInfos1.push_back(collisionInfo);
                 }
             }
         }
     }
 
-//    LOGE("num of constraints %d", constraints.size());
+    LOGE("new collisions count %d", newCollisionsCount);
 
-    for (int i = 0; i < 10; i++) {
-        for (std::list<Constraint *>::iterator iter = constraints.begin(); iter != constraints.end(); ++iter) {
-            (*iter)->fix();
+//    for (int i = 0; i < collisionInfos1.size(); i++) {
+//        collisionInfos1[i]->reset();
+//    }
+
+
+    for (int iteration = 0; iteration < 10; iteration++) {
+        for (int i = 0; i < collisionInfos1.size(); i++) {
+            collisionInfos1[i]->fix();
         }
     }
 
-    for (std::list<Constraint *>::iterator iterator = constraints.begin(); iterator != constraints.end(); ++iterator) {
-        delete *iterator;
-    }
+//    LOGE("num of constraints %d, vector size %d", realConstraintSize, constraints.size());
 
+//    bool contact = false;
+//    for (int iteration = 0; iteration < 10; iteration++) {
+//        for (int constraintNumber = 0; constraintNumber < realConstraintSize; constraintNumber++) {
+//            if (constraints[constraintNumber].fix()) {
+//                contact = true;
+//            }
+//        }
+//    }
+//    if (contact) {
+//        audioService.push();
+//    }
+
+//    pthread_mutex_lock(&mutex);
     for (int i = 0; i < physicsObjects.size(); i++) {
         PhysicsObject *po = physicsObjects[i];
         if (!po->isActive()) {
@@ -68,8 +114,15 @@ void BasePhysicsService::nextFrame() {
         }
         po->updatePos();
     }
+//    pthread_mutex_unlock(&mutex);
 
     doActionAfter();
+
+//    double afterTime = now();
+//    unsigned int delay = 30 - (unsigned int) (afterTime - beforeTime);
+//    delay = delay < 2 ? 2 : delay;
+//    LOGE("delay %d", delay);
+//    usleep(delay * 1000);
 }
 
 int BasePhysicsService::getStatus() {
@@ -84,4 +137,24 @@ BasePhysicsService::~BasePhysicsService() {
     for (int i = 0; i < physicsObjects.size(); i++) {
         delete physicsObjects[i];
     }
+}
+
+void BasePhysicsService::innerRun() {
+    double time = now();
+    while (!isStop) {
+        double currentTime = now();
+        LOGE("timeDiff %f", currentTime - time);
+        time = currentTime;
+        double timeBefore = now();
+        nextFrame();
+        double timeAfter = now();
+
+        int delay = 16 - (int) (timeAfter - timeBefore);
+        delay = delay < 2 ? 2 : delay;
+        usleep((unsigned int) delay * 1000);
+    }
+}
+
+void BasePhysicsService::addPhysicsObjects(PhysicsObject *physicsObject) {
+    physicsObjects.push_back(physicsObject);
 }

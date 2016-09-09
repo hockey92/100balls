@@ -7,9 +7,9 @@ File::File(const char *fileName, struct android_app *app) {
     _fileName = std::string(fileName);
 
     AAsset *asset = AAssetManager_open(app->activity->assetManager, fileName, AASSET_MODE_UNKNOWN);
-    int len = AAsset_getLength(asset);
-    _buff = new unsigned char[len];
-    AAsset_read(asset, _buff, (size_t) len);
+    _length = AAsset_getLength(asset);
+    _buff = new unsigned char[_length];
+    AAsset_read(asset, _buff, (size_t) _length);
     AAsset_close(asset);
 }
 

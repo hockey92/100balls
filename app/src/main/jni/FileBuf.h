@@ -21,6 +21,8 @@ public:
 
     File *getPauseButton();
 
+    File* getSound();
+
 private:
     FileBuf();
 
@@ -29,6 +31,7 @@ private:
     File *circle;
     File *fontImage;
     File *pauseButton;
+    File *sound;
 
     MapWrapper<std::string, File *> _files;
 };

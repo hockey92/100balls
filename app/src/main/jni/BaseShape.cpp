@@ -8,9 +8,9 @@ void BaseShape::move(const Vec2 &coords) {
     if (!parent) {
         center += coords;
     }
-//    if (aabb) {
-//        aabb->move(coords);
-//    }
+    if (aabb) {
+        aabb->move(coords);
+    }
     for (int i = 0; i < realChildCount; i++) {
         children[i]->move(coords);
     }

@@ -3,6 +3,7 @@
 #include "FileBuf.h"
 #include "Context.h"
 #include "TouchEventData.h"
+#include "TimeUtils.h"
 
 #define VERBOSE_LOGGING 1
 
@@ -18,6 +19,7 @@ Application::Application(struct android_app *app) {
     this->app = app;
     FileBuf::init(app);
     displayService = new DisplayService(app);
+//    audioService = new AudioService();
 }
 
 Application::~Application() {
@@ -149,7 +151,16 @@ void Application::loop() {
     app->onAppCmd = _handle_cmd_proxy;
     app->onInputEvent = _handle_input_proxy;
 
+    double time = TimeUtils::now();
+
     while (1) {
+
+        double currentTime = TimeUtils::now();
+
+//        LOGE("time diff main thread = %f", currentTime - time);
+
+        time = currentTime;
+
         int ident, events;
         struct android_poll_source *source;
         bool wasAnimating = displayService->isAnimating();

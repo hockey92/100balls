@@ -78,8 +78,8 @@ bool DisplayService::initSurface() {
             EGL_GREEN_SIZE, 8,
             EGL_RED_SIZE, 8,
             EGL_DEPTH_SIZE, 24,
-            EGL_SAMPLE_BUFFERS, 1,
-            EGL_SAMPLES, 16,
+//            EGL_SAMPLE_BUFFERS, 1,
+//            EGL_SAMPLES, 16,
             EGL_NONE};
     eglChooseConfig(eglDisplay, attribs, &eglConfig, 1, &numConfigs);
     eglGetConfigAttrib(eglDisplay, eglConfig, EGL_NATIVE_VISUAL_ID, &format);

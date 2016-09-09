@@ -9,6 +9,7 @@ FileBuf::FileBuf() {
     circle = new File("circle.tga", FileBuf::app);
     fontImage = new File("font.tga", FileBuf::app);
     pauseButton = new File("pause_button.tga", FileBuf::app);
+    sound = new File("misc128.wav", FileBuf::app);
 }
 
 FileBuf *FileBuf::getInstance() {
@@ -36,4 +37,8 @@ File *FileBuf::getFile(std::string fileName) {
 
 File *FileBuf::getPauseButton() {
     return pauseButton;
+}
+
+File *FileBuf::getSound() {
+    return sound;
 }

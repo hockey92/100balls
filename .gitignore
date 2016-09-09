@@ -5,3 +5,8 @@
 app/build/*
 .gradle/*
 .idea/*
+local.properties
+build/generated/*
+100Balls.iml
+100balls.iml
+app.iml
