@@ -1,17 +1,16 @@
 #ifndef NATIVE_ACTIVITY_GAMEOBJECT_H
 #define NATIVE_ACTIVITY_GAMEOBJECT_H
 
-#include "Drawable.h"
 #include "PhysicsObject.h"
 
-class GameObject : public PhysicsObject, public Drawable {
+class GameObject : public PhysicsObject {
 
 public:
     GameObject(BaseShape *shape, float invM) : PhysicsObject(shape, invM) { }
 
-    void reset() { }
+    virtual void reset() { }
 
-    virtual Initializer *createInitializer();
+    virtual void draw() { }
 };
 
 #endif //NATIVE_ACTIVITY_GAMEOBJECT_H

@@ -1,29 +1,26 @@
 #include "ContainerGameObject.h"
 #include "Gate.h"
+#include "Container.h"
 
-void ContainerGameObject::draw(const DrawableData &drawableDate) {
-    Shader *simpleShader = drawableDate.simpleShader;
+unsigned short ContainerGameObject::openedGateIndices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13};
+unsigned short ContainerGameObject::closedGateIndices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 6, 7, 9, 9, 10, 10, 11, 11, 12, 12, 13};
 
-    simpleShader->setMVP(drawableDate.projMat);
-    simpleShader->setColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-    if (gate->isActive()) {
-        GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13};
-        glDrawElements(GL_LINES, 22, GL_UNSIGNED_SHORT, indices);
-    } else {
-        GLushort indices[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 6, 7, 9, 9, 10, 10, 11, 11, 12, 12, 13};
-        glDrawElements(GL_LINES, 20, GL_UNSIGNED_SHORT, indices);
-    }
-}
-
-unsigned int ContainerGameObject::type() {
-    return getShape()->type();
-}
-
-ContainerGameObject::ContainerGameObject(BaseShape *shape, float invM) : GameObject(shape, invM) {
-    float vertices[getShape()->verticesSize()];
+ContainerGameObject::ContainerGameObject(float invM, RendererFactory *rendererFactory) : GameObject(new Container(), invM) {
+    int size = getShape()->verticesSize();
+    float vertices[size];
     getShape()->getVertices(vertices);
+
     gate = new PhysicsObject(new Gate(vertices), 0.f);
+    renderer = rendererFactory->createGeometryRenderer(vertices, size);
+    renderer->setColor(Color(1.f, 1.f, 1.f, 1.f));
+}
+
+void ContainerGameObject::draw() {
+    if (gate->isActive()) {
+        renderer->render(openedGateIndices, 22);
+    } else {
+        renderer->render(closedGateIndices, 20);
+    }
 }
 
 PhysicsObject *ContainerGameObject::getGate() {
@@ -31,7 +28,6 @@ PhysicsObject *ContainerGameObject::getGate() {
 }
 
 ContainerGameObject::~ContainerGameObject() {
-    if (gate) {
-        delete gate;
-    }
+    delete gate;
+    delete renderer;
 }

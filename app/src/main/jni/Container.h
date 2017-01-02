@@ -2,7 +2,7 @@
 #define NATIVE_ACTIVITY_CONTAINER_H
 
 #include "BaseShape.h"
-#include "ArrayWrapper.h"
+#include "Array.h"
 #include "SimpleShape.h"
 
 class Container : public SimpleShape {

@@ -1,6 +1,7 @@
 #include "Circle.h"
+#include "RendererFactory.h"
 
-Circle::Circle(float r) : BaseShape() {
+Circle::Circle(float r, RendererFactory *rendererFactory) : BaseShape() {
     this->r = r;
     setInnerAABB();
 }

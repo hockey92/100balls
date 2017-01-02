@@ -1,17 +1,21 @@
-#include <vecmath.h>
-#include "Context.h"
 #include "Circle.h"
-#include "TextureInitializer.h"
 #include "CircleGameObject.h"
+#include "ScreenService.h"
 
-CircleGameObject::CircleGameObject(float r, float invM) : PhysicsObject(new Circle(r), invM),
-                                                          insideGlass(false),
-                                                          color(Color(1.0f, 1.0f, 0.0f, 1.0f)) { }
+CircleGameObject::CircleGameObject(float r, float invM, float lowerBound,
+                                   RendererFactory *rendererFactory)
+        : PhysicsObject(new Circle(r, NULL), invM),
+          insideGlass(false),
+          color(Color(1.0f, 1.0f, 0.0f, 1.0f)),
+          lowerBound(lowerBound) {
+
+    renderer = rendererFactory->createTextureRenderer(2.f * r, 2.f * r, "circle.tga");
+
+}
 
 void CircleGameObject::updatePos() {
     PhysicsObject::updatePos();
     if (getShape() != NULL) {
-        float lowerBound = -Context::getInstance()->getH();
         if (getShape()->getCenter().y() < lowerBound) {
             setDeleted(true);
         }
@@ -26,24 +30,18 @@ void CircleGameObject::setInsideGlass(bool insideGlass) {
     this->insideGlass = insideGlass;
 }
 
-void CircleGameObject::draw(const DrawableData &drawableDate) {
+void CircleGameObject::draw() {
     if (isDeleted()) {
         return;
     }
+    renderer->setColor(color);
     Vec2 center = getShape()->getCenter();
-    drawableDate.textureShader->setMVP(
-            (ndk_helper::Mat4(drawableDate.projMat) * ndk_helper::Mat4::Translation(center.x(), center.y(), 0.0f)).Ptr()
-    );
-    drawableDate.textureShader->setColor(color);
-    drawableDate.textureShader->render();
+    renderer->setPosition(center.x(), center.y());
+    renderer->render();
 }
 
 unsigned int CircleGameObject::type() {
     return getShape()->type();
-}
-
-Initializer *CircleGameObject::createInitializer() {
-    return new TextureInitializer();
 }
 
 void CircleGameObject::setColor(const Color &color) {

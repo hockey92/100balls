@@ -2,24 +2,25 @@
 #define NATIVE_ACTIVITY_FILE_H
 
 #include <string>
+#include <android/asset_manager_jni.h>
 
 class File {
 
 public:
-    File(const char *fileName, struct android_app *app);
+    File(const char *fileName, void *buff, int size);
 
     virtual ~File();
 
-    void *buff() const;
+    void *getBuff() const;
 
-    std::string fileName() const { return _fileName; }
+    std::string& getFileName() { return fileName; }
 
-    long length() const { return _length; }
+    long getSize() const { return size; }
 
 private:
-    std::string _fileName;
-    void *_buff;
-    long _length;
+    std::string fileName;
+    void *buff;
+    long size;
 };
 
 #endif //NATIVE_ACTIVITY_FILE_H

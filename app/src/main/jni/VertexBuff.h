@@ -3,10 +3,10 @@
 
 #include <GLES2/gl2.h>
 #include "AABB.h"
-#include "ArrayWrapper.h"
-#include "OpenGLObject.h"
+#include "Array.h"
+#include "GLObject.h"
 
-class VertexBuff : public OpenGLObject {
+class VertexBuff : public GLObject {
 public:
     VertexBuff(GLfloat *vertices, int size);
 
@@ -14,18 +14,25 @@ public:
 
     virtual ~VertexBuff();
 
-    bool init();
-
     void kill();
 
     void bind();
 
     void unbind();
 
+    int size();
+
+    float get(int i);
+
+    virtual bool equals(const GLObject &b) const;
+
+protected:
+    virtual void innerInit();
+
 private:
     GLuint vbo;
 
-    ArrayWrapper arrayWrapper;
+    Array arrayWrapper;
 };
 
 #endif //NATIVE_ACTIVITY_VERTEXBUFF_H

@@ -1,3 +1,4 @@
+#include <typeinfo>
 #include "Texture.h"
 
 Texture::Texture(TGAImage *image) {
@@ -20,13 +21,14 @@ Texture::~Texture() {
     }
 }
 
-void Texture::init() {
+void Texture::innerInit() {
     glGenTextures(1, &texture);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
 
     glPixelStorei(GL_PACK_ALIGNMENT, 4);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->getW(), image->getH(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->getPtr());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->getW(), image->getH(), 0, GL_RGBA,
+                 GL_UNSIGNED_BYTE, image->getPtr());
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -34,4 +36,20 @@ void Texture::init() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::kill() {
+    glDeleteTextures(1, &texture);
+}
+
+bool Texture::equals(const GLObject &b) const {
+    try {
+        const Texture &that = dynamic_cast<const Texture &>(b);
+        if (image->getFileName() != that.image->getFileName()) {
+            return false;
+        }
+    } catch (const std::bad_cast &e) {
+        return false;
+    }
+    return true;
 }

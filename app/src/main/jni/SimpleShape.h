@@ -2,7 +2,7 @@
 #define NATIVE_ACTIVITY_SIMPLESHAPE_H
 
 #include "BaseShape.h"
-#include "ArrayWrapper.h"
+#include "Array.h"
 
 class SimpleShape : public BaseShape {
 public:
@@ -11,7 +11,7 @@ public:
     virtual int verticesSize();
 
 protected:
-    ArrayWrapper array;
+    Array array;
 };
 
 #endif //NATIVE_ACTIVITY_SIMPLESHAPE_H

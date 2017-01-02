@@ -5,7 +5,7 @@
 
 class GlassPath {
 public:
-    GlassPath();
+    GlassPath(float screenH, int numOfGlasses);
 
     float getPositionOnPath(const Vec2 &center, float &len, Vec2 &normal) const;
 

@@ -3,9 +3,6 @@
 
 #include "Vec2.h"
 
-class LineException {
-};
-
 class Line {
 public:
     Line(const Vec2 &p1, const Vec2 &p2);

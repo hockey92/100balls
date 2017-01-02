@@ -5,13 +5,6 @@
 #include "Color.h"
 
 class Shader {
-protected:
-    int vertShader, fragShader, program;
-    int MVPMatrix;
-    int positionAttrib;
-    int colorAttrib;
-    VertexBuff *preparedVertexBuf;
-
 public:
     Shader();
 
@@ -50,6 +43,14 @@ public:
 //        endRender();
 //    }
 protected:
+    int vertShader, fragShader, program;
+    int MVPMatrix;
+    int positionAttrib;
+    int colorAttrib;
+    VertexBuff *preparedVertexBuf;
+
+    int preparedVertexBuffId;
+
     // Push MVP matrix to the shader
 //    void PushMVPMatrix(glm::mat4 *mat);
 

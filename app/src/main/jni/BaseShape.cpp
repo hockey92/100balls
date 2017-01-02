@@ -1,7 +1,7 @@
-#include <vecmath.h>
 #include "BaseShape.h"
 
-BaseShape::BaseShape() : realChildCount(0), parent(NULL), angle(0.f), aabb(NULL), extendedAABB(NULL) {
+BaseShape::BaseShape() : realChildCount(0), parent(NULL), angle(0.f), aabb(NULL),
+                         extendedAABB(NULL) {
 }
 
 void BaseShape::move(const Vec2 &coords) {
@@ -92,3 +92,5 @@ void BaseShape::setAABB() {
 void BaseShape::setCenter(const Vec2 &center) {
     this->center = center;
 }
+
+float BaseShape::getZ() { return z; }

@@ -1,8 +1,9 @@
 #include "AudioService.h"
 #include "common.h"
-#include "FileBuf.h"
+//#include "FileBuf.h"
 
-AudioService::AudioService() : wavFile(WAVFile(FileBuf::getInstance()->getSound())) {
+//todo
+AudioService::AudioService() : wavFile(NULL/*WAVFile(FileBuf::getInstance()->getSound())*/) {
     SLObjectItf engineObj;
     const SLInterfaceID pIDs[1] = {SL_IID_ENGINE};
     const SLboolean pIDsRequired[1] = {SL_BOOLEAN_TRUE};

@@ -2,7 +2,7 @@
 #define NATIVE_ACTIVITY_GLASSSHAPE_H
 
 #include "BaseShape.h"
-#include "ArrayWrapper.h"
+#include "Array.h"
 #include "SimpleShape.h"
 
 class GlassShape : public SimpleShape {

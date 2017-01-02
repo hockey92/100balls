@@ -2,8 +2,8 @@
 #define TEAPOT_BASESHAPE_H
 
 #include <cstddef>
-#include "Vec2.h"
-#include "AABB.h"
+#include <Vec2.h>
+#include <AABB.h>
 
 class BaseShape {
 public:
@@ -29,6 +29,8 @@ public:
 
     void calculateExtendAABB(const Vec2 &moveVec);
 
+    float getZ();
+
     AABB *getExtendedAABB();
 
     virtual void setInnerAABB();
@@ -47,6 +49,7 @@ protected:
     BaseShape *parent;
     AABB *aabb;
     AABB *extendedAABB;
+    float z;
 
     virtual void innerRotate(float angle);
 

@@ -1,18 +1,35 @@
-#include <vecmath.h>
 #include "GlassGameObject.h"
 #include "GlassShape.h"
 #include "Constants.h"
-#include "common.h"
-#include "ScoreService.h"
-#include "Context.h"
 
-GlassGameObject::GlassGameObject(GlassPath *glassPath) : GameObject(new GlassShape(), 0.f), child(NULL), parent(NULL), isRotate(false), glassPath(glassPath), numOfCircles(0), wasted(false), numOfGlassesDistsBeetweenThisAndParentGlasses(1), score(0), color(Color(1.0f, 1.0f, 1.0f, 1.0f)) {
+GlassGameObject::GlassGameObject(GlassPath *glassPath,
+                                 RendererFactory *rendererFactory,
+                                 Score *gameScore)
+        : GameObject(new GlassShape(), 0.f),
+          child(NULL),
+          parent(NULL),
+          isRotate(false),
+          glassPath(glassPath),
+          numOfCircles(0),
+          wasted(false),
+          numOfGlassesDistsBetweenThisAndParentGlasses(1),
+          localScore(0),
+          color(Color(1.0f, 1.0f, 1.0f, 1.0f)),
+          gameScore(gameScore) {
+
     for (int i = 0; i < 3; i++) {
-        lines[i] = new Line(((Segment *) getShape()->getChildren(i))->getPoint(0), ((Segment *) getShape()->getChildren(i))->getPoint(1));
+        lines[i] = new Line(((Segment *) getShape()->getChildren(i))->getPoint(0),
+                            ((Segment *) getShape()->getChildren(i))->getPoint(1));
     }
-    lines[3] = new Line(((Segment *) getShape()->getChildren(2))->getPoint(1), ((Segment *) getShape()->getChildren(0))->getPoint(0));
+    lines[3] = new Line(((Segment *) getShape()->getChildren(2))->getPoint(1),
+                        ((Segment *) getShape()->getChildren(0))->getPoint(0));
 
     reset();
+
+    int size = getShape()->verticesSize();
+    float vertices[size];
+    getShape()->getVertices(vertices);
+    renderer = rendererFactory->createGeometryRenderer(vertices, size);
 }
 
 GlassGameObject::~GlassGameObject() {
@@ -45,11 +62,11 @@ GlassGameObject *GlassGameObject::findNonRotateParent() {
 }
 
 void GlassGameObject::innerUpdate() {
+    float currScoreVel = -0.5f;
 
-    float currScoreVel = Context::getInstance()->getScoreService()->getGlassVel();
     clearVel = currScoreVel;
 
-    GlassGameObject* glassBefore = NULL;
+    GlassGameObject *glassBefore = NULL;
 
     if (parent) {
         glassBefore = parent;
@@ -62,10 +79,12 @@ void GlassGameObject::innerUpdate() {
 
     if (glassBefore != NULL) {
         float parentPositionOnPath = glassBefore->positionOnPath;
-        float distanceFromParent = glassPath->getDistanceBetweenPoints(parentPositionOnPath, positionOnPath);
+        float distanceFromParent = glassPath->getDistanceBetweenPoints(parentPositionOnPath,
+                                                                       positionOnPath);
         if (distanceFromParent < glassPath->getDistanceBetweenGlasses()) {
             float parentClearVel = glassBefore->clearVel;
-            clearVel = parentClearVel - 0.01f * (distanceFromParent - glassPath->getDistanceBetweenGlasses()) / DT;
+            clearVel = parentClearVel -
+                       0.01f * (distanceFromParent - glassPath->getDistanceBetweenGlasses()) / DT;
         }
     }
 
@@ -83,7 +102,8 @@ void GlassGameObject::innerUpdate() {
         isRotate = false;
     }
 
-    setVel((Vec2::cross(normal, 1) * clearVel) + (normal * (((len - glassPath->getDistFromPath()) * 0.1f) / DT)));
+    setVel((Vec2::cross(normal, 1) * clearVel) +
+           (normal * (((len - glassPath->getDistFromPath()) * 0.1f) / DT)));
 
     if (isRotate) {
         setVel(Vec2(-velDuringRotation, 0.0f));
@@ -120,31 +140,32 @@ void GlassGameObject::clearCircles() {
 void GlassGameObject::addCircle(CircleGameObject *circlePhysicsObject) {
     circles.push_back(circlePhysicsObject);
     if (glassPath->isDown(normal)) {
-        if (0 <= score && score < 50) {
-            score += 1;
-            Context::getInstance()->getScoreService()->add(1);
-        } else if (50 <= score && score < 100) {
-            score += 2;
-            Context::getInstance()->getScoreService()->add(2);
-        } else if (100 <= score) {
-            score += 5;
-            Context::getInstance()->getScoreService()->add(5);
+        if (0 <= localScore && localScore < 50) {
+            localScore += 1;
+            gameScore->add(1);
+        } else if (50 <= localScore && localScore < 100) {
+            localScore += 2;
+            gameScore->add(2);
+        } else if (100 <= localScore) {
+            localScore += 5;
+            gameScore->add(5);
         }
-        score++;
+        localScore++;
     }
     bool changeColor = true;
-    if (0 <= score && score < 50) {
+    if (0 <= localScore && localScore < 50) {
         changeColor = false;
         color = Color(1.0f, 1.0f, 1.0f, 1.0f);
-    } else if (50 <= score && score < 100) {
+    } else if (50 <= localScore && localScore < 100) {
         color = Color(1.0f, 0.0f, 0.0f, 1.0f);
-    } else if (100 <= score && score < 150) {
+    } else if (100 <= localScore && localScore < 150) {
         color = Color(0.0f, 1.0f, 0.0f, 1.0f);
-    } else if (150 <= score) {
+    } else if (150 <= localScore) {
         color = Color(1.0f, 0.0f, 1.0f, 1.0f);
     }
     if (changeColor) {
-        for (std::list<CircleGameObject *>::iterator iter = circles.begin(); iter != circles.end(); ++iter) {
+        for (std::list<CircleGameObject *>::iterator iter = circles.begin();
+             iter != circles.end(); ++iter) {
             (*iter)->setColor(color);
         }
     }
@@ -202,34 +223,31 @@ void GlassGameObject::waste(GlassGameObject **firstGlassPtr) {
     }
     if (child) {
         child->parent = parent;
-        child->numOfGlassesDistsBeetweenThisAndParentGlasses += numOfGlassesDistsBeetweenThisAndParentGlasses;
+        child->numOfGlassesDistsBetweenThisAndParentGlasses += numOfGlassesDistsBetweenThisAndParentGlasses;
     }
     parent = NULL;
     child = NULL;
     setInvM(1);
 }
 
-void GlassGameObject::draw(const DrawableData &drawableDate) {
+void GlassGameObject::draw() {
     if (!isVisible() || isDeleted()) {
         return;
     }
 
-    Shader *simpleShader = drawableDate.simpleShader;
-    float *projMat = drawableDate.projMat;
+    Vec2 center = getShape()->getCenter();
+    renderer->setPosition(center.x(), center.y());
+    renderer->setAngel(getShape()->getAngel());
 
-    BaseShape *shape = getShape();
-    Vec2 center = shape->getCenter();
-    simpleShader->setMVP((ndk_helper::Mat4(projMat) * ndk_helper::Mat4::Translation(center.x(), center.y(), 0.0f) * ndk_helper::Mat4::RotationZ(-shape->getAngel())).Ptr());
-    simpleShader->setColor(color.r(), color.g(), color.b(), 0.5f);
-    GLushort indices1[] = {0, 1, 2, 0, 2, 3};
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices1);
-    simpleShader->setColor(color);
-    GLushort indices2[] = {0, 1, 1, 2, 2, 3};
-    glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, indices2);
-}
+    renderer->setColor(color.r(), color.g(), color.b(), 0.5f);
+    renderer->setFilled(true);
+    unsigned short vertices1[] = {0, 1, 2, 0, 2, 3};
+    renderer->render(vertices1, 6);
 
-unsigned int GlassGameObject::type() {
-    return getShape()->type();
+    renderer->setFilled(false);
+    renderer->setColor(color);
+    unsigned short vertices2[] = {0, 1, 1, 2, 2, 3};
+    renderer->render(vertices2, 6);
 }
 
 void GlassGameObject::reset() {
@@ -238,8 +256,8 @@ void GlassGameObject::reset() {
     isRotate = false;
     numOfCircles = 0;
     wasted = false;
-    numOfGlassesDistsBeetweenThisAndParentGlasses = 1;
-    score = 0;
+    numOfGlassesDistsBetweenThisAndParentGlasses = 1;
+    localScore = 0;
     color = Color(1.0f, 1.0f, 1.0f, 1.0f);
     BaseShape *shape = getShape();
     shape->setCenter(glassPath->getGlassStartPoint());
@@ -248,4 +266,3 @@ void GlassGameObject::reset() {
     updatePositionOnPath();
     setInvM(0);
 }
-

@@ -2,19 +2,18 @@
 #include "DrawUtils.h"
 #include <set>
 #include <queue>
-#include <vecmath.h>
 
-Font::Font(TGAImage *image) : image(image) {
+Font::Font(RendererFactory *rendererFactory, ObjectAccessor<File> *fileAccessor)
+        : rendererFactory(rendererFactory) {
     for (int i = 0; i < 300; i++) {
-        fontBuff[i] = std::pair<VertexBuff *, float>(NULL, 0);
+        symbolRenderers[i] = NULL;
     }
-    texture = new Texture(image);
+    image = new TGAImage(fileAccessor->getObject("font.tga"));
     bfs('A', 26, 200);
     bfs('0', 10, 100);
 }
 
 void Font::bfs(char firstSymbol, size_t count, int yPosition) {
-
     int initX = 0;
     int initY = yPosition;
     int right, left, up, down;
@@ -30,7 +29,8 @@ void Font::bfs(char firstSymbol, size_t count, int yPosition) {
         used.insert(std::pair<int, int>(initX, initY));
         que.push(std::pair<int, int>(initX, initY));
 
-        std::pair<int, int> d[] = {std::pair<int, int>(1, 0), std::pair<int, int>(-1, 0), std::pair<int, int>(0, 1), std::pair<int, int>(0, -1)};
+        std::pair<int, int> d[] = {std::pair<int, int>(1, 0), std::pair<int, int>(-1, 0),
+                                   std::pair<int, int>(0, 1), std::pair<int, int>(0, -1)};
 
         right = left = initX;
         up = down = initY;
@@ -45,12 +45,15 @@ void Font::bfs(char firstSymbol, size_t count, int yPosition) {
             down = front.second < down ? front.second : down;
 
             for (int i = 0; i < 4; i++) {
-                std::pair<int, int> newCoords = std::pair<int, int>(front.first + d[i].first, front.second + d[i].second);
-                if (checkRange(newCoords.first, 0, image->getW() - 1) || checkRange(newCoords.second, 0, image->getH() - 1)) {
+                std::pair<int, int> newCoords = std::pair<int, int>(front.first + d[i].first,
+                                                                    front.second + d[i].second);
+                if (checkRange(newCoords.first, 0, image->getW() - 1) ||
+                    checkRange(newCoords.second, 0, image->getH() - 1)) {
                     continue;
                 }
 
-                if (used.find(newCoords) == used.end() && image->getPixel(newCoords.second, newCoords.first).alpha != 0) {
+                if (used.find(newCoords) == used.end() &&
+                    image->getPixel(newCoords.second, newCoords.first).alpha != 0) {
                     que.push(newCoords);
                     used.insert(newCoords);
                 }
@@ -62,32 +65,32 @@ void Font::bfs(char firstSymbol, size_t count, int yPosition) {
         float texLeft = ((float) (left - 5)) / ((float) image->getW());
         float texRight = ((float) (right + 5)) / ((float) image->getW());
 
-        float coeff = 720.0f;
-        float h = (float) (up - down) / coeff;
-        float w = (float) (right - left) / coeff;
+        float coefficient = 720.0f;
+        float h = (float) (up - down) / coefficient;
+        float w = (float) (right - left) / coefficient;
 
         maxLetterHigh = std::max(maxLetterHigh, h);
 
-        float *vert = DrawUtils::createCoordsForTextureShader(-h, h, -w, w, texDown, texUp, texLeft, texRight);
-        fontBuff[firstSymbol + k] = std::pair<VertexBuff *, float>(new VertexBuff(vert, 24), h);
-        delete[] vert;
+        float *vertices = DrawUtils::createCoordinatesForTextureShader(-h, h,
+                                                                       -w, w,
+                                                                       texDown, texUp,
+                                                                       texLeft, texRight);
+        symbolRenderers[firstSymbol + k] = rendererFactory->createTextureRenderer(vertices,
+                                                                                  "font.tga");
+        delete[] vertices;
 
         initX = right + 2;
     }
 }
 
 Font::~Font() {
-    if (texture) {
-        delete texture;
-    }
-
     if (image) {
         delete image;
     }
 
     for (int i = 0; i < 300; i++) {
-        if (fontBuff[i].first) {
-            delete fontBuff[i].first;
+        if (symbolRenderers[i]) {
+            delete symbolRenderers[i];
         }
     }
 }
@@ -96,52 +99,23 @@ bool Font::checkRange(int value, int lower, int upper) {
     return value < lower || value > upper;
 }
 
-void Font::init() {
-    texture->init();
-    for (int i = 0; i < 300; i++) {
-        VertexBuff *currentVertexBuff = fontBuff[i].first;
-        if (currentVertexBuff) {
-            currentVertexBuff->init();
-        }
-    }
-}
-
-void Font::renderText(unsigned int num, TextureShader *shader, float *mvp, float x, float y) {
-    char intStr[20];
-    sprintf(intStr, "%u", num);
-    renderText(std::string(intStr), shader, mvp, x, y);
-}
-
-void Font::renderText(unsigned int num, TextureShader *shader, float *mvp, const Vec2 &pos) {
-    renderText(num, shader, mvp, pos.x(), pos.y());
-}
-
-void Font::renderText(const std::string &text, TextureShader *shader, float *mvp, float x, float y) {
+void Font::renderText(const std::string &text, float x, float y) {
     float distBetweenSymbols = 0.15f;
-    ndk_helper::Mat4 mvpMat4 = ndk_helper::Mat4(mvp);
     int tokensCount = text.size();
-    float dx = distBetweenSymbols * (float) ((tokensCount - 1) / 2) + (tokensCount % 2 == 0 ? distBetweenSymbols / 2.0f : 0.0f);
-    mvpMat4 *= ndk_helper::Mat4::Translation(x + dx, y, 0.0f);
+    x += distBetweenSymbols * (float) ((tokensCount - 1) / 2)
+         + (tokensCount % 2 == 0 ? distBetweenSymbols / 2.0f : 0.0f);
     for (int i = 0; i < tokensCount; i++) {
         char ch = text[(tokensCount - 1) - i];
         if (ch == ' ') {
-//            float dY = (maxLetterHigh - fontBuff[ch].second) / 2.0f;
-            mvpMat4 *= ndk_helper::Mat4::Translation(-distBetweenSymbols, 0.0f, 0.0f);
+            x -= distBetweenSymbols;
             continue;
         }
-        shader->beginRender(fontBuff[ch].first, 4, 6);
-        shader->setTexture(texture);
-        shader->setColor(color);
-        shader->setMVP(mvpMat4.Ptr());
-        shader->render();
-        shader->endRender();
-
-        mvpMat4 *= ndk_helper::Mat4::Translation(-distBetweenSymbols, 0.0f, 0.0f);
+        Renderer *currentRenderer = symbolRenderers[ch];
+        currentRenderer->setColor(Color(1, 1, 1, 1));
+        currentRenderer->setPosition(x, y);
+        currentRenderer->render();
+        x -= distBetweenSymbols;
     }
-}
-
-void Font::renderText(const std::string &text, TextureShader *shader, float *mvp, const Vec2 &pos) {
-    renderText(text, shader, mvp, pos.x(), pos.y());
 }
 
 void Font::setColor(const Color &color) {

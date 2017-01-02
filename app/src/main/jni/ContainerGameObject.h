@@ -2,21 +2,24 @@
 #define NATIVE_ACTIVITY_CONTAINERGAMEOBJECT_H
 
 #include "GameObject.h"
+#include "GeometryRenderer.h"
+#include "RendererFactory.h"
 
 class ContainerGameObject : public GameObject {
 public:
-    ContainerGameObject(BaseShape *shape, float invM);
+    ContainerGameObject(float invM, RendererFactory *rendererFactory);
 
     virtual ~ContainerGameObject();
 
-    void draw(const DrawableData &drawableDate);
-
-    unsigned int type();
+    void draw();
 
     PhysicsObject *getGate();
 
 private:
     PhysicsObject *gate;
+    GeometryRenderer *renderer;
+    static unsigned short openedGateIndices[];
+    static unsigned short closedGateIndices[];
 };
 
 #endif //NATIVE_ACTIVITY_CONTAINERGAMEOBJECT_H

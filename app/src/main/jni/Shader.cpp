@@ -1,4 +1,3 @@
-#include <vecmath.h>
 #include "Shader.h"
 #include "common.h"
 
@@ -6,6 +5,7 @@ Shader::Shader() {
     vertShader = 0;
     fragShader = 0;
     program = 0;
+    preparedVertexBuffId = -1;
 }
 
 Shader::~Shader() {
@@ -167,11 +167,19 @@ void Shader::PushPositions(int vbo_offset, int stride) {
 }
 
 void Shader::beginRender(VertexBuff *vbuf, int size, int stride) {
+//    if (preparedVertexBuffId == vbuf->getId()) {
+//        RETURN;
+//    }
+
     bindShader();
     vbuf->bind();
 
     ASSERT(positionAttrib >= 0);
-    glVertexAttribPointer(positionAttrib, size, GL_FLOAT, GL_FALSE, stride * sizeof(float),
+    glVertexAttribPointer(positionAttrib,
+                          size,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          stride * sizeof(float),
                           BUFFER_OFFSET(0));
     glEnableVertexAttribArray(positionAttrib);
 

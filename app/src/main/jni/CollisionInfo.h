@@ -12,25 +12,19 @@ public:
 
     unsigned int getId() const;
 
-    bool isCalculateNewCollision();
-
-    void calculateDiff();
-
     void addConstraint(Collision *c);
 
     bool isEmpty();
 
     void fix();
 
+    void clear();
+
 private:
     PhysicsObject *o1;
     PhysicsObject *o2;
 
     void swapIfNeeded();
-
-    Vec2 diff;
-    float angle1;
-    float angle2;
 
     int _size;
     int _maxSize;

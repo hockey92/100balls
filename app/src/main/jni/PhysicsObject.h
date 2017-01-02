@@ -51,7 +51,7 @@ public:
 
     void setVisible(bool visible) { this->visible = visible; }
 
-    unsigned int getId() const { return id;}
+    unsigned int getId() const { return id; }
 
 private:
     Vec2 vel;

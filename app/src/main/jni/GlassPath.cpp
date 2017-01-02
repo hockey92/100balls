@@ -1,13 +1,13 @@
 #include "GlassPath.h"
-#include "Context.h"
 #include "Constants.h"
 #include "CollisionFactory.h"
 
-GlassPath::GlassPath() {
+GlassPath::GlassPath(float screenH, int numOfGlasses) {
+
     left = -0.6f;
-    down = -Context::getInstance()->getH() + 0.44f;
+    down = -screenH + 0.44f;
     right = 0.6f;
-    up = Context::getInstance()->getH() - 0.44f;
+    up = screenH - 0.44f;
 
     distFromPath = 0.2f;
 
@@ -18,7 +18,7 @@ GlassPath::GlassPath() {
 
     quartOfCircleLen = PI * distFromPath / 2.0f;
 
-    numOfGlasses = 7;
+    this->numOfGlasses = numOfGlasses;
 
     h = up - down;
     w = right - left;
@@ -33,7 +33,7 @@ GlassPath::GlassPath() {
     pointsOnPath[8] = 2.0f * h + 2.0f * w + 4.0f * quartOfCircleLen;
 
     pathLen = pointsOnPath[8];
-    distanceBetweenGlasses = pathLen / 7.0f;
+    distanceBetweenGlasses = pathLen / this->numOfGlasses;
 }
 
 float GlassPath::getPositionOnPath(const Vec2 &center, float &len, Vec2 &normal) const {

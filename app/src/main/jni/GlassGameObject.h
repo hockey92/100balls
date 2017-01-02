@@ -7,13 +7,15 @@
 #include "CircleGameObject.h"
 #include "GlassPath.h"
 #include "Shader.h"
-#include "Drawable.h"
 #include "GameObject.h"
+#include "RendererFactory.h"
+#include "GLGeometryRenderer.h"
+#include "Score.h"
 #include <list>
 
 class GlassGameObject : public GameObject {
 public:
-    GlassGameObject(GlassPath *glassPath);
+    GlassGameObject(GlassPath *glassPath, RendererFactory *rendererFactory, Score *gameScore);
 
     virtual ~GlassGameObject();
 
@@ -37,9 +39,7 @@ public:
 
     void doActionAfter(GlassGameObject **firstGlassPtr);
 
-    void draw(const DrawableData &drawableDate);
-
-    unsigned int type();
+    void draw();
 
     void reset();
 
@@ -57,10 +57,14 @@ private:
     int numOfCircles;
     std::list<CircleGameObject *> circles;
     bool wasted;
-    int numOfGlassesDistsBeetweenThisAndParentGlasses;
-    int score;
+    int numOfGlassesDistsBetweenThisAndParentGlasses;
+    int localScore;
     Color color;
     GlassPath *glassPath;
+
+    Score* gameScore;
+
+    GeometryRenderer *renderer;
 
     void setParent(GlassGameObject *parent);
 

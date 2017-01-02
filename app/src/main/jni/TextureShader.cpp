@@ -1,5 +1,4 @@
 #include <GLES2/gl2.h>
-#include <vecmath.h>
 #include "TextureShader.h"
 #include "common.h"
 
@@ -65,9 +64,13 @@ void TextureShader::compile() {
 }
 
 void TextureShader::setTexture(Texture *texture) {
-    ASSERT(preparedVertexBuf != NULL);
+//    if (preparedTextureId == texture->getId()) {
+//        return;
+//    }
+//    ASSERT(preparedVertexBuf != NULL);
     texture->bind(GL_TEXTURE0);
     glUniform1i(samplerHandle, 0);
+//    preparedTextureId = texture->getId();
 }
 
 void TextureShader::beginRender(VertexBuff *vbuf, int size, int stride) {

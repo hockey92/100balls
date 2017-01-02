@@ -7,29 +7,25 @@
 #include "Texture.h"
 #include "TextureShader.h"
 #include "Color.h"
+#include "RendererFactory.h"
+#include "ObjectAccessor.h"
 #include <string>
 
 class Font {
 public:
-    Font(TGAImage *image);
+    Font(RendererFactory *rendererFactory, ObjectAccessor<File> *fileAccessor);
 
     virtual ~Font();
 
-    void init();
-
     void setColor(const Color &color);
 
-    void renderText(unsigned int num, TextureShader *shader, float *mvp, float x, float y);
-
-    void renderText(unsigned int num, TextureShader *shader, float *mvp, const Vec2 &pos);
-
-    void renderText(const std::string &text, TextureShader *shader, float *mvp, float x, float y);
-
-    void renderText(const std::string &text, TextureShader *shader, float *mvp, const Vec2 &pos);
+    void renderText(const std::string &text, float x, float y);
 
 private:
+    RendererFactory *rendererFactory;
+
     TGAImage *image;
-    std::pair<VertexBuff *, float> fontBuff[300]; // pair(height, buff)
+    Renderer *symbolRenderers[300];
     Texture *texture;
 
     void bfs(char firstSymbol, size_t count, int yPosition);

@@ -2,11 +2,11 @@
 #define NATIVE_ACTIVITY_CIRCLEPHYSICSOBJECT_H
 
 #include "PhysicsObject.h"
-#include "Drawable.h"
+#include "RendererFactory.h"
 
-class CircleGameObject : public PhysicsObject, public Drawable {
+class CircleGameObject : public PhysicsObject {
 public:
-    CircleGameObject(float r, float invM);
+    CircleGameObject(float r, float invM, float lowerBound, RendererFactory *rendererFactory);
 
     virtual void updatePos();
 
@@ -14,18 +14,17 @@ public:
 
     void setInsideGlass(bool insideGlass);
 
-    void draw(const DrawableData &drawableDate);
+    void draw();
 
     unsigned int type();
 
-    Initializer *createInitializer();
-
-    void setColor(const Color& color);
+    void setColor(const Color &color);
 
 private:
     bool insideGlass;
     Color color;
-
+    float lowerBound;
+    Renderer *renderer;
 };
 
 #endif //NATIVE_ACTIVITY_CIRCLEPHYSICSOBJECT_H

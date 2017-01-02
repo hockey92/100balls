@@ -1,4 +1,4 @@
-#include <stddef.h>
+#include <set>
 #include "TGAImage.h"
 
 struct TGAHeader {
@@ -29,12 +29,16 @@ void *TGAImage::getPtr() const {
 }
 
 TGAImage::TGAImage(File *file) : file(file) {
-    w = ((TGAHeader *) file->buff())->width;
-    h = ((TGAHeader *) file->buff())->height;
-    ptr = (file->buff() + sizeof(TGAHeader));
+    w = ((TGAHeader *) file->getBuff())->width;
+    h = ((TGAHeader *) file->getBuff())->height;
+    ptr = (file->getBuff() + sizeof(TGAHeader));
 }
 
 Pixel TGAImage::getPixel(int y, int x) const {
     unsigned char *startPointer = ((unsigned char *) ptr) + y * w * 4 + x * 4;
     return Pixel(*startPointer, *(startPointer + 1), *(startPointer + 2), *(startPointer + 3));
+}
+
+std::string& TGAImage::getFileName() const {
+    return file->getFileName();
 }

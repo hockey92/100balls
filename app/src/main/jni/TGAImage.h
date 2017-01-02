@@ -25,6 +25,8 @@ public:
 
     Pixel getPixel(int y, int x) const;
 
+    std::string& getFileName() const;
+
 private:
     File *file;
     void *ptr;

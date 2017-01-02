@@ -5,9 +5,9 @@ WAVFile::WAVFile(File *file) : _file(file) {
 }
 
 void *WAVFile::ptr() const {
-    return (char *) (_file->buff() + sizeof(WAVHeader));
+    return (char *) (_file->getBuff() + sizeof(WAVHeader));
 }
 
 int WAVFile::length() const {
-    return _file->length() - sizeof(WAVFile);
+    return _file->getSize() - sizeof(WAVFile);
 }
