@@ -6,14 +6,12 @@ GameService::GameService(float w, float h, RendererFactory *rendererFactory) {
     this->w = w;
     this->h = h;
     r = 0.0355f;
-    time = 0;
-    lastDrawn = -1;
     glassPath = new GlassPath(h, NUM_OF_GLASSES);
     container = new ContainerGameObject(0.f, rendererFactory);
 
     fontRenderer = rendererFactory->createFontRenderer();
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 100; i++) {
         CircleGameObject *circleGO = new CircleGameObject(r, 1.f, -h, rendererFactory);
         addPhysicsObjects(circleGO);
         circles.push_back(circleGO);
@@ -65,8 +63,6 @@ void GameService::doActionBefore() {
 
 void GameService::doActionAfter() {
 
-    GameObject::incrementCycleNumber();
-
     bool gameOver = true;
 
     for (int i = 0; i < glasses.size(); i++) {
@@ -85,6 +81,7 @@ void GameService::doActionAfter() {
 
     checkFrozenGlasses();
 
+    int MAX_NUM_OF_ACTIVE_CIRCLES = 40;
     int realNumOfActiveCircles = 0;
     for (int i = 0; i < circles.size(); i++) {
         CircleGameObject *circle = circles[i];
@@ -138,15 +135,15 @@ void GameService::reset() {
 
     resetCircles(containerVertices[4] + r + distanceBetweenCircles,
                  containerVertices[5] - r - distanceBetweenCircles,
-                 1.0f, r, distanceBetweenCircles, false, 10, 0);
+                 1.0f, r, distanceBetweenCircles, false, 30, 0);
 
-//    resetCircles(containerVertices[22] - r - distanceBetweenCircles,
-//                 containerVertices[23] - r - distanceBetweenCircles,
-//                 -1.0f, r, distanceBetweenCircles, false, 30, 30);
-//
-//    resetCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
-//                 containerVertices[23] - r - distanceBetweenCircles,
-//                 1.0f, r, distanceBetweenCircles, false, 40, 60);
+    resetCircles(containerVertices[22] - r - distanceBetweenCircles,
+                 containerVertices[23] - r - distanceBetweenCircles,
+                 -1.0f, r, distanceBetweenCircles, false, 30, 30);
+
+    resetCircles(-2.0f * (2.0f * r + distanceBetweenCircles),
+                 containerVertices[23] - r - distanceBetweenCircles,
+                 1.0f, r, distanceBetweenCircles, true, 40, 60);
 
     while (!frozenGlasses.empty()) {
         frozenGlasses.pop();
@@ -166,36 +163,15 @@ void GameService::reset() {
     }
 }
 
-void GameService::draw(float currentTime) {
-
-    int cycleNumber = GameObject::getCycleNumber();
-    cycleNumber--;
-    if (cycleNumber < 0) {
-        cycleNumber = 99;
-    }
-
-    lastDrawn= cycleNumber;
-
-//    if (lastDrawn == -1) {
-//        lastDrawn = cycleNumber;
-//    } else {
-//        lastDrawn = (lastDrawn + 1) % 100;
-//    }
-
-    LOGE("cycle number %d", lastDrawn);
-
-    container->draw(lastDrawn);
+void GameService::draw() {
+    container->draw();
 
     for (int i = 0; i < circles.size(); i++) {
-        float delta = currentTime - time;
-        delta = delta < 0 ? 0 : delta;
-        circles[i]->draw(delta);
+        circles[i]->draw();
     }
 
     for (int i = 0; i < glasses.size(); i++) {
-        float delta = currentTime - time;
-        delta = delta < 0 ? 0 : delta;
-        glasses[i]->draw(delta);
+        glasses[i]->draw();
     }
 
     std::ostringstream ss;
@@ -203,15 +179,8 @@ void GameService::draw(float currentTime) {
     fontRenderer->setText(ss.str());
     fontRenderer->setPosition(0, -0.2f);
     fontRenderer->render();
-
-
 }
 
 GameService::~GameService() {
     delete glassPath;
-}
-
-void GameService::nextFrame(float dt) {
-    PhysicsService::nextFrame(dt);
-    time += dt;
 }

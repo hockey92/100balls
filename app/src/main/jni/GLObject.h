@@ -1,8 +1,6 @@
 #ifndef INC_100BALLS_OPENGLOBJECTS_H
 #define INC_100BALLS_OPENGLOBJECTS_H
 
-#include <Mutex.h>
-
 class GLObject {
 public:
     GLObject();
@@ -19,8 +17,6 @@ public:
 
     static void incrementNumberOfInits();
 
-    int getId();
-
 protected:
     virtual void innerPrepareRender() { };
 
@@ -29,9 +25,6 @@ protected:
 private:
     int initIndex;
     static int numberOfInits;
-    int id;
-    static int lastId;
-    static Mutex mutex;
 };
 
 #endif //INC_100BALLS_OPENGLOBJECTS_H

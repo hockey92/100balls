@@ -15,7 +15,7 @@ ContainerGameObject::ContainerGameObject(float invM, RendererFactory *rendererFa
     renderer->setColor(Color(1.f, 1.f, 1.f, 1.f));
 }
 
-void ContainerGameObject::draw(float delta) {
+void ContainerGameObject::draw() {
     if (gate->isActive()) {
         renderer->render(openedGateIndices, 22);
     } else {

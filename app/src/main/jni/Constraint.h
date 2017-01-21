@@ -10,7 +10,7 @@ public:
 
     virtual ~Constraint();
 
-    bool fix(float dt);
+    bool fix();
 
     void set(PhysicsObject *o1, PhysicsObject *o2, Collision *c);
 

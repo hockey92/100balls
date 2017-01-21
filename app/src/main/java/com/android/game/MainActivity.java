@@ -13,18 +13,15 @@ import java.io.InputStream;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import static android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY;
-
 public class MainActivity extends Activity {
 
-    public static GLSurfaceView glSurfaceView;
-    public static boolean stop = false;
+    GLSurfaceView glSurfaceView;
+
+    Thread thread = null;
 
     @Override
     public void onBackPressed() {
-        if (GameService.getState() == GameService.GameState.PROCESSING) {
-            GameService.setState(GameService.GameState.PAUSED);
-        }
+        GameService.setState(GameService.GameState.PAUSED);
         ScreenManager.getInstance().setCurrentScreenId(MainMenu.class.getName());
     }
 
@@ -43,16 +40,34 @@ public class MainActivity extends Activity {
             @Override
             public void onSurfaceChanged(GL10 gl, int width, int height) {
                 ScreenService.surfaceChanged(width, height);
+//                if (thread != null) return;
+//                thread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            Thread.sleep(1000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        GameService.nextFrame();
+//                        try {
+//                            Thread.sleep(1000 / 60);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//                thread.setDaemon(true);
+//                thread.start();
             }
 
             @Override
             public void onDrawFrame(GL10 gl) {
                 ScreenService.beforeDraw();
                 ScreenManager.getInstance().draw();
-                stop = true;
+
             }
         });
-//        glSurfaceView.setRenderMode(RENDERMODE_WHEN_DIRTY);
         setContentView(glSurfaceView);
     }
 
@@ -60,9 +75,7 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         glSurfaceView.onPause();
-        if (GameService.getState() == GameService.GameState.PROCESSING) {
-            GameService.setState(GameService.GameState.PAUSED);
-        }
+        GameService.setState(GameService.GameState.PAUSED);
         ScreenManager.getInstance().setCurrentScreenId(MainMenu.class.getName());
     }
 

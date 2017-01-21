@@ -8,8 +8,8 @@ GameService *getGameService() {
 }
 
 JNIEXPORT void JNICALL
-Java_com_android_game_GameService_draw(JNIEnv *env, jclass type, jfloat time) {
-    getGameService()->draw(time);
+Java_com_android_game_GameService_draw(JNIEnv *env, jclass type) {
+    getGameService()->draw();
 }
 
 JNIEXPORT void JNICALL
@@ -18,8 +18,8 @@ Java_com_android_game_GameService_resetNative(JNIEnv *env, jclass type) {
 }
 
 JNIEXPORT void JNICALL
-Java_com_android_game_GameService_nextFrameNative(JNIEnv *env, jclass type, jfloat dt) {
-    getGameService()->nextFrame(dt);
+Java_com_android_game_GameService_nextFrameNative(JNIEnv *env, jclass type) {
+    getGameService()->nextFrame();
 }
 
 JNIEXPORT void JNICALL

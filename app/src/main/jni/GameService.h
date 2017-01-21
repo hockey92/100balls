@@ -18,9 +18,7 @@ public:
 
     void reset();
 
-    void draw(float currentTime);
-
-    virtual void nextFrame(float dt);
+    void draw();
 
     GameService(float w, float h, RendererFactory *rendererFactory);
 
@@ -36,10 +34,6 @@ private:
     float h;
 
     float r;
-
-    int lastDrawn;
-
-    float time;
 
     PhysicsObject *gate;
     std::stack<PhysicsObject *> frozenCircles;
@@ -63,7 +57,6 @@ private:
     void checkFrozenGlasses();
 
     const int NUM_OF_GLASSES = 7;
-    const int MAX_NUM_OF_ACTIVE_CIRCLES = 10;
 };
 
 #endif //NATIVE_ACTIVITY_PHYSICSSERVER_H

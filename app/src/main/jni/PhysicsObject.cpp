@@ -1,3 +1,4 @@
+#include "Constants.h"
 #include "PhysicsObject.h"
 
 unsigned int PhysicsObject::idCounter = 0;
@@ -15,17 +16,17 @@ PhysicsObject::PhysicsObject(BaseShape *shape, float invM) : angleVel(0),
     idMutex.unlock();
 }
 
-void PhysicsObject::updatePos(float dt) {
+void PhysicsObject::updatePos() {
     if (shape) {
-        shape->rotate(angleVel * dt);
-        shape->move(vel * dt);
+        shape->rotate(angleVel * DT);
+        shape->move(vel * DT);
         shape->setAABB();
     }
 }
 
-void PhysicsObject::applyGravity(float dt) {
+void PhysicsObject::applyGravity() {
     if (invM > 0.f) {
-        vel += Vec2(0.0f, -9.8f) * dt;
+        vel += Vec2(0.0f, -9.8f) * DT;
     }
 }
 
@@ -35,8 +36,8 @@ PhysicsObject::~PhysicsObject() {
     }
 }
 
-void PhysicsObject::calculateExtendedAABB(float dt) {
-    shape->calculateExtendAABB(vel * dt);
+void PhysicsObject::calculateExtendedAABB() {
+    shape->calculateExtendAABB(vel * DT);
 }
 
 bool PhysicsObject::isActive() {

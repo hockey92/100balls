@@ -21,7 +21,7 @@ public:
 
     virtual ~PhysicsService();
 
-    virtual void nextFrame(float dt);
+    void nextFrame();
 
     int getStatus();
 

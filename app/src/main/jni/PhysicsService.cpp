@@ -9,17 +9,11 @@ PhysicsService::PhysicsService() : status(STOPPED) {
     for (int i = 0; i < 10000000; i++) {
         collisionInfos[i] = NULL;
     }
-
-//    start();
 }
 
-void PhysicsService::nextFrame(float dt) {
+void PhysicsService::nextFrame() {
 
-    if (dt == 0) {
-        return;
-    }
-
-    double beforeTime = now();
+//    double beforeTime = now();
 
     std::vector<CollisionInfo *> collisionInfosToFix;
 
@@ -29,9 +23,9 @@ void PhysicsService::nextFrame(float dt) {
         if (!po->isActive()) {
             continue;
         }
-        po->update(dt);
-        po->applyGravity(dt);
-        po->calculateExtendedAABB(dt);
+        po->update();
+        po->applyGravity();
+        po->calculateExtendedAABB();
     }
 
     int newCollisionsCount = 0;
@@ -77,9 +71,10 @@ void PhysicsService::nextFrame(float dt) {
 
     LOGE("new collisions count %d", newCollisionsCount);
 
+
     for (int iteration = 0; iteration < 10; iteration++) {
         for (int i = 0; i < collisionInfosToFix.size(); i++) {
-            collisionInfosToFix[i]->fix(dt);
+            collisionInfosToFix[i]->fix();
         }
     }
 
@@ -103,7 +98,7 @@ void PhysicsService::nextFrame(float dt) {
         if (!po->isActive()) {
             continue;
         }
-        po->updatePos(dt);
+        po->updatePos();
     }
 //    pthread_mutex_unlock(&mutex);
 
@@ -114,8 +109,6 @@ void PhysicsService::nextFrame(float dt) {
 //    delay = delay < 2 ? 2 : delay;
 //    LOGE("delay %d", delay);
 //    usleep(delay * 1000);
-
-    LOGE("collision time %f", now() - beforeTime);
 }
 
 int PhysicsService::getStatus() {
@@ -133,25 +126,18 @@ PhysicsService::~PhysicsService() {
 }
 
 void PhysicsService::innerRun() {
-    double prevTime = now() / 1000.0;
+    double time = now();
     while (!isStop) {
-        double currentTime = now() / 1000.0;
-//        prevTime = currentTime;
-//        double timeBefore = now();
+        double currentTime = now();
+        LOGE("timeDiff %f", currentTime - time);
+        time = currentTime;
+        double timeBefore = now();
+        nextFrame();
+        double timeAfter = now();
 
-
-        if (currentTime - prevTime >= 0.016) {
-            nextFrame((float) (currentTime - prevTime));
-            LOGE("timeDiff %f", currentTime - prevTime);
-            prevTime = currentTime;
-        }
-
-
-//        double timeAfter = now();
-
-//        int delay = 8 - (int) (currentTime - prevTime) * 1000;
-//        delay = delay < 2 ? 2 : delay;
-//        usleep((unsigned int) delay * 1000);
+        int delay = 16 - (int) (timeAfter - timeBefore);
+        delay = delay < 2 ? 2 : delay;
+        usleep((unsigned int) delay * 1000);
     }
 }
 

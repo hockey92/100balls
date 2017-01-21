@@ -7,7 +7,7 @@
 class ImpulseFactory {
 public:
     static float createImpulse(const PhysicsObject *o1, const PhysicsObject *o2,
-                                  const Collision *c, float dt);
+                               const Collision *c);
 };
 
 #endif //NATIVE_ACTIVITY_IMPULSEFACTORY_H
