@@ -16,7 +16,7 @@ public:
 
     bool isEmpty();
 
-    void fix();
+    void fix(float dt);
 
     void clear();
 

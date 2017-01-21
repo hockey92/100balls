@@ -3,18 +3,19 @@
 
 #include "PhysicsObject.h"
 #include "RendererFactory.h"
+#include "GameObject.h"
 
-class CircleGameObject : public PhysicsObject {
+class CircleGameObject : public GameObject {
 public:
     CircleGameObject(float r, float invM, float lowerBound, RendererFactory *rendererFactory);
 
-    virtual void updatePos();
+    virtual void updatePos(float dt);
 
     bool isInsideGlass();
 
     void setInsideGlass(bool insideGlass);
 
-    void draw();
+    void draw(float delta);
 
     unsigned int type();
 

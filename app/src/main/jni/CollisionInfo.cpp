@@ -51,9 +51,9 @@ bool CollisionInfo::isEmpty() {
     return _size <= 0;
 }
 
-void CollisionInfo::fix() {
+void CollisionInfo::fix(float dt) {
     for (int i = 0; i < _size; i++) {
-        constraints[i]->fix();
+        constraints[i]->fix(dt);
     }
 }
 

@@ -11,7 +11,7 @@ public:
 
     virtual ~ContainerGameObject();
 
-    void draw();
+    void draw(float delta);
 
     PhysicsObject *getGate();
 

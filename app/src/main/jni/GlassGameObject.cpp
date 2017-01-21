@@ -1,3 +1,4 @@
+#include <common.h>
 #include "GlassGameObject.h"
 #include "GlassShape.h"
 #include "Constants.h"
@@ -38,9 +39,9 @@ GlassGameObject::~GlassGameObject() {
     }
 }
 
-void GlassGameObject::update() {
+void GlassGameObject::update(float dt) {
     if (!parent && !wasted) {
-        innerUpdate();
+        innerUpdate(dt);
     }
 }
 
@@ -61,7 +62,7 @@ GlassGameObject *GlassGameObject::findNonRotateParent() {
     return nonRotateParent;
 }
 
-void GlassGameObject::innerUpdate() {
+void GlassGameObject::innerUpdate(float dt) {
     float currScoreVel = -0.5f;
 
     clearVel = currScoreVel;
@@ -84,7 +85,7 @@ void GlassGameObject::innerUpdate() {
         if (distanceFromParent < glassPath->getDistanceBetweenGlasses()) {
             float parentClearVel = glassBefore->clearVel;
             clearVel = parentClearVel -
-                       0.01f * (distanceFromParent - glassPath->getDistanceBetweenGlasses()) / DT;
+                       0.01f * (distanceFromParent - glassPath->getDistanceBetweenGlasses()) / dt;
         }
     }
 
@@ -92,7 +93,7 @@ void GlassGameObject::innerUpdate() {
 
     float p1 = glassPath->getPointOnPath(6);
     float p2 = glassPath->getPointOnPath(7);
-    float angleVel = (2.0f * PI) / (DT * ((p2 - p1) / (velDuringRotation * DT)));
+    float angleVel = (2.0f * PI) / (dt * ((p2 - p1) / (velDuringRotation * dt)));
     if (positionOnPath >= p1 && positionOnPath <= p2) {
         if (!isRotate) {
             setAngleVel(angleVel);
@@ -103,7 +104,7 @@ void GlassGameObject::innerUpdate() {
     }
 
     setVel((Vec2::cross(normal, 1) * clearVel) +
-           (normal * (((len - glassPath->getDistFromPath()) * 0.1f) / DT)));
+           (normal * (((len - glassPath->getDistFromPath()) * 0.1f) / dt)));
 
     if (isRotate) {
         setVel(Vec2(-velDuringRotation, 0.0f));
@@ -115,7 +116,7 @@ void GlassGameObject::innerUpdate() {
     }
 
     if (child) {
-        child->innerUpdate();
+        child->innerUpdate(dt);
     }
 }
 
@@ -185,11 +186,11 @@ GlassGameObject *GlassGameObject::getHead() {
     return this;
 }
 
-void GlassGameObject::updatePos() {
+void GlassGameObject::updatePos(float dt) {
     if (!isActive()) {
         return;
     }
-    PhysicsObject::updatePos();
+    GameObject::updatePos(dt);
     if (getShape() != NULL) {
         if (getShape()->getCenter().y() < -2.0f) {
             setDeleted(true);
@@ -209,7 +210,7 @@ void GlassGameObject::doActionAfter(GlassGameObject **firstGlassPtr) {
     }
 
     if (glassPath->isLeft(normal) && !containsCircles()) {
-        waste(firstGlassPtr);
+//        waste(firstGlassPtr);
     } else if (glassPath->isRight(normal) && containsCircles()) {
         clearCircles();
     }
@@ -230,14 +231,21 @@ void GlassGameObject::waste(GlassGameObject **firstGlassPtr) {
     setInvM(1);
 }
 
-void GlassGameObject::draw() {
+void GlassGameObject::draw(float delta) {
     if (!isVisible() || isDeleted()) {
         return;
     }
 
     Vec2 center = getShape()->getCenter();
     renderer->setPosition(center.x(), center.y());
+
+//    renderer->setPosition(coordsToDraw[cycleNumber][X], coordsToDraw[cycleNumber][Y]);
+
+//    LOGE("X: %f Y: %f", center.x(), center.y());
+
     renderer->setAngel(getShape()->getAngel());
+
+//    renderer->setAngel(coordsToDraw[cycleNumber][ANGLE]);
 
     renderer->setColor(color.r(), color.g(), color.b(), 0.5f);
     renderer->setFilled(true);
@@ -247,7 +255,7 @@ void GlassGameObject::draw() {
     renderer->setFilled(false);
     renderer->setColor(color);
     unsigned short vertices2[] = {0, 1, 1, 2, 2, 3};
-    renderer->render(vertices2, 6);
+//    renderer->render(vertices2, 6);
 }
 
 void GlassGameObject::reset() {

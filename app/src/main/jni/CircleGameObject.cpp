@@ -4,7 +4,7 @@
 
 CircleGameObject::CircleGameObject(float r, float invM, float lowerBound,
                                    RendererFactory *rendererFactory)
-        : PhysicsObject(new Circle(r, NULL), invM),
+        : GameObject(new Circle(r, NULL), invM),
           insideGlass(false),
           color(Color(1.0f, 1.0f, 0.0f, 1.0f)),
           lowerBound(lowerBound) {
@@ -13,8 +13,8 @@ CircleGameObject::CircleGameObject(float r, float invM, float lowerBound,
 
 }
 
-void CircleGameObject::updatePos() {
-    PhysicsObject::updatePos();
+void CircleGameObject::updatePos(float dt) {
+    GameObject::updatePos(dt);
     if (getShape() != NULL) {
         if (getShape()->getCenter().y() < lowerBound) {
             setDeleted(true);
@@ -30,13 +30,14 @@ void CircleGameObject::setInsideGlass(bool insideGlass) {
     this->insideGlass = insideGlass;
 }
 
-void CircleGameObject::draw() {
+void CircleGameObject::draw(float delta) {
     if (isDeleted()) {
         return;
     }
     renderer->setColor(color);
     Vec2 center = getShape()->getCenter();
     renderer->setPosition(center.x(), center.y());
+//    renderer->setPosition(coordsToDraw[cycleNumber][X], coordsToDraw[cycleNumber][Y]);
     renderer->render();
 }
 

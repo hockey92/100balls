@@ -64,13 +64,13 @@ void TextureShader::compile() {
 }
 
 void TextureShader::setTexture(Texture *texture) {
-//    if (preparedTextureId == texture->getId()) {
-//        return;
-//    }
+    if (preparedTextureId == texture->getId()) {
+        return;
+    }
+    preparedTextureId = texture->getId();
 //    ASSERT(preparedVertexBuf != NULL);
     texture->bind(GL_TEXTURE0);
     glUniform1i(samplerHandle, 0);
-//    preparedTextureId = texture->getId();
 }
 
 void TextureShader::beginRender(VertexBuff *vbuf, int size, int stride) {

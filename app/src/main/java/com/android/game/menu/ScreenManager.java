@@ -10,7 +10,7 @@ public class ScreenManager extends ScreenElement {
         instance.add(new MainMenu());
         instance.add(new GameScreen());
 
-        instance.currentScreenId = MainMenu.class.getName();
+        instance.currentScreenId = GameScreen.class.getName();
     }
 
     public static ScreenManager getInstance() {

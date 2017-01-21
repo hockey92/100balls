@@ -5,7 +5,9 @@ public class GameService {
         System.loadLibrary("onehundredballs");
     }
 
-    private static GameState gameState = GameState.STOPPED;
+    private static GameState gameState = GameState.PROCESSING;//GameState.STOPPED;
+
+    private static long prev = System.currentTimeMillis();
 
     public static GameState getState() {
         return gameState;
@@ -15,7 +17,7 @@ public class GameService {
         GameService.gameState = gameState;
     }
 
-    public static native void draw();
+    public static native void draw(float time);
 
     public static void reset() {
         gameState = GameState.STOPPED;
@@ -23,15 +25,20 @@ public class GameService {
         closeNative();
     }
 
-    public static void nextFrame() {
+    public static void nextFrame(float dt) {
         if (gameState == GameState.PROCESSING) {
-            nextFrameNative();
+
+            long newTime = System.currentTimeMillis();
+            System.out.println("nextFrameTime " + (newTime - prev));
+            prev = newTime;
+
+            nextFrameNative(dt);
         }
     }
 
     private static native void resetNative();
 
-    private static native void nextFrameNative();
+    private static native void nextFrameNative(float dt);
 
     public static void open() {
         if (gameState == GameState.PROCESSING) {

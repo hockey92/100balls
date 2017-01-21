@@ -7,7 +7,7 @@ model {
 
         defaultConfig {
             applicationId = 'com.android.onehundredballs'
-            minSdkVersion.apiLevel = 23
+            minSdkVersion.apiLevel = 8
             targetSdkVersion.apiLevel = 23
         }
         ndk {

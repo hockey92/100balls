@@ -13,11 +13,11 @@ public:
 
     virtual ~PhysicsObject();
 
-    virtual void update() { }
+    virtual void update(float dt) { }
 
-    virtual void updatePos();
+    virtual void updatePos(float dt);
 
-    void applyGravity();
+    void applyGravity(float dt);
 
     Vec2 getVel() const { return vel; }
 
@@ -45,7 +45,7 @@ public:
 
     void setActive(bool active) { this->active = active; }
 
-    void calculateExtendedAABB();
+    void calculateExtendedAABB(float dt);
 
     bool isVisible() { return visible && !deleted; }
 

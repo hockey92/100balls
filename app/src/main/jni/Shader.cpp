@@ -167,9 +167,10 @@ void Shader::PushPositions(int vbo_offset, int stride) {
 }
 
 void Shader::beginRender(VertexBuff *vbuf, int size, int stride) {
-//    if (preparedVertexBuffId == vbuf->getId()) {
-//        RETURN;
-//    }
+    if (preparedVertexBuffId == vbuf->getId()) {
+        return;
+    }
+    preparedVertexBuffId = vbuf->getId();
 
     bindShader();
     vbuf->bind();

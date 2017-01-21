@@ -6,8 +6,8 @@ Constraint::Constraint(PhysicsObject *o1, PhysicsObject *o2, Collision *c) {
     set(o1, o2, c);
 }
 
-bool Constraint::fix() {
-    float j = ImpulseFactory::createImpulse(o1, o2, c);
+bool Constraint::fix(float dt) {
+    float j = ImpulseFactory::createImpulse(o1, o2, c, dt);
     float oldImpulse = totalImpulse;
     totalImpulse = clamp(oldImpulse + j);
     j = totalImpulse - oldImpulse;

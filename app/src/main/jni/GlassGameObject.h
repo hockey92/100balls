@@ -19,7 +19,7 @@ public:
 
     virtual ~GlassGameObject();
 
-    void update();
+    void update(float dt);
 
     void setChild(GlassGameObject *child);
 
@@ -31,7 +31,7 @@ public:
 
     bool containsPoint(const Vec2 &point) const;
 
-    virtual void updatePos();
+    virtual void updatePos(float dt);
 
     GlassGameObject *getTail();
 
@@ -39,7 +39,7 @@ public:
 
     void doActionAfter(GlassGameObject **firstGlassPtr);
 
-    void draw();
+    void draw(float delta);
 
     void reset();
 
@@ -68,7 +68,7 @@ private:
 
     void setParent(GlassGameObject *parent);
 
-    void innerUpdate();
+    void innerUpdate(float dt);
 
     void updatePositionOnPath();
 
